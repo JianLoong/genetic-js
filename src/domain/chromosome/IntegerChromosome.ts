@@ -8,8 +8,6 @@ class IntegerChromosome extends BinaryChromosomeBase {
     private m_maxValue: number;
     private m_originalValue;
 
-
-
     createNew(): IChromosome {
         throw new Error("Method not implemented.");
     }
@@ -28,9 +26,7 @@ class IntegerChromosome extends BinaryChromosomeBase {
         let randomValue = this.getRandomInt(minValue, maxValue);
                 
         this.m_originalValue = this.createBinaryString(randomValue).split("").map(Number);
-
         this.createGenes();
-
     }
 
     createBinaryString (nMask: number): string {
@@ -46,6 +42,14 @@ class IntegerChromosome extends BinaryChromosomeBase {
            return new Gene(0);
 
         return new Gene(value);
+    }
+
+    toString(): string {
+        let str = "";
+        for(let i = 0; i < this.getGenes().length; i++){
+            str += this.getGene(i).m_value + " ";
+        }
+        return str;
     }
 }
 
