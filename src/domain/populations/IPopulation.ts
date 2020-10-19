@@ -1,0 +1,4 @@
+interface IPopulation {
+    creationDate: Date;
+
+}
