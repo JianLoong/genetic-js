@@ -17,6 +17,10 @@ abstract class CrossoverBase implements ICrossover {
     cross(parents: IChromosome[]): IChromosome[] {
         let firstParent = parents[0];
 
+        if (firstParent.length < this.minChromosomeLength) {
+            throw new Error("Error: A chromosome should have at least 0 genes");
+        }
+
         return this.performCross(parents);
     }
 

@@ -9,6 +9,8 @@ abstract class SequenceMutationBase extends MutationBase {
     validateLength(chromosome: IChromosome): void {
 
     }
+
+    abstract mutateOnSequence(): void;
 }
 
 export { SequenceMutationBase }

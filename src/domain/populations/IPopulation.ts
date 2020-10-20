@@ -11,9 +11,9 @@ interface IPopulation {
     bestChromosome: IChromosome;
 
     createInitialGeneration(): void;
-    createNewGeneration(): void;
+    createNewGeneration(chromosomes?: IChromosome[]): void;
     endCurrentGeneration(): void;
 
 }
 
-export {IPopulation};
+export { IPopulation };

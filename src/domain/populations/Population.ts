@@ -12,7 +12,8 @@ class Population implements IPopulation {
     minSize: number;
     maxSize: number;
     bestChromosome: IChromosome;
-   
+    adamChromosome: IChromosome;
+
     constructor(minSize: number, maxSize: number, adamChromosome: IChromosome) {
         if (minSize < 2) throw new Error();
         if (maxSize < minSize) throw new Error();
@@ -23,18 +24,36 @@ class Population implements IPopulation {
         this.generations = [];
 
     }
-   
+    createNewGeneration(chromosomes?: IChromosome[]): void {
+
+    }
+
 
     createInitialGeneration(): void {
-        throw new Error("Method not implemented.");
-    }
-    createNewGeneration(): void {
-        throw new Error("Method not implemented.");
+        this.generations = [];
+        this.generationNumber = 0;
+        let chromosomes = [];
+
+        for (let i = 0; i < this.minSize; i++) {
+            let c = this.adamChromosome.createNew();
+
+            if (c == null) {
+                throw new Error("");
+            }
+
+
+
+            chromosomes.push(c);
+        }
+
+        //this.createNewGeneration(chromosomes);
+
     }
     endCurrentGeneration(): void {
-        throw new Error("Method not implemented.");
+        this.currentGeneration.end(this.maxSize);
+
     }
 
 }
 
-export {Population};
+export { Population };

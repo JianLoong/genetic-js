@@ -28,4 +28,5 @@ var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutatio
 
 
 
-console.log(ga.toString());
+console.log(ga.population);
+

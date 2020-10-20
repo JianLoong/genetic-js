@@ -6,7 +6,7 @@ class Generation {
     private chromosomes: IChromosome[];
     private bestChromosomes: IChromosome;
 
-    getChromosome() : IChromosome[]{
+    getChromosome(): IChromosome[] {
         return this.chromosomes;
     }
 
@@ -20,13 +20,13 @@ class Generation {
         }
         this.num = num;
         this.creationDate = new Date();
-        this.chromosomes = chromosomes;   
+        this.chromosomes = chromosomes;
     }
 
-    end(chromosomesNumber: number): void{
+    end(chromosomesNumber: number): void {
         this.chromosomes = this.chromosomes
             .filter(chromosome => this.validateChromosome(chromosome) == true)
-            .sort((a,b) => a.fitness - b.fitness);
+            .sort((a, b) => a.fitness - b.fitness);
 
         this.chromosomes = this.chromosomes.slice(0, chromosomesNumber);
 
@@ -39,10 +39,10 @@ class Generation {
         return true;
     }
 
-    toString(){
+    toString() {
         return this.bestChromosomes.getGenes().toString();
     }
 }
 
 
-export {Generation}
+export { Generation }

@@ -14,9 +14,10 @@ class ChromosomeExtension {
         return false;
     }
 
-    validateGenes(chromosomes: IChromosome[]): void {
+    validateGenes(chromosome?: IChromosome, chromosomes?: IChromosome[]): void {
+
 
     }
-
-
 }
+
+export { ChromosomeExtension }

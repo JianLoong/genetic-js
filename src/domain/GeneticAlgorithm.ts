@@ -35,11 +35,16 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
     private evolveOneGeneration(): boolean {
         let parents = this.selectParents();
         let offspring = this.cross(parents);
+
         return null;
     }
 
     toString(): string {
         return "Genetic Algorithm";
+    }
+
+    private mutate(chromosome: IChromosome[]) {
+
     }
 
 }
