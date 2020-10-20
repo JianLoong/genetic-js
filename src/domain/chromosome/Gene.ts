@@ -12,7 +12,7 @@ class Gene {
     }
 
     toString() {
-        return this.m_value != null? this.m_value : "";
+        return this.m_value != null ? this.m_value : "";
     }
 
     equals(other: Gene) {

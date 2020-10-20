@@ -24,11 +24,11 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
 
     }
 
-    private selectParents() : IChromosome[]{
+    private selectParents(): IChromosome[] {
         return this.selection.selectChromosomes(this.population.minSize, this.population.currentGeneration);
     }
 
-    private cross(parents: IChromosome[]): IChromosome[]{
+    private cross(parents: IChromosome[]): IChromosome[] {
         return null;
     }
 

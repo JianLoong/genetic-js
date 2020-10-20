@@ -24,32 +24,38 @@ class IntegerChromosome extends BinaryChromosomeBase {
         this.m_maxValue = maxValue;
 
         let randomValue = this.getRandomInt(minValue, maxValue);
-                
+
         this.m_originalValue = this.createBinaryString(randomValue).split("").map(Number);
         this.createGenes();
     }
 
-    createBinaryString (nMask: number): string {
+    createBinaryString(nMask: number): string {
         // nMask must be between -2147483648 and 2147483647
         for (var nFlag = 0, nShifted = nMask, sMask = ""; nFlag < 32;
-             nFlag++, sMask += String(nShifted >>> 31), nShifted <<= 1);
+            nFlag++, sMask += String(nShifted >>> 31), nShifted <<= 1);
         return sMask;
     }
-  
+
     generateGene(geneIndex: number): Gene {
         let value = this.m_originalValue[geneIndex];
         if (value == undefined)
-           return new Gene(0);
+            return new Gene(0);
 
         return new Gene(value);
     }
 
     toString(): string {
         let str = "";
-        for(let i = 0; i < this.getGenes().length; i++){
+        for (let i = 0; i < this.getGenes().length; i++) {
             str += this.getGene(i).m_value + " ";
         }
         return str;
+    }
+
+    flipGene = (index: number) => {
+        let realIndex = Math.abs(31 - index);
+        let value = this.getGene(realIndex).m_value;
+
     }
 }
 

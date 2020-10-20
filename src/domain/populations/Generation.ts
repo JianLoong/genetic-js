@@ -1,6 +1,4 @@
 import { IChromosome } from "../chromosome/IChromosome";
-
-
 class Generation {
 
     private num: number;

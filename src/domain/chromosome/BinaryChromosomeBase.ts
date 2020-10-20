@@ -2,7 +2,6 @@ import { Gene } from "./Gene";
 import { ChromosomeBase } from "./ChromosomeBase";
 import { IBinaryChromosome } from "./IBinaryChromosome";
 
-
 abstract class BinaryChromosomeBase
     extends ChromosomeBase
     implements IBinaryChromosome {
@@ -11,7 +10,7 @@ abstract class BinaryChromosomeBase
     }
     flipGene(index: number): void {
         let value = this.getGene(index).m_value;
-        this.replaceGene(index, new Gene(value === 0? 1 : 0));
+        this.replaceGene(index, new Gene(value === 0 ? 1 : 0));
     }
 
     generateGene(geneIndex: number): Gene {

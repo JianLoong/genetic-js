@@ -4,4 +4,4 @@ interface IFitness {
     evaluate(chromosome: IChromosome): number;
 }
 
-export {IFitness}
+export { IFitness }

@@ -7,8 +7,8 @@ abstract class MutationBase implements IMutation {
     }
     isOrdered: boolean;
 
-    abstract performMutate(chromosome: IChromosome, probability: number);
+    abstract performMutate(chromosome: IChromosome, probability: number): void;
 
 }
 
-export {MutationBase};
+export { MutationBase };

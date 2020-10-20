@@ -2,4 +2,4 @@ interface IChromosomeOperator {
     isOrdered: boolean;
 }
 
-export {IChromosomeOperator};
+export { IChromosomeOperator };

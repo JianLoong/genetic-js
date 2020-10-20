@@ -6,4 +6,4 @@ interface ISelection {
     selectChromosomes(num: number, generation: Generation): IChromosome[];
 }
 
-export {ISelection};
+export { ISelection };
