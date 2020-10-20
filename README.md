@@ -8,9 +8,13 @@ Genetic JS is a port of GeneticSharp done in TypeScript.
 
 Genetic JS attempts to be a fast, extensible, multi-platform and multi-threading JavaScript Genetic Algorithm library that simples the development of applications using Genetic Algorithm.
 
+# Motivation
+
+The current landscape of Genetic Algorithm libraries are vast, however this library aims to provide a simple way in which various selection and crossover criteria can be introduced.
+
 # Porting Status from C# to TypeScript
 
-| src                   | Complete? |
+| Directory             | Complete? |
 | --------------------- | --------- |
 | Benchmarks            | No        |
 | Domain.UnitTests      | No        |
@@ -28,3 +32,30 @@ Genetic JS attempts to be a fast, extensible, multi-platform and multi-threading
 | Extensions.UniTest    | No        |
 | Extensions            | No        |
 | Samples               | No        |
+
+| Chromosomes/            | Complete? |
+| ----------------------- | --------- |
+| BinaryChromosomeBase    | Yes       |
+| ChromosomeBase          | Yes       |
+| ChromosomeExtensions    | No        |
+| Chromosomes dot cd      | Ignored   |
+| FloatingPointChromosome | No        |
+| Gene                    | Yes       |
+| IBinaryChromosome       | Yes       |
+| IChromosome             | Yes       |
+| IChromosomeOperator     | Yes       |
+| IntegerChromosome       | Yes       |
+
+| Crossover                 | Complete? |
+| ------------------------- | --------- |
+| AlternatingPointCrossover | No        |
+
+# Design Decisions
+
+- Usage of namespaces are abandoned in favour of modules. Refer
+  [here](https://michelenasti.com/2019/01/23/is-typescript-namespace-feature-deprecated.html)
+- Usage of `extensions` are still be considered. Refer [here](https://www.c-sharpcorner.com/article/learn-about-extension-methods-in-typescript/)
+
+# Quick run
+
+Currently it is ran via command line via the `Make` file provided which is just running npx.

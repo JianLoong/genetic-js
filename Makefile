@@ -6,3 +6,6 @@ demo: prepare
 	node ./out/samples/basic.js
 prepare:
 	mkdir -p ./out
+
+test: npm install --save-dev mocha
+	
