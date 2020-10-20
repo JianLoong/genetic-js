@@ -59,3 +59,5 @@ The current landscape of Genetic Algorithm libraries are vast, however this libr
 # Quick run
 
 Currently it is ran via command line via the `Make` file provided which is just running npx.
+
+You can also do a `yarn test` to run the test cases.

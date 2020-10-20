@@ -105,3 +105,4 @@ dist
 
 # Generated JS file
 out/*
+coverage/*

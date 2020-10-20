@@ -4,12 +4,12 @@ import { Gene } from "./Gene";
 
 class IntegerChromosome extends BinaryChromosomeBase {
 
-    private m_minValue: number;
-    private m_maxValue: number;
-    private m_originalValue;
+    m_minValue: number;
+    m_maxValue: number;
+    m_originalValue;
 
     createNew(): IChromosome {
-        throw new Error("Method not implemented.");
+        return new IntegerChromosome(this.m_minValue, this.m_maxValue);
     }
 
     getRandomInt(min, max) {

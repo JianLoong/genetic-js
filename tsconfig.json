@@ -1,4 +1,5 @@
 {
+    "exclude": ["node_modules","out"],
     "compilerOptions": {
       "outDir": "out",
       "target": "es6",

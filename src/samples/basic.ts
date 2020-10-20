@@ -21,7 +21,9 @@ const fitnessFunction = function (chromosome: IChromosome) {
 }
 
 var fitness = new FuncFitness(fitnessFunction);
-var chromosome = new IntegerChromosome(0, 2);
+var chromosome = new IntegerChromosome(0, 20);
+
+
 var population = new Population(50, 70, chromosome);
 
 var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
