@@ -55,8 +55,6 @@ class Population implements IPopulation {
     }
     endCurrentGeneration(): void {
         this.currentGeneration.end(this.maxSize);
-
-
     }
 
     toString = () => {

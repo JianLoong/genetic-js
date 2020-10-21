@@ -14,49 +14,13 @@ Genetic JS attempts to be a fast, extensible, multi-platform and multi-threading
 
 The current landscape of Genetic Algorithm libraries are vast, however this library aims to provide a simple way in which various selection and crossover criteria can be introduced.
 
-# Porting Status from C# to TypeScript
-
-| Directory             | Complete? |
-| --------------------- | --------- |
-| Benchmarks            | No        |
-| Domain.UnitTests      | No        |
-| Domain.Chromosome     | Yes       |
-| Domain.Crossover      | No        |
-| Domain.Fitnesses      | No        |
-| Domain.Mutations      | No        |
-| Domain.Populations    | No        |
-| Domain.Properties     | No        |
-| Domain.Randomizations | No        |
-| Domain.Reinsertions   | No        |
-| Domain.Selections     | No        |
-| Domain.Terminations   | No        |
-| Domain GA             | No        |
-| Extensions.UniTest    | No        |
-| Extensions            | No        |
-| Samples               | No        |
-
-| Chromosomes/            | Complete? |
-| ----------------------- | --------- |
-| BinaryChromosomeBase    | Yes       |
-| ChromosomeBase          | Yes       |
-| ChromosomeExtensions    | No        |
-| Chromosomes dot cd      | Ignored   |
-| FloatingPointChromosome | No        |
-| Gene                    | Yes       |
-| IBinaryChromosome       | Yes       |
-| IChromosome             | Yes       |
-| IChromosomeOperator     | Yes       |
-| IntegerChromosome       | Yes       |
-
-| Crossover                 | Complete? |
-| ------------------------- | --------- |
-| AlternatingPointCrossover | No        |
-
-# Design Decisions
+# Design Decisions and Considerations
 
 - Usage of namespaces are abandoned in favour of modules. Refer
   [here](https://michelenasti.com/2019/01/23/is-typescript-namespace-feature-deprecated.html)
 - Usage of `extensions` are still be considered. Refer [here](https://www.c-sharpcorner.com/article/learn-about-extension-methods-in-typescript/)
+- Jest is used as the testing framework.
+- Promise API will be used to "multi-thread".
 
 # Quick run
 
