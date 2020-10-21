@@ -8,4 +8,4 @@ interface ICrossover extends IChromosomeOperator {
     cross(parents: IChromosome[]): IChromosome[];
 }
 
-export {ICrossover};
+export { ICrossover };

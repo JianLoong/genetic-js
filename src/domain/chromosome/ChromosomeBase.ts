@@ -1,7 +1,6 @@
 import { Gene } from "./Gene";
 import { IChromosome } from "./IChromosome";
 
-
 abstract class ChromosomeBase implements IChromosome {
     public length: number;
     public fitness?: number;
@@ -12,9 +11,10 @@ abstract class ChromosomeBase implements IChromosome {
         this.length = length;
         this.genes = [];
     }
+
     replaceGene(index: number, gene: Gene): void {
         if (index < 0 || index > this.length) {
-            throw Error();
+            throw Error("ChromosomeBase - Index cannot be less than 0 and more than the length. " + index);
         }
 
         this.genes[index] = gene;

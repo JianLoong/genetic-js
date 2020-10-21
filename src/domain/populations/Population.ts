@@ -24,8 +24,12 @@ class Population implements IPopulation {
         this.generations = [];
         this.adamChromosome = adamChromosome;
 
+        this.createInitialGeneration();
+
     }
+
     createNewGeneration(chromosomes?: IChromosome[]): void {
+
         this.currentGeneration = new Generation(++this.generationNumber, chromosomes);
         this.generations.push(this.currentGeneration);
     }
@@ -51,6 +55,7 @@ class Population implements IPopulation {
     }
     endCurrentGeneration(): void {
         this.currentGeneration.end(this.maxSize);
+
 
     }
 

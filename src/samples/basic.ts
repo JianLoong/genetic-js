@@ -8,12 +8,9 @@ import { ReverseSequenceMutation } from "../domain/mutations/ReverseSequenceMuta
 import { Population } from "../domain/populations/Population";
 import { EliteSelection } from "../domain/selections/EliteSelection";
 
-const gene = new Gene(0);
 
-var selection = new EliteSelection();
-var crossover = new OrderedCrossover();
-var mutation = new ReverseSequenceMutation();
 
+// Create your own fitness function.
 const fitnessFunction = function (chromosome: IChromosome) {
     let genes = chromosome.getGenes();
     let fitness = 0;
@@ -24,21 +21,25 @@ const fitnessFunction = function (chromosome: IChromosome) {
 }
 
 var fitness = new FuncFitness(fitnessFunction);
+
+// Create your own chromosome
 var chromosome = new IntegerChromosome(0, 20);
 
-
-var population = new Population(5, 10, chromosome);
-
-population.createInitialGeneration();
-
+// Running the GA
+var selection = new EliteSelection();
+var crossover = new OrderedCrossover();
+var mutation = new ReverseSequenceMutation();
+var population = new Population(50, 70, chromosome);
 
 
 var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
+console.log(ga);
+
+//ga.evaluateFitness();
 
 ga.evolveOneGeneration();
 
-
-console.log(ga);
+//console.log(ga);
 
 
 

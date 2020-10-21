@@ -15,6 +15,9 @@ abstract class CrossoverBase implements ICrossover {
 
 
     cross(parents: IChromosome[]): IChromosome[] {
+        if (parents == null)
+            throw new Error("Error - CrossOverbase: Number of parents cannot be null.");
+
         let firstParent = parents[0];
 
         if (firstParent.length < this.minChromosomeLength) {

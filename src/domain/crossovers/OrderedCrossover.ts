@@ -2,8 +2,8 @@ import { IChromosome } from "../chromosome/IChromosome";
 import { CrossoverBase } from "./CrossoverBase";
 
 class OrderedCrossover extends CrossoverBase {
-    constructor(){
-        super(2,2);
+    constructor() {
+        super(2, 2);
         this.isOrdered = true;
     }
     performCross(parents: IChromosome[]): IChromosome[] {
@@ -15,4 +15,4 @@ class OrderedCrossover extends CrossoverBase {
 
 }
 
-export {OrderedCrossover};
+export { OrderedCrossover };

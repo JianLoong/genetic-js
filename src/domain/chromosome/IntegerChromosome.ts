@@ -41,6 +41,10 @@ class IntegerChromosome extends BinaryChromosomeBase {
         return new Gene(value);
     }
 
+    getGenes(): Gene[] {
+        return super.getGenes();
+    }
+
     toString(): string {
         let str = "";
         for (let i = 0; i < this.getGenes().length; i++) {
