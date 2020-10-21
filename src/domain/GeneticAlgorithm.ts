@@ -36,6 +36,8 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
 
         this.operatorStrategy = new DefaultOperationStrategy();
 
+        this.bestChromosome = [];
+
     }
 
     private selectParents(): IChromosome[] {
@@ -55,8 +57,7 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
         let offspring = this.cross(parents);
         //this.mutate(offspring);
 
-        // TODO Offspring have an issue.
-        this.population.createNewGeneration(parents);
+        this.population.createNewGeneration(offspring);
 
         return this.endCurrentGeneration();
     }
@@ -68,6 +69,8 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
             let fitness = this.fitness.evaluate(element);
             element.fitness = fitness;
         }
+
+        this.bestChromosome.push(this.population.currentGeneration.chromosomes[0]);
     }
 
     toString(): string {

@@ -33,13 +33,18 @@ var population = new Population(50, 70, chromosome);
 
 
 var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
-console.log(ga);
+//console.log(ga);
+console.log(ga.bestChromosome);
 
 //ga.evaluateFitness();
+for (let index = 0; index < 100; index++) {
+    ga.evolveOneGeneration();
+}
 
-ga.evolveOneGeneration();
+console.log(ga.bestChromosome[9]);
 
-//console.log(ga);
+
+
 
 
 

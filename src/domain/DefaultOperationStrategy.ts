@@ -6,10 +6,17 @@ import { IPopulation } from "./populations/IPopulation";
 
 class DefaultOperationStrategy implements IOperationStrategy {
     cross(population: IPopulation, crossover: ICrossover, crossoverProbability: number, parents: IChromosome[]): IChromosome[] {
-        let minSize = population.minSize;
-        let offspring = [];
+        let minSize: number = population.minSize;
+        let offspring: IChromosome[] = [];
+        for (let i = 0; i < minSize; i += crossover.parentNumber) {
+            let selectedParents = parents.slice(2).splice(0, crossover.parentNumber);
 
-        return parents;
+            let cross = crossover.cross(selectedParents);
+
+            offspring = offspring.concat(cross);
+        }
+
+        return offspring;
     }
     mutate(mutation: IMutation, mutationProbability: number, chromosomes: IChromosome[]): void {
         throw new Error("Method not implemented.");
