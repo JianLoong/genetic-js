@@ -3,6 +3,8 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=square)](https://github.com/JianLoong/genetic-js/issues)
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
 ![ts](https://badgen.net/badge/Built%20With/TypeScript/blue)
+![GitHub repo size](https://img.shields.io/github/repo-size/JianLoong/genetic-js)
+![GitHub issues](https://img.shields.io/github/issues/JianLoong/genetic-js)
 
 Genetic JS is a port of GeneticSharp done in TypeScript.
 

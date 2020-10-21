@@ -24,3 +24,5 @@ class DefaultOperationStrategy implements IOperationStrategy {
     }
 
 }
+
+export { DefaultOperationStrategy }

@@ -22,10 +22,12 @@ class Population implements IPopulation {
         this.minSize = minSize;
         this.maxSize = maxSize;
         this.generations = [];
+        this.adamChromosome = adamChromosome;
 
     }
     createNewGeneration(chromosomes?: IChromosome[]): void {
-
+        this.currentGeneration = new Generation(++this.generationNumber, chromosomes);
+        this.generations.push(this.currentGeneration);
     }
 
 
@@ -41,17 +43,23 @@ class Population implements IPopulation {
                 throw new Error("");
             }
 
-
-
             chromosomes.push(c);
         }
 
-        //this.createNewGeneration(chromosomes);
+        this.createNewGeneration(chromosomes);
 
     }
     endCurrentGeneration(): void {
         this.currentGeneration.end(this.maxSize);
 
+    }
+
+    toString = () => {
+        let str = "";
+        for (let i = 0; i < this.generations.length; i++) {
+            str += this.generations[i].toString();
+        }
+        return str;
     }
 
 }

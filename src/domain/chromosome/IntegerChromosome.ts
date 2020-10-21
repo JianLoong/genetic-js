@@ -6,7 +6,7 @@ class IntegerChromosome extends BinaryChromosomeBase {
 
     m_minValue: number;
     m_maxValue: number;
-    m_originalValue;
+    m_originalValue = [];
 
     createNew(): IChromosome {
         return new IntegerChromosome(this.m_minValue, this.m_maxValue);
@@ -38,9 +38,6 @@ class IntegerChromosome extends BinaryChromosomeBase {
 
     generateGene(geneIndex: number): Gene {
         let value = this.m_originalValue[geneIndex];
-        if (value == undefined)
-            return new Gene(0);
-
         return new Gene(value);
     }
 
@@ -49,12 +46,16 @@ class IntegerChromosome extends BinaryChromosomeBase {
         for (let i = 0; i < this.getGenes().length; i++) {
             str += this.getGene(i).m_value + " ";
         }
-        return str;
+
+        return super.toString();
+        //return str;
     }
 
     flipGene = (index: number) => {
         let realIndex = Math.abs(31 - index);
         let value = this.getGene(realIndex).m_value;
+
+        this.replaceGene(realIndex, new Gene(value == 0 ? 1 : 0));
 
     }
 }

@@ -10,25 +10,35 @@ import { EliteSelection } from "../domain/selections/EliteSelection";
 
 const gene = new Gene(0);
 
-console.log(gene);
-
 var selection = new EliteSelection();
 var crossover = new OrderedCrossover();
 var mutation = new ReverseSequenceMutation();
 
 const fitnessFunction = function (chromosome: IChromosome) {
-    return 0;
+    let genes = chromosome.getGenes();
+    let fitness = 0;
+    for (let i = 0; i < genes.length; i++) {
+        fitness += parseInt(genes[i].m_value.toString());
+    }
+    return fitness;
 }
 
 var fitness = new FuncFitness(fitnessFunction);
 var chromosome = new IntegerChromosome(0, 20);
 
 
-var population = new Population(50, 70, chromosome);
+var population = new Population(5, 10, chromosome);
+
+population.createInitialGeneration();
+
+
 
 var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
 
+ga.evolveOneGeneration();
 
 
-console.log(ga.population);
+console.log(ga);
+
+
 

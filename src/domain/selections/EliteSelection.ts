@@ -3,6 +3,9 @@ import { SelectionBase } from "./SelectionBase";
 
 class EliteSelection extends SelectionBase {
     performSelectChromosome(num: number, generation: Generation) {
+        if (generation == undefined)
+            throw new Error("Selection - No generation for Elite Selection");
+
         let ordered = generation.getChromosome().sort((a, b) => a.fitness - b.fitness);
         return ordered.slice(0, num);
     }

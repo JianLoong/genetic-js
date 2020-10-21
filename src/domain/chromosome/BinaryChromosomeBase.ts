@@ -9,8 +9,12 @@ abstract class BinaryChromosomeBase
         super(length);
     }
     flipGene(index: number): void {
-        let value = this.getGene(index).m_value;
-        this.replaceGene(index, new Gene(value === 0 ? 1 : 0));
+        let value = this.getGene(index);
+
+        if (value == undefined)
+            throw new Error("");
+
+        this.replaceGene(index, new Gene(value.m_value === 0 ? 1 : 0));
     }
 
     generateGene(geneIndex: number): Gene {

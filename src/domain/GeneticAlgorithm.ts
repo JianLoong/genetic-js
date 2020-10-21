@@ -3,8 +3,10 @@ import { IChromosome } from "./chromosome/IChromosome";
 import { ICrossover } from "./crossovers/ICrossover";
 import { IFitness } from "./fitnesses/IFitness";
 import { IGeneticAlgorithm } from "./IGeneticAlgorithm";
+import { IOperationStrategy } from "./IOperationStrategy";
 import { IMutation } from "./mutations/IMutation";
 import { IPopulation } from "./populations/IPopulation";
+import { DefaultOperationStrategy } from "./selections/DefaultOperationStrategy";
 import { ISelection } from "./selections/ISelection";
 
 class GeneticAlgorithm implements IGeneticAlgorithm {
@@ -13,14 +15,23 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
     bestChromosome: IChromosome[];
     selection: ISelection;
     population: IPopulation;
+    fitness: IFitness;
+    operatorStrategy: IOperationStrategy;
+    crossOver: ICrossover;
 
-    constructor(population: IPopulation,
+    constructor(
+        population: IPopulation,
         fitness: IFitness,
         selection: ISelection,
         crossOver: ICrossover,
         mutation: IMutation) {
+
         this.selection = selection;
         this.population = population;
+        this.fitness = fitness;
+        this.crossOver = crossOver;
+
+        this.operatorStrategy = new DefaultOperationStrategy();
 
     }
 
@@ -29,14 +40,23 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
     }
 
     private cross(parents: IChromosome[]): IChromosome[] {
-        return null;
+        return this.operatorStrategy.cross(this.population, this.crossOver, 0.1, parents);
     }
 
-    private evolveOneGeneration(): boolean {
+    public evolveOneGeneration(): boolean {
         let parents = this.selectParents();
         let offspring = this.cross(parents);
+        this.mutate(offspring);
 
-        return null;
+        this.population.createNewGeneration(offspring);
+
+        return this.endCurrentGeneration();
+    }
+
+    public evaluateFitness(): void {
+        for (let i = 0; i < this.population.currentGeneration.chromosomes.length; i++) {
+            this.population.currentGeneration.chromosomes[i].fitness = this.fitness.evaluate(this.population.currentGeneration.chromosomes[i]);
+        }
     }
 
     toString(): string {
@@ -44,7 +64,12 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
     }
 
     private mutate(chromosome: IChromosome[]) {
+        return chromosome;
+    }
 
+    private endCurrentGeneration(): boolean {
+        this.evaluateFitness();
+        return true;
     }
 
 }
