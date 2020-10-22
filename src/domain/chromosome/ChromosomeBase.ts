@@ -22,6 +22,7 @@ abstract class ChromosomeBase implements IChromosome {
     }
     abstract generateGene(geneIndex: number): Gene;
 
+    // TODO - Start index does nothing
     replaceGenes(startIndex: number, genes: Gene[]): void {
         var genesToBeReplacedLength = genes.length;
 

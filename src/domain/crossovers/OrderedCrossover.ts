@@ -40,16 +40,28 @@ class OrderedCrossover extends CrossoverBase {
         // Mark parent 2
         let cloneSecondParent = secondParent.createNew();
         let cloneSecondParentGenes = cloneSecondParent.getGenes();
-        cloneSecondParentGenes = cloneSecondParentGenes.filter((e) => {
-            return !middleSectionGenes.includes(e);
-        })
+        // https://stackoverflow.com/questions/19957348/remove-all-elements-contained-in-another-array
+        // cloneSecondParentGenes = cloneSecondParentGenes.filter((e) => {
+        //     return !middleSectionGenes.includes(e);
+        // })
+        cloneSecondParentGenes = cloneSecondParentGenes.filter((el) => !middleSectionGenes.includes(el));
 
-        for (let i = secondParent.length; i > 0; i--) {
-            if (!(i > middleSectionEndIndex && i < middleSectionBeginIndex)) {
-                firstChild.replaceGene(i, cloneSecondParentGenes.pop())
-            }
+        let genes = [];
+
+        for (let i = 0; i < middleSectionBeginIndex; i++) {
+            genes[i] = cloneSecondParentGenes.pop();
         }
 
+        for (let i = middleSectionBeginIndex; i < middleSectionEndIndex; i++) {
+            genes[i] = middleSectionGenes.pop();
+        }
+
+        for (let i = middleSectionEndIndex; i < secondParentGenes.length; i++) {
+            genes[i] = cloneSecondParentGenes.pop();
+        }
+
+
+        firstChild.replaceGenes(0, genes);
 
         return firstChild;
     }

@@ -6,11 +6,11 @@ import { ChromosomeBase } from "./ChromosomeBase";
 
 class NQueenChromosome extends ChromosomeBase {
 
-    private r = new RandomizationProvider().current.getUniqueInts(5, 0, 5);
+    private r = new RandomizationProvider().current.getUniqueInts(4, 0, 4);
 
 
     constructor() {
-        super(5);
+        super(4);
         this.createGenes();
     }
 

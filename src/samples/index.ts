@@ -67,7 +67,7 @@ var chromosome = new NQueenChromosome();
 var selection = new EliteSelection();
 var crossover = new OrderedCrossover();
 var mutation = new ReverseSequenceMutation();
-var population = new Population(50, 100, chromosome);
+var population = new Population(200, 500, chromosome);
 
 
 var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
