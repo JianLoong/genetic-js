@@ -57,6 +57,7 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
     public evolveOneGeneration(): boolean {
         let parents = this.selectParents();
         let offspring = this.cross(parents);
+
         this.mutate(offspring);
         this.population.createNewGeneration(offspring);
 

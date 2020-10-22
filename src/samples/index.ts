@@ -2,6 +2,7 @@ import { Gene } from "../domain/chromosome/Gene";
 import { IChromosome } from "../domain/chromosome/IChromosome";
 import { IntegerChromosome } from "../domain/chromosome/IntegerChromosome";
 import { NQueenChromosome } from "../domain/chromosome/NQueenChromosome";
+import { OrderedCrossover } from "../domain/crossovers/OrderedCrossover";
 import { UniformCrossover } from "../domain/crossovers/UniformCrossover";
 import { FuncFitness } from "../domain/fitnesses/FuncFitness";
 import { GeneticAlgorithm } from "../domain/GeneticAlgorithm";
@@ -52,7 +53,7 @@ const fitnessFunction = (chromosome: IChromosome) => {
 
         }
     }
-    return 6 - clashes
+    return 10 - clashes
 }
 
 
@@ -64,15 +65,15 @@ var chromosome = new NQueenChromosome();
 
 // Running the GA
 var selection = new EliteSelection();
-var crossover = new UniformCrossover(0.5);
+var crossover = new OrderedCrossover();
 var mutation = new ReverseSequenceMutation();
-var population = new Population(1000, 2000, chromosome);
+var population = new Population(50, 100, chromosome);
 
 
 var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
 console.log(ga.bestChromosome);
 
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 100; i++) {
     ga.evolveOneGeneration();
     console.log(ga.bestChromosome[ga.bestChromosome.length - 1].toString());
 }

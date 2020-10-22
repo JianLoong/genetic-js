@@ -6,11 +6,13 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/JianLoong/genetic-js)
 ![GitHub issues](https://img.shields.io/github/issues/JianLoong/genetic-js)
 
-Genetic JS is a port of GeneticSharp done in TypeScript.
+Genetic JS is a port of [GeneticSharp](https://github.com/giacomelli/GeneticSharp) done in TypeScript.
+
+Genetic JS attempts to be a fast, extensible, multi-platform and multi-threading JavaScript Genetic Algorithm library that simples the development of applications using Genetic Algorithm.
 
 Credits to the original implementation goes to the author of Genetic Sharp which serves as the entire basis of this project.
 
-Genetic JS attempts to be a fast, extensible, multi-platform and multi-threading JavaScript Genetic Algorithm library that simples the development of applications using Genetic Algorithm.
+Currently the project is `ongoing` and there will be plans to release a npm module with instructions on how to run it.
 
 # Motivation
 
