@@ -2,7 +2,7 @@ build: prepare
 	npx tsc --outDir out ./main.ts
 demo: prepare
 	rm -rf ./out
-	npx tsc --outDir out ./src/samples/index.ts
+	npx tsc --downlevelIteration --outDir out ./src/samples/index.ts
 	node ./out/samples/index.js
 prepare:
 	mkdir -p ./out

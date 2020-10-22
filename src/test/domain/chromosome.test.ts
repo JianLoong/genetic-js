@@ -1,6 +1,10 @@
 import { BinaryChromosomeBase } from "../../domain/chromosome/BinaryChromosomeBase";
 import { IntegerChromosome } from "../../domain/chromosome/IntegerChromosome";
 import { BinaryChromosomeStub } from "./BinaryChromosomeStub.test.";
+import { mockRandom } from 'jest-mock-random';
+import { mockRandomForEach } from 'jest-mock-random';
+import { resetMockRandom } from 'jest-mock-random';
+
 
 describe("IntegerChromosome Test", () => {
     test("Check the create binary string function", () => {
@@ -16,17 +20,22 @@ describe("IntegerChromosome Test", () => {
     })
 
     test("Check the toString() function", () => {
+        mockRandom(0.5);
         let a = new IntegerChromosome(0, 2);
         expect(a.toString()).toEqual("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1");
+        resetMockRandom();
     });
 
     test("Check the flipGene() function", () => {
+        mockRandom(0.9);
         let a = new IntegerChromosome(0, 2);
         a.flipGene(0);
         expect(a.toString()).toEqual("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0");
+        resetMockRandom();
     });
 
     test("Check the flipGene() function", () => {
+        mockRandom(0.9);
         let a = new IntegerChromosome(0, 2);
 
         a.flipGene(1);

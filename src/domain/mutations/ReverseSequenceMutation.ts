@@ -9,7 +9,6 @@ class ReverseSequenceMutation extends SequenceMutationBase {
         if (random <= probability) {
             let mutatedSequence = chromosome.getGenes().reverse();
             chromosome.replaceGenes(0, mutatedSequence);
-            console.log("Mutated");
         }
 
     }

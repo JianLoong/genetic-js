@@ -4,7 +4,7 @@ import { IChromosome } from "./IChromosome";
 abstract class ChromosomeBase implements IChromosome {
     public length: number;
     public fitness?: number;
-    private genes: Gene[];
+    public genes: Gene[];
 
     protected constructor(length: number) {
         this.validateLength(length);

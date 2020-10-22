@@ -27,7 +27,7 @@ class Generation {
 
         this.chromosomes = this.chromosomes
             .filter(chromosome => this.validateChromosome(chromosome) == true)
-            .sort((a, b) => a.fitness - b.fitness);
+            .sort((a, b) => b.fitness - a.fitness);
 
         this.chromosomes = this.chromosomes.slice(0, chromosomesNumber);
 

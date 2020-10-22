@@ -55,9 +55,8 @@ class IntegerChromosome extends BinaryChromosomeBase {
         }
 
         let fitness = "Fitness:  " + this.fitness;
-        //str += "Fitness : " + this.fitness == undefined ? "No value" : this.fitness;
-        return str + fitness;
-        //return super.toString();
+        //return str + fitness;
+        return super.toString();
     }
 
     flipGene = (index: number) => {
