@@ -1,6 +1,7 @@
 import { BinaryChromosomeBase } from "./BinaryChromosomeBase";
 import { IChromosome } from "./IChromosome";
 import { Gene } from "./Gene";
+import { RandomizationProvider } from "../randomizations/RandomizationProvider";
 
 class IntegerChromosome extends BinaryChromosomeBase {
 
@@ -12,29 +13,31 @@ class IntegerChromosome extends BinaryChromosomeBase {
         return new IntegerChromosome(this.m_minValue, this.m_maxValue);
     }
 
-    getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-    }
-
     constructor(minValue: number, maxValue: number) {
         super(32);
         this.m_minValue = minValue;
         this.m_maxValue = maxValue;
-
-        let randomValue = this.getRandomInt(minValue, maxValue);
+        let randomValue = new RandomizationProvider().current.getInt(minValue, maxValue);
 
         this.m_originalValue = this.createBinaryString(randomValue).split("").map(Number);
         this.createGenes();
     }
 
+    // Will be replaced
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart
     createBinaryString(nMask: number): string {
-        // nMask must be between -2147483648 and 2147483647
-        for (var nFlag = 0, nShifted = nMask, sMask = ""; nFlag < 32;
-            nFlag++, sMask += String(nShifted >>> 31), nShifted <<= 1);
-        return sMask;
+        let binary = nMask.toString(2);
+
+        return binary.padStart(32, "0");
+
     }
+
+    // createBinaryString(nMask: number): string {
+    //     // nMask must be between -2147483648 and 2147483647
+    //     for (var nFlag = 0, nShifted = nMask, sMask = ""; nFlag < 32;
+    //         nFlag++, sMask += String(nShifted >>> 31), nShifted <<= 1);
+    //     return sMask;
+    // }
 
     generateGene(geneIndex: number): Gene {
         let value = this.m_originalValue[geneIndex];
@@ -51,8 +54,10 @@ class IntegerChromosome extends BinaryChromosomeBase {
             str += this.getGene(i).m_value + " ";
         }
 
-        return super.toString();
-        //return str;
+        let fitness = "Fitness:  " + this.fitness;
+        //str += "Fitness : " + this.fitness == undefined ? "No value" : this.fitness;
+        return str + fitness;
+        //return super.toString();
     }
 
     flipGene = (index: number) => {

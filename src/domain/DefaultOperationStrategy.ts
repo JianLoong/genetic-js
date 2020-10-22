@@ -19,7 +19,9 @@ class DefaultOperationStrategy implements IOperationStrategy {
         return offspring;
     }
     mutate(mutation: IMutation, mutationProbability: number, chromosomes: IChromosome[]): void {
-        throw new Error("Method not implemented.");
+        for (let index = 0; index < chromosomes.length; index++) {
+            mutation.mutate(chromosomes[index], mutationProbability);
+        }
     }
 
 }

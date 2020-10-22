@@ -23,7 +23,11 @@ abstract class ChromosomeBase implements IChromosome {
     abstract generateGene(geneIndex: number): Gene;
 
     replaceGenes(startIndex: number, genes: Gene[]): void {
-        throw new Error("Method not implemented.");
+        var genesToBeReplacedLength = genes.length;
+
+        var availableSpaceLength = this.length - startIndex;
+
+        this.genes = genes;
     }
     resize(newLength: number): void {
         this.validateLength(newLength);

@@ -1,5 +1,7 @@
 import { IChromosome } from "./IChromosome";
 
+
+
 class ChromosomeExtension {
     anyHasRepeatedGene(chromosomes: IChromosome[]): boolean {
         for (let i = 0; i < chromosomes.length; i++) {

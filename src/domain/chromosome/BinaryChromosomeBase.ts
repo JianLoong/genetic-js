@@ -1,6 +1,7 @@
 import { Gene } from "./Gene";
 import { ChromosomeBase } from "./ChromosomeBase";
 import { IBinaryChromosome } from "./IBinaryChromosome";
+import { RandomizationProvider } from "../randomizations/RandomizationProvider";
 
 abstract class BinaryChromosomeBase
     extends ChromosomeBase
@@ -18,7 +19,8 @@ abstract class BinaryChromosomeBase
     }
 
     generateGene(geneIndex: number): Gene {
-        let value = Math.floor(Math.random() * Math.floor(2));
+        let random = new RandomizationProvider();
+        let value = random.current.getInt(0, 2);
         return new Gene(value);
     }
 

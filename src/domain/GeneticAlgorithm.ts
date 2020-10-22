@@ -18,6 +18,7 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
     fitness: IFitness;
     operatorStrategy: IOperationStrategy;
     crossOver: ICrossover;
+    mutation: IMutation;
 
     defaultCrossOverProbability: number = 0.75;
     defaultMutationProbability: number = 0.1;
@@ -33,6 +34,7 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
         this.population = population;
         this.fitness = fitness;
         this.crossOver = crossOver;
+        this.mutation = mutation;
 
         this.operatorStrategy = new DefaultOperationStrategy();
 
@@ -55,8 +57,7 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
     public evolveOneGeneration(): boolean {
         let parents = this.selectParents();
         let offspring = this.cross(parents);
-        //this.mutate(offspring);
-
+        this.mutate(offspring);
         this.population.createNewGeneration(offspring);
 
         return this.endCurrentGeneration();
@@ -77,8 +78,8 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
         return "Genetic Algorithm";
     }
 
-    private mutate(chromosome: IChromosome[]) {
-        return chromosome;
+    private mutate(chromosomes: IChromosome[]): void {
+        this.operatorStrategy.mutate(this.mutation, this.defaultMutationProbability, chromosomes);
     }
 
     private endCurrentGeneration(): boolean {
