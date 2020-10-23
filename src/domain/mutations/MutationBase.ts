@@ -2,14 +2,13 @@ import { IChromosome } from "../chromosome/IChromosome";
 import { IMutation } from "./IMutation";
 
 abstract class MutationBase implements IMutation {
-    mutate(chromosome: IChromosome, probability: number): void {
-        this.performMutate(chromosome, probability);
-    }
+  mutate(chromosome: IChromosome, probability: number): void {
+    this.performMutate(chromosome, probability);
+  }
 
-    isOrdered: boolean;
+  isOrdered: boolean;
 
-    abstract performMutate(chromosome: IChromosome, probability: number): void;
-
+  abstract performMutate(chromosome: IChromosome, probability: number): void;
 }
 
 export { MutationBase };

@@ -1,5 +1,5 @@
 interface IChromosomeOperator {
-    isOrdered: boolean;
+  isOrdered: boolean;
 }
 
 export { IChromosomeOperator };

@@ -2,8 +2,8 @@ build: prepare
 	npx tsc --outDir out ./main.ts
 demo: prepare
 	rm -rf ./out
-	npx tsc --downlevelIteration --outDir out ./src/samples/nqueen.ts
-	node ./out/samples/nqueen.js
+	npx tsc --downlevelIteration --outDir out ./src/samples/index.ts
+	node ./out/samples/index.js
 prepare:
 	mkdir -p ./out
 

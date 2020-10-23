@@ -1,7 +1,7 @@
 import { IGeneticAlgorithm } from "../IGeneticAlgorithm";
 
 interface ITermination {
-    hasReached(geneticAlgorithm: IGeneticAlgorithm): boolean;
+  hasReached(geneticAlgorithm: IGeneticAlgorithm): boolean;
 }
 
-export { ITermination }
+export { ITermination };

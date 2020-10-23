@@ -1,51 +1,46 @@
 import { IChromosome } from "../chromosome/IChromosome";
 class Generation {
+  private num: number;
+  private creationDate: Date;
+  chromosomes: IChromosome[];
+  private bestChromosomes: IChromosome;
 
-    private num: number;
-    private creationDate: Date;
-    chromosomes: IChromosome[];
-    private bestChromosomes: IChromosome;
+  getChromosome(): IChromosome[] {
+    return this.chromosomes;
+  }
 
-    getChromosome(): IChromosome[] {
-        return this.chromosomes;
+  constructor(num: number, chromosomes: IChromosome[]) {
+    if (num < 1) {
+      throw new Error("Generation number " + num + "is invalid.");
     }
 
-    constructor(num: number, chromosomes: IChromosome[]) {
-        if (num < 1) {
-            throw new Error("Generation number " + num + "is invalid.");
-        }
-
-        if (chromosomes.length < 2) {
-            throw new Error("A generation should have at least 2 chromosome");
-        }
-        this.num = num;
-        this.creationDate = new Date();
-        this.chromosomes = chromosomes;
+    if (chromosomes.length < 2) {
+      throw new Error("A generation should have at least 2 chromosome");
     }
+    this.num = num;
+    this.creationDate = new Date();
+    this.chromosomes = chromosomes;
+  }
 
-    end(chromosomesNumber: number): void {
+  end(chromosomesNumber: number): void {
+    this.chromosomes = this.chromosomes
+      .filter((chromosome) => this.validateChromosome(chromosome) == true)
+      .sort((a, b) => b.fitness - a.fitness);
 
-        this.chromosomes = this.chromosomes
-            .filter(chromosome => this.validateChromosome(chromosome) == true)
-            .sort((a, b) => b.fitness - a.fitness);
+    this.chromosomes = this.chromosomes.slice(0, chromosomesNumber);
 
+    this.bestChromosomes = this.chromosomes[0];
+  }
 
-        this.chromosomes = this.chromosomes.slice(0, chromosomesNumber);
+  validateChromosome(chromosome: IChromosome): boolean {
+    if (chromosome.fitness == null) throw new Error("No fitness");
+    return true;
+  }
 
-        this.bestChromosomes = this.chromosomes[0];
-    }
-
-    validateChromosome(chromosome: IChromosome): boolean {
-        if (chromosome.fitness == null)
-            throw new Error("No fitness");
-        return true;
-    }
-
-    toString() {
-        //return "";
-        return this.bestChromosomes.getGenes().toString();
-    }
+  toString() {
+    //return "";
+    return this.bestChromosomes.getGenes().toString();
+  }
 }
 
-
-export { Generation }
+export { Generation };

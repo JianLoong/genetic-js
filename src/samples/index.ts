@@ -1,25 +1,20 @@
-import { Gene } from "../domain/chromosome/Gene";
 import { IChromosome } from "../domain/chromosome/IChromosome";
 import { IntegerChromosome } from "../domain/chromosome/IntegerChromosome";
-import { NQueenChromosome } from "../domain/chromosome/NQueenChromosome";
 import { OrderedCrossover } from "../domain/crossovers/OrderedCrossover";
-import { UniformCrossover } from "../domain/crossovers/UniformCrossover";
 import { FuncFitness } from "../domain/fitnesses/FuncFitness";
 import { GeneticAlgorithm } from "../domain/GeneticAlgorithm";
 import { PartialShuffleMutation } from "../domain/mutations/PartialShuffleMutation";
-import { ReverseSequenceMutation } from "../domain/mutations/ReverseSequenceMutation";
 import { Population } from "../domain/populations/Population";
 import { EliteSelection } from "../domain/selections/EliteSelection";
 
-
 const fitnessFunction = function (chromosome: IChromosome): number {
-    let genes = chromosome.getGenes();
-    let fitness = 0;
-    for (let i = 0; i < genes.length; i++) {
-        fitness += parseInt(genes[i].m_value.toString());
-    }
-    return fitness;
-}
+  let genes = chromosome.getGenes();
+  let fitness = 0;
+  for (let i = 0; i < genes.length; i++) {
+    fitness += parseInt(genes[i].m_value.toString());
+  }
+  return fitness;
+};
 
 var fitness = new FuncFitness(fitnessFunction);
 
@@ -32,12 +27,16 @@ var crossover = new OrderedCrossover();
 var mutation = new PartialShuffleMutation();
 var population = new Population(200, 1000, chromosome);
 
-
-var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
+var ga = new GeneticAlgorithm(
+  population,
+  fitness,
+  selection,
+  crossover,
+  mutation
+);
 console.log(ga.bestChromosome);
 
 for (let i = 0; i < 1000; i++) {
-    ga.evolveOneGeneration();
-    console.log(ga.bestChromosome.toString());
+  ga.evolveOneGeneration();
+  console.log(ga.bestChromosome.toString());
 }
-

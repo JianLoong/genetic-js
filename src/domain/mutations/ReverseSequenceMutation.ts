@@ -4,11 +4,9 @@ import { RandomizationProvider } from "../randomizations/RandomizationProvider";
 import { SequenceMutationBase } from "./SequenceMutationBase";
 
 class ReverseSequenceMutation extends SequenceMutationBase {
-
-    mutateOnSequence(sequence: Gene[]): Gene[] {
-        return sequence.reverse();
-    }
-
+  mutateOnSequence(sequence: Gene[]): Gene[] {
+    return sequence.reverse();
+  }
 }
 
-export { ReverseSequenceMutation }
+export { ReverseSequenceMutation };

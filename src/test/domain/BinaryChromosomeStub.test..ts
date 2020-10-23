@@ -2,14 +2,13 @@ import { BinaryChromosomeBase } from "../../domain/chromosome/BinaryChromosomeBa
 import { IChromosome } from "../../domain/chromosome/IChromosome";
 
 class BinaryChromosomeStub extends BinaryChromosomeBase {
-    createNew(): IChromosome {
-        return new BinaryChromosomeStub(length);
-    }
+  createNew(): IChromosome {
+    return new BinaryChromosomeStub(length);
+  }
 
-    constructor(length: number) {
-        super(length);
-    }
-
+  constructor(length: number) {
+    super(length);
+  }
 }
 
 export { BinaryChromosomeStub };
