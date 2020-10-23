@@ -15,7 +15,22 @@ import { GenerationNumberTermination } from "../domain/terminations/GenerationNu
 
 
 
-const noOfQueen = 10;
+const displayBoard = (chromosome: IChromosome): string => {
+    let str = "";
+    let genes = chromosome.getGenes();
+    for (let i = 0; i < chromosome.length; i++) {
+        for (let j = 0; j < chromosome.length; j++) {
+            if (genes[j].m_value == i)
+                str += " X ";
+            else
+                str += " - ";
+        }
+        str += "\n\r";
+    }
+    return str;
+}
+
+const noOfQueen = 11;
 const good = (no) => {
     let sum = 0;
     for (let i = no - 1; i > 0; i--)
@@ -104,3 +119,6 @@ for (let i = 0; i < 500; i++) {
 
 console.log(stringOut);
 
+
+
+console.log(displayBoard(ga.bestChromosome));

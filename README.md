@@ -8,9 +8,9 @@
 
 Genetic JS is a port of [GeneticSharp](https://github.com/giacomelli/GeneticSharp) done in TypeScript.
 
-Genetic JS attempts to be a fast, extensible, multi-platform and multi-threading JavaScript Genetic Algorithm library that simples the development of applications using Genetic Algorithm.
+Genetic JS **attempts** to be a _fast_, _extensible_, _multi-platform_ and _multi-threading_ JavaScript Genetic Algorithm library that simples the development of applications using Genetic Algorithm.
 
-Credits to the original implementation goes to the author of Genetic Sharp which serves as the entire basis of this project.
+**Credits to the original implementation goes to the author of Genetic Sharp** which serves as the entire basis of this project.
 
 Currently the project is `ongoing` and there will be plans to release a npm module with instructions on how to run it.
 
@@ -28,10 +28,61 @@ The current landscape of Genetic Algorithm libraries are vast, however this libr
 - `Singleton` pattern is determined to be not needed. Refer [here](https://medium.com/@dmnsgn/singleton-pattern-in-es6-d2d021d150ae)
 - Testing randomness with `Jest` can be found [here](https://softwareengineering.stackexchange.com/questions/147134/how-should-i-test-randomness)
 
-# How to use.
+# Usage
 
-# Quick run
+## You will first need to create your own chromosome to represent the problem.
 
-Currently it is ran via command line via the `Make` file provided which is just running npx.
+```typescript
+class MyProblemChromosome extends ChromosomeBase {
+  constructor() {
+    super(10);
+    this.createGenes();
+  }
+  public generateGene(geneIndex: number): Gene {
+    // Fill in how to generate the gene
+  }
+  createNew(): IChromosome {
+    return new MyProblemChromosome();
+  }
+}
+```
 
-You can also do a `yarn test` to run the test cases.
+## You will need to create your own fitness evaluation.
+
+This is an example of a simple evaluation function that just sums up all the m_value in the chromosomes.
+
+```typescript
+const fitnessFunction = (chromosome: IChromosome): number => {
+  let genes = chromosome.getGenes();
+  let fitness = 0;
+  for (let i = 0; i < genes.length; i++) {
+    fitness += parseInt(genes[i].m_value.toString());
+  }
+  return fitness;
+};
+```
+
+### Running your GA
+
+```typescript
+var selection = new EliteSelection();
+var crossover = new OrderedCrossover();
+var mutation = new ReverseSequenceMutation();
+var fitness = new MyProblemFitness();
+var chromosome = new MyProblemChromosome();
+var population = new Population(50, 70, chromosome);
+
+var ga = new GeneticAlgorithm(
+  population,
+  fitness,
+  selection,
+  crossover,
+  mutation
+);
+```
+
+# Samples
+
+Provided samples are as follows
+
+- NQueenProblem.

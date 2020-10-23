@@ -12,7 +12,7 @@ import { Population } from "../domain/populations/Population";
 import { EliteSelection } from "../domain/selections/EliteSelection";
 
 
-const fitnessFunction = function (chromosome: IChromosome) {
+const fitnessFunction = function (chromosome: IChromosome): number {
     let genes = chromosome.getGenes();
     let fitness = 0;
     for (let i = 0; i < genes.length; i++) {
