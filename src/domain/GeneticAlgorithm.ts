@@ -8,20 +8,31 @@ import { IMutation } from "./mutations/IMutation";
 import { IPopulation } from "./populations/IPopulation";
 import { DefaultOperationStrategy } from "./DefaultOperationStrategy";
 import { ISelection } from "./selections/ISelection";
+import { ITermination } from "./terminations/ITermination";
+import { GenerationNumberTermination } from "./terminations/GenerationNumberTermination";
+
+enum GeneticAlgorithmState {
+    NotStarted,
+    Started,
+    Stopped,
+    Resumed,
+    TerminationReached
+}
 
 class GeneticAlgorithm implements IGeneticAlgorithm {
 
     generationsNumber: number;
-    bestChromosome: IChromosome[];
+    bestChromosome: IChromosome;
     selection: ISelection;
     population: IPopulation;
     fitness: IFitness;
     operatorStrategy: IOperationStrategy;
     crossOver: ICrossover;
     mutation: IMutation;
+    termination: ITermination;
 
     defaultCrossOverProbability: number = 0.75;
-    defaultMutationProbability: number = 0.1;
+    defaultMutationProbability: number = 0.3;
 
     constructor(
         population: IPopulation,
@@ -35,11 +46,8 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
         this.fitness = fitness;
         this.crossOver = crossOver;
         this.mutation = mutation;
-
+        this.termination = new GenerationNumberTermination(100);
         this.operatorStrategy = new DefaultOperationStrategy();
-
-        this.bestChromosome = [];
-
     }
 
     private selectParents(): IChromosome[] {
@@ -50,21 +58,17 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
         return this.operatorStrategy.cross(this.population, this.crossOver, this.defaultCrossOverProbability, parents);
     }
 
-    public termination(): void {
-
-    }
-
     public evolveOneGeneration(): boolean {
+        this.evaluateFitness();
         let parents = this.selectParents();
         let offspring = this.cross(parents);
-
         this.mutate(offspring);
         this.population.createNewGeneration(offspring);
-
         return this.endCurrentGeneration();
     }
 
     public evaluateFitness(): void {
+        // The evaluate fitness needs to be done using async
         let array = this.population.currentGeneration.chromosomes;
         for (let index = 0; index < array.length; index++) {
             const element = array[index];
@@ -72,7 +76,9 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
             element.fitness = fitness;
         }
 
-        this.bestChromosome.push(this.population.currentGeneration.chromosomes[0]);
+        // this.population.currentGeneration.chromosomes =
+        //     this.population.currentGeneration.chromosomes
+        //         .sort((c1, c2) => c2.fitness - c1.fitness);
     }
 
     toString(): string {
@@ -86,9 +92,13 @@ class GeneticAlgorithm implements IGeneticAlgorithm {
     private endCurrentGeneration(): boolean {
         this.evaluateFitness();
         this.population.endCurrentGeneration();
+        this.bestChromosome = this.population.bestChromosome;
         return true;
     }
 
+    public start(): void {
+
+    }
 }
 
 export { GeneticAlgorithm }

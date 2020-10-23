@@ -17,7 +17,7 @@ class IntegerChromosome extends BinaryChromosomeBase {
         super(32);
         this.m_minValue = minValue;
         this.m_maxValue = maxValue;
-        let randomValue = new RandomizationProvider().current.getInt(minValue, maxValue);
+        let randomValue = RandomizationProvider.current.getInt(minValue, maxValue);
 
         this.m_originalValue = this.createBinaryString(randomValue).split("").map(Number);
         this.createGenes();

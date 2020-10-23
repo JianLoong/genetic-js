@@ -17,7 +17,7 @@ class OrderedCrossover extends CrossoverBase {
         }
 
 
-        let middleSectionIndexes = new RandomizationProvider().current.getUniqueInts(2, 0, parentOne.length);
+        let middleSectionIndexes = RandomizationProvider.current.getUniqueInts(2, 0, parentOne.length);
         middleSectionIndexes = middleSectionIndexes.sort((a, b) => a - b);
         let middleSectionBeginIndex = middleSectionIndexes[0];
         let middleSectionEndIndex = middleSectionIndexes[1];
@@ -60,8 +60,9 @@ class OrderedCrossover extends CrossoverBase {
             genes[i] = cloneSecondParentGenes.pop();
         }
 
-
-        firstChild.replaceGenes(0, genes);
+        for (let i = 0; i < genes.length; i++) {
+            firstChild.replaceGene(i, genes[i]);
+        }
 
         return firstChild;
     }

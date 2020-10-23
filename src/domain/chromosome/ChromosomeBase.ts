@@ -12,6 +12,9 @@ abstract class ChromosomeBase implements IChromosome {
         this.genes = [];
     }
 
+
+    abstract createNew(): IChromosome;
+
     replaceGene(index: number, gene: Gene): void {
         if (index < 0 || index > this.length) {
             throw Error("ChromosomeBase - Index cannot be less than 0 and more than the length. " + index);
@@ -28,7 +31,10 @@ abstract class ChromosomeBase implements IChromosome {
 
         var availableSpaceLength = this.length - startIndex;
 
-        this.genes = genes;
+        for (let i = startIndex; i < genes.length; i++) {
+            this.replaceGene(i, genes.pop());
+        }
+
     }
     resize(newLength: number): void {
         this.validateLength(newLength);
@@ -36,13 +42,15 @@ abstract class ChromosomeBase implements IChromosome {
     getGene(index: number): Gene {
         return this.genes[index];
     }
+
     getGenes(): Gene[] {
         return this.genes;
     }
-    abstract createNew(): IChromosome;
+
     clone(): IChromosome {
         throw new Error("Method not implemented.");
     }
+
     private validateLength(length: number) {
         if (length < 2) {
             throw Error("Error - The minimum length for a chromosome is 2 genes");

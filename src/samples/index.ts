@@ -6,75 +6,38 @@ import { OrderedCrossover } from "../domain/crossovers/OrderedCrossover";
 import { UniformCrossover } from "../domain/crossovers/UniformCrossover";
 import { FuncFitness } from "../domain/fitnesses/FuncFitness";
 import { GeneticAlgorithm } from "../domain/GeneticAlgorithm";
+import { PartialShuffleMutation } from "../domain/mutations/PartialShuffleMutation";
 import { ReverseSequenceMutation } from "../domain/mutations/ReverseSequenceMutation";
 import { Population } from "../domain/populations/Population";
 import { EliteSelection } from "../domain/selections/EliteSelection";
 
 
-// const fitnessFunction = function (chromosome: IChromosome) {
-//     let genes = chromosome.getGenes();
-//     let fitness = 0;
-//     for (let i = 0; i < genes.length; i++) {
-//         fitness += parseInt(genes[i].m_value.toString());
-//     }
-//     return fitness;
-// }
-const fitnessFunction = (chromosome: IChromosome) => {
+const fitnessFunction = function (chromosome: IChromosome) {
     let genes = chromosome.getGenes();
-    let dx = 0;
-    let dy = 0;
-    let clashes = 0;
-    let rowClashes = 0;
-    let geneArray = [];
-
-    // Create a gene array
+    let fitness = 0;
     for (let i = 0; i < genes.length; i++) {
-        let value = Number(genes[i].m_value);
-        geneArray.push(value);
+        fitness += parseInt(genes[i].m_value.toString());
     }
-
-    var uniqueItems = [...new Set(geneArray)];
-
-    rowClashes = Math.abs(chromosome.length - uniqueItems.length);
-    clashes += rowClashes;
-
-    for (let i = 0; i < genes.length; i++) {
-        for (let j = i; j < genes.length; j++) {
-            let a = Number(genes[i].m_value);
-            let b = Number(genes[j].m_value);
-            if (i != j) {
-                dx = Math.abs(i - j);
-                dy = Math.abs(a - b)
-                if (dx == dy) {
-                    clashes += 1;
-                }
-            }
-
-
-        }
-    }
-    return 10 - clashes
+    return fitness;
 }
-
 
 var fitness = new FuncFitness(fitnessFunction);
 
 // Create your own chromosome
-//var chromosome = new IntegerChromosome(0, 500);
-var chromosome = new NQueenChromosome();
+var chromosome = new IntegerChromosome(0, Number.MAX_SAFE_INTEGER);
 
 // Running the GA
 var selection = new EliteSelection();
 var crossover = new OrderedCrossover();
-var mutation = new ReverseSequenceMutation();
-var population = new Population(200, 500, chromosome);
+var mutation = new PartialShuffleMutation();
+var population = new Population(200, 1000, chromosome);
 
 
 var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
 console.log(ga.bestChromosome);
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 1000; i++) {
     ga.evolveOneGeneration();
-    console.log(ga.bestChromosome[ga.bestChromosome.length - 1].toString());
+    console.log(ga.bestChromosome.toString());
 }
 

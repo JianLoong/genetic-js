@@ -6,11 +6,16 @@ import { ChromosomeBase } from "./ChromosomeBase";
 
 class NQueenChromosome extends ChromosomeBase {
 
-    private r = new RandomizationProvider().current.getUniqueInts(4, 0, 4);
+    private r;// = new RandomizationProvider().current.getUniqueInts(4, 0, 4);
 
 
-    constructor() {
-        super(4);
+    private noOfQueen: number;
+
+    constructor(noOfQueen) {
+        super(noOfQueen);
+        this.noOfQueen = noOfQueen;
+        this.r = RandomizationProvider.current.getUniqueInts(noOfQueen, 0, noOfQueen);
+
         this.createGenes();
     }
 
@@ -23,7 +28,7 @@ class NQueenChromosome extends ChromosomeBase {
         for (let i = 0; i < this.r.length; i++) {
             super.replaceGene(i, new Gene(this.r[i]));
         }
-        return new NQueenChromosome();
+        return new NQueenChromosome(this.noOfQueen);
     }
 
     toString() {

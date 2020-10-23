@@ -6,7 +6,7 @@ class EliteSelection extends SelectionBase {
         if (generation == undefined)
             throw new Error("Selection - No generation for Elite Selection");
 
-        let ordered = generation.getChromosome().sort((a, b) => a.fitness - b.fitness);
+        let ordered = generation.getChromosome().sort((a, b) => b.fitness - a.fitness);
         return ordered.slice(0, num);
     }
 

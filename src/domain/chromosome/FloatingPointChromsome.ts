@@ -6,7 +6,6 @@ class FloatingPointChromosome extends BinaryChromosomeBase {
         throw new Error("Method not implemented.");
     }
 
-
     m_minValue: number[];
     m_maxValue: number[];
     m_totalBits: number[];
@@ -29,9 +28,7 @@ class FloatingPointChromosome extends BinaryChromosomeBase {
 
         }
         this.createGenes();
-
     }
-
 }
 
 export { FloatingPointChromosome }

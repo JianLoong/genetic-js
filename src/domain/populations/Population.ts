@@ -23,6 +23,7 @@ class Population implements IPopulation {
         this.maxSize = maxSize;
         this.generations = [];
         this.adamChromosome = adamChromosome;
+        this.bestChromosome = adamChromosome;
 
         this.createInitialGeneration();
 
@@ -55,6 +56,10 @@ class Population implements IPopulation {
     }
     endCurrentGeneration(): void {
         this.currentGeneration.end(this.maxSize);
+        if (this.bestChromosome.fitness < this.currentGeneration.chromosomes[0].fitness
+            || this.bestChromosome == undefined) {
+            this.bestChromosome = this.currentGeneration.chromosomes[0];
+        }
     }
 
     toString = () => {
