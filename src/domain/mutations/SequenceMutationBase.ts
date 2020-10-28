@@ -1,37 +1,35 @@
-import { Gene } from "../chromosome/Gene";
-import { IChromosome } from "../chromosome/IChromosome";
-import { RandomizationProvider } from "../randomizations/RandomizationProvider";
-import { MutationBase } from "./MutationBase";
+import Gene from "../chromosome/Gene";
+import IChromosome from "../chromosome/IChromosome";
+import RandomizationProvider from "../randomization/RandomizationProvider";
+import MutationBase from "./MutationBase";
 
-abstract class SequenceMutationBase extends MutationBase {
-  protected validateLength(chromosome: IChromosome) {
-    if (chromosome.length < 3) {
-      throw new Error(
-        "SequenceMutationBase - A chromosome shuld have at least 3 genes"
-      );
-    }
-  }
+export default abstract class SequenceMutationBase extends MutationBase {
+
+  abstract mutateOnSequence(sequence: Gene[]): Gene[];
 
   performMutate(chromosome: IChromosome, probability: number) {
     this.validateLength(chromosome);
 
-    let r = RandomizationProvider.current;
+    const r = RandomizationProvider.current;
 
     if (r.getDouble() <= probability) {
-      let indexes = r
+      const indexes = r
         .getUniqueInts(2, 0, chromosome.length)
         .sort((a, b) => a - b);
-      let firstIndex = indexes[0];
-      let secondIndex = indexes[1];
-      let sequenceLength = secondIndex - firstIndex + 1;
-      let sequence = chromosome.getGenes().slice(firstIndex, secondIndex);
-      let mutatedSequence = this.mutateOnSequence(sequence);
+      const firstIndex = indexes[0];
+      const secondIndex = indexes[1];
+      const sequenceLength = secondIndex - firstIndex + 1;
+      const sequence = chromosome.getGenes().slice(firstIndex, secondIndex);
+      const mutatedSequence = this.mutateOnSequence(sequence);
 
       chromosome.replaceGenes(firstIndex, mutatedSequence);
     }
   }
-
-  abstract mutateOnSequence(sequence: Gene[]): Gene[];
+  protected validateLength(chromosome: IChromosome) {
+    if (chromosome.length < 3) {
+      throw new Error(
+        "SequenceMutationBase - A chromosome should have at least 3 genes"
+      );
+    }
+  }
 }
-
-export { SequenceMutationBase };

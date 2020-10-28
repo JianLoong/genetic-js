@@ -1,5 +1,5 @@
-import { IPopulation } from "./IPopulation";
+import IPopulation from "./IPopulation";
 
-interface IGenerationStrategy {
+export default interface IGenerationStrategy {
   registerNewGeneration(population: IPopulation): void;
 }

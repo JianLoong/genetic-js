@@ -1,16 +1,14 @@
-import { IChromosome } from "../chromosome/IChromosome";
-import { IFitness } from "./IFitness";
+import IChromosome from "../chromosome/IChromosome";
+import IFitness from "./IFitness";
 
-class FuncFitness implements IFitness {
-  m_func: Function;
+export default class FuncFitness implements IFitness {
+  mFunc: (chromosome: IChromosome) => number;
 
-  constructor(f: Function) {
-    this.m_func = f;
+  constructor(f: (chromosome: IChromosome) => number) {
+    this.mFunc = f;
   }
 
   evaluate(chromosome: IChromosome): number {
-    return this.m_func(chromosome);
+    return this.mFunc(chromosome);
   }
 }
-
-export { FuncFitness };

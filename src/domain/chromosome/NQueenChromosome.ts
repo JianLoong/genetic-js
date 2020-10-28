@@ -1,12 +1,9 @@
-import { BinaryChromosomeBase } from "./BinaryChromosomeBase";
-import { IChromosome } from "./IChromosome";
-import { Gene } from "./Gene";
-import { RandomizationProvider } from "../randomizations/RandomizationProvider";
-import { ChromosomeBase } from "./ChromosomeBase";
+import RandomizationProvider from "../randomization/RandomizationProvider";
+import ChromosomeBase from "./ChromosomeBase";
+import Gene from "./Gene";
+import IChromosome from "./IChromosome";
 
-class NQueenChromosome extends ChromosomeBase {
-  private r: number[]; // = new RandomizationProvider().current.getUniqueInts(4, 0, 4);
-  private noOfQueen: number;
+export default class NQueenChromosome extends ChromosomeBase {
 
   constructor(noOfQueen) {
     super(noOfQueen);
@@ -18,25 +15,33 @@ class NQueenChromosome extends ChromosomeBase {
     );
     this.createGenes();
   }
+  private noOfQueen: number;
+  private r: number[]; // = new RandomizationProvider().current.getUniqueInts(4, 0, 4);
+
+  // clone() {
+  //   const c = new NQueenChromosome(this.noOfQueen);
+  //   c.replaceGenes(0, this.genes);
+  //   c.r = this.r;
+  //   return c;
+  // }
+  createNew(): IChromosome {
+    // for (let i = 0; i < this.r.length; i++) {
+    //  super.replaceGene(i, new Gene(this.r[i]));
+    // }
+    return new NQueenChromosome(this.noOfQueen);
+  }
 
   generateGene(geneIndex: number): Gene {
     return new Gene(this.r[geneIndex]);
-  }
-  createNew(): IChromosome {
-    for (let i = 0; i < this.r.length; i++) {
-      super.replaceGene(i, new Gene(this.r[i]));
-    }
-    return new NQueenChromosome(this.noOfQueen);
   }
 
   toString() {
     let str = "";
     for (let i = 0; i < this.getGenes().length; i++) {
-      str += this.getGene(i).m_value + " ";
+      str += this.getGene(i).mValue + " ";
     }
-    let fitness = " Fitness:  " + this.fitness;
+    const fitness = " Fitness:  " + this.fitness;
     str += fitness;
     return str;
   }
 }
-export { NQueenChromosome };

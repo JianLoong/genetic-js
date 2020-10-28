@@ -1,11 +1,15 @@
 build: prepare
-	npx tsc --outDir out ./main.ts
+	npx tsc --outDir dist ./main.ts
 demo: prepare
-	rm -rf ./out
-	npx tsc --downlevelIteration --outDir out ./src/samples/index.ts
-	node ./out/samples/index.js
+	rm -rf ./dist
+	# npx tsc
+	yarn build
+	cp -r ./dist/* ./site/
+	# node ./dist/bundle.js
+	http-server ./site/
+	# node ./dist/bundle.js
 prepare:
-	mkdir -p ./out
+	mkdir -p ./dist
 
-test: npm install --save-dev mocha
+test: yarn test
 	

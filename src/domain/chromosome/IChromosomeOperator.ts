@@ -1,5 +1,3 @@
-interface IChromosomeOperator {
+export default interface IChromosomeOperator {
   isOrdered: boolean;
 }
-
-export { IChromosomeOperator };

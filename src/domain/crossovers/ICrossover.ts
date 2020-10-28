@@ -1,11 +1,9 @@
-import { IChromosome } from "../chromosome/IChromosome";
-import { IChromosomeOperator } from "../chromosome/IChromosomeOperator";
+import IChromosome from "../chromosome/IChromosome";
+import IChromosomeOperator from "../chromosome/IChromosomeOperator";
 
-interface ICrossover extends IChromosomeOperator {
-  parentNumber: number;
+export default interface ICrossover extends IChromosomeOperator {
   childrenNumber: number;
   minChromosomeLength: number;
+  parentNumber: number;
   cross(parents: IChromosome[]): IChromosome[];
 }
-
-export { ICrossover };

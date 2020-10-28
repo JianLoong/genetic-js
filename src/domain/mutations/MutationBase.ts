@@ -1,14 +1,12 @@
-import { IChromosome } from "../chromosome/IChromosome";
-import { IMutation } from "./IMutation";
+import IChromosome from "../chromosome/IChromosome";
+import IMutation from "./IMutation";
 
-abstract class MutationBase implements IMutation {
+export default abstract class MutationBase implements IMutation {
+
+  isOrdered: boolean;
   mutate(chromosome: IChromosome, probability: number): void {
     this.performMutate(chromosome, probability);
   }
 
-  isOrdered: boolean;
-
   abstract performMutate(chromosome: IChromosome, probability: number): void;
 }
-
-export { MutationBase };

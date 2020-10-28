@@ -11,7 +11,7 @@ const fitnessFunction = (chromosome: IChromosome) => {
 
   // Create a gene array
   for (let i = 0; i < genes.length; i++) {
-    let value = Number(genes[i].m_value);
+    let value = Number(genes[i].mValue);
     geneArray.push(value);
   }
 
@@ -22,8 +22,8 @@ const fitnessFunction = (chromosome: IChromosome) => {
 
   for (let i = 0; i < genes.length; i++) {
     for (let j = i; j < genes.length; j++) {
-      let a = Number(genes[i].m_value);
-      let b = Number(genes[j].m_value);
+      let a = Number(genes[i].mValue);
+      let b = Number(genes[j].mValue);
       if (i != j) {
         dx = Math.abs(i - j);
         dy = Math.abs(a - b);

@@ -18,6 +18,25 @@ Currently the project is `ongoing` and there will be plans to release a npm modu
 
 The current landscape of Genetic Algorithm libraries are vast, however this library aims to provide a simple way in which various selection and crossover criteria can be introduced. This library also aims to provide implementations of the vastly different _crossover_, _mutation_ and other criteria that exist.
 
+## Roadmap
+
+- [ ] Documentation of usage with example code
+- [ ] Full port of
+- [ ] Full port of GeneticJS
+- [ ] Node.js support
+- [ ] Browser support
+- [ ] Require.js support
+- [ ] Universal Module Definition
+- [ ] Multi-threading
+
+# Multi-threading
+
+Multi-threading on the browser is achieved by using Web Workers.
+
+# Asynchronous
+
+In order to achieve better performance, certain ask are performed asynchronously. (Not to be confused with multi-threading). This is achieved via Promise API.
+
 # Design Decisions and Considerations
 
 - Usage of `namespaces` are abandoned in favour of modules. Refer
@@ -29,6 +48,10 @@ The current landscape of Genetic Algorithm libraries are vast, however this libr
 - Testing randomness with `Jest` can be found [here](https://softwareengineering.stackexchange.com/questions/147134/how-should-i-test-randomness)
 
 # Usage
+
+## Importing the library
+
+- The library will be bundled into a single JavaScript file and can be used.
 
 ## You will first need to create your own chromosome to represent the problem.
 
@@ -49,14 +72,14 @@ class MyProblemChromosome extends ChromosomeBase {
 
 ## You will need to create your own fitness evaluation.
 
-This is an example of a simple evaluation function that just sums up all the m_value in the chromosomes.
+This is an example of a simple evaluation function that just sums up all the mValue in the chromosomes. You can use arrow functions if you want to. Most importantly is that the fitness function **must be a function that returns a number**.
 
 ```typescript
 const fitnessFunction = (chromosome: IChromosome): number => {
   let genes = chromosome.getGenes();
   let fitness = 0;
   for (let i = 0; i < genes.length; i++) {
-    fitness += parseInt(genes[i].m_value.toString());
+    fitness += parseInt(genes[i].mValue.toString());
   }
   return fitness;
 };

@@ -1,21 +1,36 @@
-import { IChromosome } from "./IChromosome";
+import IChromosome from "./IChromosome";
 
-class ChromosomeExtension {
+export default class ChromosomeExtension {
   static anyHasRepeatedGene(chromosomes: IChromosome[]): boolean {
-    for (let i = 0; i < chromosomes.length; i++) {
-      let c = chromosomes[i];
+    for (const chromosome of chromosomes) {
+      const c = chromosome;
       // https://codeburst.io/javascript-array-distinct-5edc93501dc4
-      let notRepeatedGenesLength = [...new Set(c.getGenes())].length;
+      const genes = [];
+      c.getGenes().forEach((s) => genes.push(s.mValue));
+
+      const notRepeatedGenesLength = [...new Set(genes)].length;
       if (notRepeatedGenesLength < c.length) return true;
     }
-
     return false;
   }
 
   static validateGenes(
     chromosome?: IChromosome,
     chromosomes?: IChromosome[]
-  ): void {}
-}
+  ): boolean {
 
-export { ChromosomeExtension };
+    if (chromosome !== undefined) {
+      if (chromosome.getGenes() === undefined)
+        return false;
+    }
+
+    if (chromosomes !== undefined) {
+      for (const ch of chromosomes) {
+        if (ch.getGenes() === undefined)
+          return false;
+      }
+    }
+
+    return true;
+  }
+}

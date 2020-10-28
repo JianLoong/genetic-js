@@ -1,7 +1,14 @@
-class Gene {
-  m_value: Object;
-  constructor(value: Object) {
-    this.m_value = value;
+export default class Gene {
+  mValue: any;
+  constructor(value: any) {
+    this.mValue = value;
+  }
+
+  equals(other: Gene): boolean {
+    if (other == null) {
+      return false;
+    }
+    return other.mValue === this.mValue;
   }
   equalsOperator(first: Gene, second: Gene): boolean {
     return first.equals(second);
@@ -12,15 +19,6 @@ class Gene {
   }
 
   toString() {
-    return (this.m_value != null ? this.m_value : "").toString();
-  }
-
-  equals(other: Gene): boolean {
-    if (other == null) {
-      return false;
-    }
-    return other.m_value == this.m_value;
+    return (this.mValue != null ? this.mValue : "").toString();
   }
 }
-
-export { Gene };

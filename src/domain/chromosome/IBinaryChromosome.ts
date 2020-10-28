@@ -1,4 +1,4 @@
-import { IChromosome } from "./IChromosome";
+import IChromosome from "./IChromosome";
 
 interface IBinaryChromosome extends IChromosome {
   flipGene(index: number): void;

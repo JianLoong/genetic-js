@@ -1,7 +1,7 @@
-import { IGeneticAlgorithm } from "../IGeneticAlgorithm";
-import { ITermination } from "./ITermination";
+import IGeneticAlgorithm from "../IGeneticAlgorithm";
+import ITermination from "./ITermination";
 
-abstract class TerminationBase implements ITermination {
+export default abstract class TerminationBase implements ITermination {
   private m_hasReached: boolean;
 
   hasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {
@@ -10,5 +10,3 @@ abstract class TerminationBase implements ITermination {
 
   abstract performHasReached(geneticAlgorithm: IGeneticAlgorithm): boolean;
 }
-
-export { TerminationBase };

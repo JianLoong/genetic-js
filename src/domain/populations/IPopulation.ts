@@ -1,18 +1,16 @@
-import { IChromosome } from "../chromosome/IChromosome";
-import { Generation } from "./Generation";
+import IChromosome from "../chromosome/IChromosome";
+import Generation from "./Generation";
 
-interface IPopulation {
+export default interface IPopulation {
+  bestChromosome: IChromosome;
   creationDate: Date;
-  generations: Generation[];
   currentGeneration: Generation;
   generationNumber: number;
-  minSize: number;
+  generations: Generation[];
   maxSize: number;
-  bestChromosome: IChromosome;
+  minSize: number;
 
   createInitialGeneration(): void;
   createNewGeneration(chromosomes?: IChromosome[]): void;
   endCurrentGeneration(): void;
 }
-
-export { IPopulation };

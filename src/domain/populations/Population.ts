@@ -1,17 +1,16 @@
-import { Gene } from "../chromosome/Gene";
-import { IChromosome } from "../chromosome/IChromosome";
-import { Generation } from "./Generation";
-import { IPopulation } from "./IPopulation";
+import IChromosome from "../chromosome/IChromosome";
+import Generation from "./Generation";
+import IPopulation from "./IPopulation";
 
-class Population implements IPopulation {
+export default class Population implements IPopulation {
+  public adamChromosome: IChromosome;
+  bestChromosome: IChromosome;
   creationDate: Date;
-  generations: Generation[];
   currentGeneration: Generation;
   generationNumber: number;
-  minSize: number;
+  generations: Generation[];
   maxSize: number;
-  bestChromosome: IChromosome;
-  adamChromosome: IChromosome;
+  minSize: number;
 
   constructor(minSize: number, maxSize: number, adamChromosome: IChromosome) {
     if (minSize < 2) throw new Error();
@@ -27,21 +26,13 @@ class Population implements IPopulation {
     this.createInitialGeneration();
   }
 
-  createNewGeneration(chromosomes?: IChromosome[]): void {
-    this.currentGeneration = new Generation(
-      ++this.generationNumber,
-      chromosomes
-    );
-    this.generations.push(this.currentGeneration);
-  }
-
   createInitialGeneration(): void {
     this.generations = [];
     this.generationNumber = 0;
-    let chromosomes = [];
+    const chromosomes = [];
 
     for (let i = 0; i < this.minSize; i++) {
-      let c = this.adamChromosome.createNew();
+      const c = this.adamChromosome.createNew();
 
       if (c == null) {
         throw new Error("");
@@ -52,12 +43,20 @@ class Population implements IPopulation {
 
     this.createNewGeneration(chromosomes);
   }
+
+  createNewGeneration(chromosomes?: IChromosome[]): void {
+    this.currentGeneration = new Generation(
+      ++this.generationNumber,
+      chromosomes
+    );
+    this.generations.push(this.currentGeneration);
+  }
   endCurrentGeneration(): void {
     this.currentGeneration.end(this.maxSize);
     if (
       this.bestChromosome.fitness <
-        this.currentGeneration.chromosomes[0].fitness ||
-      this.bestChromosome == undefined
+      this.currentGeneration.chromosomes[0].fitness ||
+      this.bestChromosome === undefined
     ) {
       this.bestChromosome = this.currentGeneration.chromosomes[0];
     }
@@ -65,11 +64,9 @@ class Population implements IPopulation {
 
   toString = () => {
     let str = "";
-    for (let i = 0; i < this.generations.length; i++) {
-      str += this.generations[i].toString();
+    for (const generation of this.generations) {
+      str += this.generations.toString();
     }
     return str;
   };
 }
-
-export { Population };

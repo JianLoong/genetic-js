@@ -1,9 +1,9 @@
-import { IChromosome } from "./chromosome/IChromosome";
-import { ICrossover } from "./crossovers/ICrossover";
-import { IMutation } from "./mutations/IMutation";
-import { IPopulation } from "./populations/IPopulation";
+import IChromosome from "./chromosome/IChromosome";
+import ICrossover from "./crossovers/ICrossover";
+import IMutation from "./mutations/IMutation";
+import IPopulation from "./populations/IPopulation";
 
-interface IOperationStrategy {
+export default interface IOperationStrategy {
   cross(
     population: IPopulation,
     crossover: ICrossover,
@@ -16,5 +16,3 @@ interface IOperationStrategy {
     chromosomes: IChromosome[]
   ): void;
 }
-
-export { IOperationStrategy };

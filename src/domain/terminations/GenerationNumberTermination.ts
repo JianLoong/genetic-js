@@ -1,14 +1,14 @@
-import { IGeneticAlgorithm } from "../IGeneticAlgorithm";
-import { TerminationBase } from "./TerminationBase";
+import IGeneticAlgorithm from "../IGeneticAlgorithm";
+import TerminationBase from "./TerminationBase";
 
-class GenerationNumberTermination extends TerminationBase {
+export default class GenerationNumberTermination extends TerminationBase {
   public expectedGenerationNumber: number;
 
   constructor(expectedGenerationNumber?: number) {
     super();
     if (
-      expectedGenerationNumber == undefined ||
-      expectedGenerationNumber == null
+      expectedGenerationNumber === undefined ||
+      expectedGenerationNumber === null
     )
       this.expectedGenerationNumber = 100;
     this.expectedGenerationNumber = expectedGenerationNumber;
@@ -18,5 +18,3 @@ class GenerationNumberTermination extends TerminationBase {
     return geneticAlgorithm.generationsNumber >= this.expectedGenerationNumber;
   }
 }
-
-export { GenerationNumberTermination };

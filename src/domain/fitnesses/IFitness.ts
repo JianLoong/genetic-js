@@ -1,7 +1,5 @@
-import { IChromosome } from "../chromosome/IChromosome";
+import IChromosome from "../chromosome/IChromosome";
 
-interface IFitness {
+export default interface IFitness {
   evaluate(chromosome: IChromosome): number;
 }
-
-export { IFitness };

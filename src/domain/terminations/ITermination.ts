@@ -1,7 +1,5 @@
-import { IGeneticAlgorithm } from "../IGeneticAlgorithm";
+import IGeneticAlgorithm from "../IGeneticAlgorithm";
 
-interface ITermination {
+export default interface ITermination {
   hasReached(geneticAlgorithm: IGeneticAlgorithm): boolean;
 }
-
-export { ITermination };

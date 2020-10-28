@@ -1,12 +1,12 @@
-import { IChromosome } from "../chromosome/IChromosome";
-import { ICrossover } from "./ICrossover";
+import IChromosome from "../chromosome/IChromosome";
+import ICrossover from "./ICrossover";
 
-abstract class CrossoverBase implements ICrossover {
-  public parentNumber: number;
+export default abstract class CrossoverBase implements ICrossover {
   public childrenNumber: number;
-  public minChromosomeLength: number;
 
   isOrdered: boolean;
+  public minChromosomeLength: number;
+  public parentNumber: number;
   constructor(
     parentsNumber: number,
     childrenNumber: number,
@@ -19,20 +19,14 @@ abstract class CrossoverBase implements ICrossover {
 
   cross(parents: IChromosome[]): IChromosome[] {
     if (parents == null)
-      throw new Error(
-        "Error - CrossOverbase: Number of parents cannot be null."
-      );
-
-    let firstParent = parents[0];
+      throw new Error("Error - CrossOverbase: Number of parents cannot be null.");
+    const firstParent = parents[0];
 
     if (firstParent.length < this.minChromosomeLength) {
       throw new Error("Error: A chromosome should have at least 0 genes");
     }
-
     return this.performCross(parents);
   }
 
   abstract performCross(parents: IChromosome[]): IChromosome[];
 }
-
-export { CrossoverBase };

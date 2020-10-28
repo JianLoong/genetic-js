@@ -1,19 +1,24 @@
-import { ChromosomeExtension } from "../chromosome/ChromosomeExtension";
-import { IChromosome } from "../chromosome/IChromosome";
-import { RandomizationProvider } from "../randomizations/RandomizationProvider";
-import { CrossoverBase } from "./CrossoverBase";
+import ChromosomeExtension from "../chromosome/ChromosomeExtension";
+import IChromosome from "../chromosome/IChromosome";
+import RandomizationProvider from "../randomization/RandomizationProvider";
+import CrossoverBase from "./CrossoverBase";
+import CrossOverUtil from "./CrossOverUtil";
 
-class OrderedCrossover extends CrossoverBase {
+export default class OrderedCrossover extends CrossoverBase {
   constructor() {
     super(2, 2);
     this.isOrdered = true;
   }
   performCross(parents: IChromosome[]): IChromosome[] {
-    let parentOne = parents[0];
-    let parentTwo = parents[1];
+    const parentOne = parents[0];
+    const parentTwo = parents[1];
 
-    if (ChromosomeExtension.anyHasRepeatedGene(parents)) {
-      throw new Error("Crossover Error - ");
+    if (!ChromosomeExtension.validateGenes(parentOne)) {
+      throw new Error("Ordered Crossover - Cannot be used! Parent has duplicate genes.");
+    }
+
+    if (ChromosomeExtension.anyHasRepeatedGene([parentOne, parentTwo])) {
+      throw new Error("Ordered Crossover - Parents have repeated genes");
     }
 
     let middleSectionIndexes = RandomizationProvider.current.getUniqueInts(
@@ -22,16 +27,16 @@ class OrderedCrossover extends CrossoverBase {
       parentOne.length
     );
     middleSectionIndexes = middleSectionIndexes.sort((a, b) => a - b);
-    let middleSectionBeginIndex = middleSectionIndexes[0];
-    let middleSectionEndIndex = middleSectionIndexes[1];
+    const middleSectionBeginIndex = middleSectionIndexes[0];
+    const middleSectionEndIndex = middleSectionIndexes[1];
 
-    let firstChild = this.createChild(
+    const firstChild = this.createChild(
       parentOne,
       parentTwo,
       middleSectionBeginIndex,
       middleSectionEndIndex
     );
-    let secondChild = this.createChild(
+    const secondChild = this.createChild(
       parentTwo,
       parentOne,
       middleSectionBeginIndex,
@@ -47,44 +52,24 @@ class OrderedCrossover extends CrossoverBase {
     middleSectionBeginIndex: number,
     middleSectionEndIndex: number
   ): IChromosome {
-    let middleSectionGenes = firstParent
-      .getGenes()
-      .slice(middleSectionBeginIndex, middleSectionEndIndex);
-    let secondParentGenes = secondParent.getGenes();
+    const firstParentGenes = firstParent.getGenes();
+    const secondParentGenes = secondParent.getGenes();
 
-    let firstChild = firstParent.createNew();
-
-    // Mark parent 2
-    let cloneSecondParent = secondParent.createNew();
-    let cloneSecondParentGenes = cloneSecondParent.getGenes();
-    // https://stackoverflow.com/questions/19957348/remove-all-elements-contained-in-another-array
-    // cloneSecondParentGenes = cloneSecondParentGenes.filter((e) => {
-    //     return !middleSectionGenes.includes(e);
-    // })
-    cloneSecondParentGenes = cloneSecondParentGenes.filter(
-      (el) => !middleSectionGenes.includes(el)
+    const childGenes = CrossOverUtil.orderedCrossover(
+      firstParentGenes,
+      secondParentGenes,
+      middleSectionBeginIndex,
+      middleSectionEndIndex
     );
 
-    let genes = [];
+    const child = firstParent.createNew();
 
-    for (let i = 0; i < middleSectionBeginIndex; i++) {
-      genes[i] = cloneSecondParentGenes.pop();
+    // child.replaceGenes(0, childGenes);
+    let index = 0;
+    for (const gene of childGenes) {
+      child.replaceGene(index, gene);
+      index++;
     }
-
-    for (let i = middleSectionBeginIndex; i < middleSectionEndIndex; i++) {
-      genes[i] = middleSectionGenes.pop();
-    }
-
-    for (let i = middleSectionEndIndex; i < secondParentGenes.length; i++) {
-      genes[i] = cloneSecondParentGenes.pop();
-    }
-
-    for (let i = 0; i < genes.length; i++) {
-      firstChild.replaceGene(i, genes[i]);
-    }
-
-    return firstChild;
+    return child;
   }
 }
-
-export { OrderedCrossover };

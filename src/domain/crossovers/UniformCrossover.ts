@@ -1,20 +1,21 @@
-import { IChromosome } from "../chromosome/IChromosome";
-import { CrossoverBase } from "./CrossoverBase";
-class UniformCrossover extends CrossoverBase {
-  private mixProbability: number;
+import IChromosome from "../chromosome/IChromosome";
+import CrossoverBase from "./CrossoverBase";
+
+export default class UniformCrossover extends CrossoverBase {
   constructor(mixProbability: number) {
     super(2, 2);
     this.mixProbability = mixProbability;
   }
+  private mixProbability: number;
 
   performCross(parents: IChromosome[]): IChromosome[] {
-    let firstParent = parents[0];
-    let secondParent = parents[1];
+    const firstParent = parents[0];
+    const secondParent = parents[1];
 
-    let firstChild = firstParent.createNew();
-    let secondChild = secondParent.createNew();
+    const firstChild = firstParent.createNew();
+    const secondChild = secondParent.createNew();
 
-    let children: IChromosome[] = [];
+    const children: IChromosome[] = [];
 
     for (let i = 0; i < firstParent.length; i++) {
       if (Math.random() < this.mixProbability) {
@@ -32,5 +33,3 @@ class UniformCrossover extends CrossoverBase {
     return children;
   }
 }
-
-export { UniformCrossover };

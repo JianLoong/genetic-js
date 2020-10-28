@@ -1,8 +1,6 @@
-import { IChromosome } from "./chromosome/IChromosome";
+import IChromosome from "./chromosome/IChromosome";
 
-interface IGeneticAlgorithm {
-  generationsNumber: number;
+export default interface IGeneticAlgorithm {
   bestChromosome: IChromosome;
+  generationsNumber: number;
 }
-
-export { IGeneticAlgorithm };

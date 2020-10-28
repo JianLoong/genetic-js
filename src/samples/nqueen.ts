@@ -1,24 +1,23 @@
-import { ChromosomeBase } from "../domain/chromosome/ChromosomeBase";
-import { Gene } from "../domain/chromosome/Gene";
-import { IChromosome } from "../domain/chromosome/IChromosome";
-import { IntegerChromosome } from "../domain/chromosome/IntegerChromosome";
-import { NQueenChromosome } from "../domain/chromosome/NQueenChromosome";
-import { OrderedCrossover } from "../domain/crossovers/OrderedCrossover";
-import { UniformCrossover } from "../domain/crossovers/UniformCrossover";
-import { FuncFitness } from "../domain/fitnesses/FuncFitness";
-import { GeneticAlgorithm } from "../domain/GeneticAlgorithm";
-import { PartialShuffleMutation } from "../domain/mutations/PartialShuffleMutation";
-import { ReverseSequenceMutation } from "../domain/mutations/ReverseSequenceMutation";
-import { Population } from "../domain/populations/Population";
-import { EliteSelection } from "../domain/selections/EliteSelection";
-import { GenerationNumberTermination } from "../domain/terminations/GenerationNumberTermination";
+import { AlternatingPointCrossover } from "../domain";
+import DecimalChromosome from "../domain/chromosome/DecimalChromosome";
+import IChromosome from "../domain/chromosome/IChromosome";
+import OnePointCrossOver from "../domain/crossovers/OnePointCrossover";
+import UniformCrossover from "../domain/crossovers/UniformCrossover";
+import FuncFitness from "../domain/fitnesses/FuncFitness";
+import GeneticAlgorithm from "../domain/GeneticAlgorithm";
+import PartialShuffleMutation from "../domain/mutations/PartialShuffleMutation";
+import Population from "../domain/populations/Population";
+import { ElitistReinsertion } from "../domain/reinsertion/ElitistReinsertion";
+import { FitnessBasedReinsertion } from "../domain/reinsertion/FitnessBasedReinsertion";
+import EliteSelection from "../domain/selections/EliteSelection";
+import RouletteWheelSelection from "../domain/selections/RouletteWheelSelection";
 
 const displayBoard = (chromosome: IChromosome): string => {
   let str = "";
-  let genes = chromosome.getGenes();
+  const genes = chromosome.getGenes();
   for (let i = 0; i < chromosome.length; i++) {
     for (let j = 0; j < chromosome.length; j++) {
-      if (genes[j].m_value == i) str += " X ";
+      if (genes[j].mValue === i) str += " X ";
       else str += " - ";
     }
     str += "\n\r";
@@ -27,6 +26,7 @@ const displayBoard = (chromosome: IChromosome): string => {
 };
 
 const noOfQueen = 8;
+
 const good = (no) => {
   let sum = 0;
   for (let i = no - 1; i > 0; i--) sum += i;
@@ -37,45 +37,33 @@ const fitnessForQueen = good(noOfQueen);
 
 console.log(fitnessForQueen);
 
-// Create a hashtable lookup for fitnesss
-const fitnessMap = (chromosome: IChromosome): number => {
-  let hm: Map<IChromosome, number> = new Map();
-  if (hm.get(chromosome) == undefined) {
-    let fitness = fitnessFunction(chromosome);
-    hm.set(chromosome, fitness);
-    return fitness;
-  }
-
-  return hm.get(chromosome);
-};
 
 const fitnessFunction = (chromosome: IChromosome) => {
-  let genes = chromosome.getGenes();
+  const genes = chromosome.getGenes();
   let dx = 0;
   let dy = 0;
   let clashes = 0;
   let rowClashes = 0;
-  let geneArray = [];
+  const geneArray = [];
 
-  // Create a gene array
   for (let i = 0; i < genes.length; i++) {
-    let value = Number(genes[i].m_value);
+    const value = Number(genes[i].mValue);
     geneArray.push(value);
   }
 
-  var uniqueItems = [...new Set(geneArray)];
+  const uniqueItems = [...new Set(geneArray)];
 
   rowClashes = Math.abs(chromosome.length - uniqueItems.length);
   clashes += rowClashes;
 
   for (let i = 0; i < genes.length; i++) {
     for (let j = i; j < genes.length; j++) {
-      let a = Number(genes[i].m_value);
-      let b = Number(genes[j].m_value);
-      if (i != j) {
+      const a = Number(genes[i].mValue);
+      const b = Number(genes[j].mValue);
+      if (i !== j) {
         dx = Math.abs(i - j);
         dy = Math.abs(a - b);
-        if (dx == dy) {
+        if (dx === dy) {
           clashes += 1;
         }
       }
@@ -84,35 +72,39 @@ const fitnessFunction = (chromosome: IChromosome) => {
   return fitnessForQueen - clashes;
 };
 
-var fitness = new FuncFitness(fitnessMap);
+const fitness = new FuncFitness(fitnessFunction);
 
-var chromosome = new NQueenChromosome(noOfQueen);
+const chromosome = new DecimalChromosome(noOfQueen, 0, noOfQueen);
 
 // Running the GA
-var selection = new EliteSelection();
-var crossover = new OrderedCrossover();
-var mutation = new PartialShuffleMutation();
-var population = new Population(100, 1000, chromosome);
+const selection = new RouletteWheelSelection();
+const crossover = new AlternatingPointCrossover();
+const mutation = new PartialShuffleMutation();
+const population = new Population(100, 1000, chromosome);
 
-var ga = new GeneticAlgorithm(
+const reinsertion = new FitnessBasedReinsertion();
+
+const ga = new GeneticAlgorithm(
   population,
   fitness,
   selection,
   crossover,
-  mutation
+  mutation,
+  reinsertion
 );
-console.log(ga.bestChromosome);
 
-ga.evolveOneGeneration();
+export function start(generations) {
+  const bestChromosomes = ga.start(generations);
 
-let stringOut = "";
+  const set = new Set([...bestChromosomes]);
 
-for (let i = 0; i < 500; i++) {
-  stringOut += ga.bestChromosome.toString() + "\n";
-  //console.log(ga.bestChromosome.toString());
-  ga.evolveOneGeneration();
+  for (const item of set) {
+    console.log(item.getGenes().toString() + " Fitness: " + fitnessFunction(item));
+  }
+  const best = bestChromosomes[bestChromosomes.length - 1];
+  console.log(best.getGenes().toString());
+  console.log(displayBoard(best));
+  console.log(fitnessFunction(best));
 }
 
-console.log(stringOut);
-
-console.log(displayBoard(ga.bestChromosome));
+start(100);

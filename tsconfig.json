@@ -1,9 +1,35 @@
 {
-    "exclude": ["node_modules","out"],
-    "compilerOptions": {
-      "outDir": "out",
-      "target": "es6",
-      "module": "commonjs",
-      "sourceMap": true
-    }
+  "exclude": [
+    "node_modules",
+    "./dist",
+    "./src/test"
+  ],
+  "include": [
+    "./src/**/*"
+  ],
+  "compilerOptions": {
+    "target": "ES2017",
+    "outDir": "./dist/",
+    "module": "CommonJS",
+    "strict": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true,
+    "removeComments": true,
+    "moduleResolution": "node",
+    "lib": [
+      "DOM",
+      "ES2016",
+      "ES2015"
+    ],
+    "sourceMap": true,
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin",
+        "configFile": "../tslint.json"
+      }
+    ]
+  },
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Recommended"
 }

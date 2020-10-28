@@ -1,39 +1,30 @@
-import { Gene } from "../../domain/chromosome/Gene";
-import { IntegerChromosome } from "../../domain/chromosome/IntegerChromosome";
-import { NQueenChromosome } from "../../domain/chromosome/NQueenChromosome";
-import { OrderedCrossover } from "../../domain/crossovers/OrderedCrossover";
-import { mockRandom } from "jest-mock-random";
-import { resetMockRandom } from "jest-mock-random";
+import AlternatingPointCrossover from "../../domain/crossovers/AlternatingPointCrossover";
+import CrossOverUtil from "../../domain/crossovers/CrossOverUtil";
 
 describe("CrossOver Test", () => {
-  test("Check the ordered crossover", () => {
-    let a = new OrderedCrossover();
-    let c1 = new NQueenChromosome(10);
-    let c2 = new NQueenChromosome(10);
-    let offspring = new NQueenChromosome(10);
+  test("Check the alternating point crossover", () => {
 
-    let p1 = [8, 4, 7, 3, 6, 2, 5, 1, 9, 0];
-    let p2 = [0, 4, 7, 3, 6, 2, 5, 1, 8, 9];
-    let o = [8, 2, 9, 8, 7, 6, 5, 4, 3, 0];
+    const p1 = [1, 2, 3, 4, 5, 6, 7, 8];
+    const p2 = [3, 7, 5, 1, 6, 8, 2, 4];
+    const o = [1, 3, 2, 7, 5, 4, 6, 8];
 
-    for (let i = 0; i < p1.length; i++) {
-      c1.replaceGene(i, new Gene(p1[i]));
-      c2.replaceGene(i, new Gene(p2[i]));
-      offspring.replaceGene(i, new Gene(o[i]));
+    const child = [];
+    const maxLength = p1.length;
+
+    while (child.length < maxLength) {
+      !child.includes(p1[0]) ? child.push(p1.shift()) : p1.shift();
+      !child.includes(p2[0]) ? child.push(p2.shift()) : p2.shift();
     }
 
-    let parents = [c1, c2];
-    console.log(c1.getGenes().toString());
-    console.log(c2.getGenes().toString());
+    expect(child).toEqual(o);
+  });
+  test("Check the ordered crossover", () => {
+    const p1 = [5, 3, 4, 8, 1, 2, 7, 6];
+    const p2 = [3, 8, 6, 7, 2, 4, 1, 5];
+    const o = [6, 3, 4, 8, 1, 2, 7, 5];
 
-    mockRandom([0.2, 0.7]);
+    const child = CrossOverUtil.orderedCrossover(p1, p2, 1, 6);
 
-    let child = a.cross(parents)[0].getGenes();
-    console.log(child.toString());
-
-    expect(child.toString()).toEqual(offspring.getGenes().toString());
-
-    //expect(a.cross(parents)[0].getGenes().toString()).toEqual(offspring.getGenes().toString());
-    resetMockRandom();
+    expect(child).toEqual(o);
   });
 });
