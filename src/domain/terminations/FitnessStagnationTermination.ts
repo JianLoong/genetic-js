@@ -1,7 +1,7 @@
 import IGeneticAlgorithm from "../IGeneticAlgorithm";
 import TerminationBase from "./TerminationBase";
 
-class FitnessStagnationTermination extends TerminationBase {
+export default class FitnessStagnationTermination extends TerminationBase {
     public expectedStagnationGenerationNumber: number;
     constructor(expectedStagnationGenerationNumber?: number) {
         super();

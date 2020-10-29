@@ -9,8 +9,7 @@ import IPopulation from "./populations/IPopulation";
 import Population from "./populations/Population";
 import { IReinsertion } from "./reinsertion/IReinsertion";
 import ISelection from "./selections/ISelection";
-import GenerationNumberTermination from "./terminations/GenerationNumberTermination";
-import ITermination from "./terminations/ITermination";
+import { ITermination } from "./terminations/Index";
 
 enum GeneticAlgorithmState {
   NotStarted,
@@ -42,16 +41,19 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
     selection: ISelection,
     crossOver: ICrossover,
     mutation: IMutation,
-    reinsertion: IReinsertion
+    reinsertion: IReinsertion,
+    termination: ITermination
   ) {
     this.selection = selection;
     this.population = population;
     this.fitness = fitness;
     this.crossOver = crossOver;
     this.mutation = mutation;
-    this.termination = new GenerationNumberTermination(100);
+    this.termination = termination;
     this.operatorStrategy = new DefaultOperationStrategy();
     this.reinsertion = reinsertion;
+
+    this.generationsNumber = 0;
   }
 
   clone() {
@@ -65,7 +67,8 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
       this.selection,
       this.crossOver,
       this.mutation,
-      this.reinsertion
+      this.reinsertion,
+      this.termination
     );
   }
 
@@ -80,14 +83,13 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
     return this.endCurrentGeneration();
   }
 
-  public start = (generations: number): IChromosome[] => {
+  public start = (): IChromosome[] => {
     const bestChromosomeArray = [];
     this.timeEvolving = new Date();
-    if (this.termination.hasReached(this) === false) {
-      for (let j = 0; j < generations; j++) {
-        this.evolveOneGeneration();
-        bestChromosomeArray.push(this.bestChromosome);
-      }
+    while (this.termination.hasReached(this) === false) {
+      this.evolveOneGeneration();
+      bestChromosomeArray.push(this.bestChromosome);
+      this.generationsNumber++;
     }
     return bestChromosomeArray;
   };
@@ -108,6 +110,10 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
     return true;
   }
 
+  /**
+   * The evaluate fitness function by default uses a map to lookup for a fitness
+   * that already been calculated.
+   */
   private evaluateFitness(): void {
     // The evaluate fitness needs to be done using async
     const chromosomes = this.population.currentGeneration.chromosomes;
@@ -122,7 +128,6 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
   private fitnessMap = (chromosome: IChromosome): number => {
     const hm: Map<IChromosome, number> = new Map();
     if (hm.get(chromosome) === undefined) {
-      // const fitness = fitnessFunction(chromosome);
       const fitness = this.fitness.evaluate(chromosome);
       hm.set(chromosome, fitness);
       return fitness;

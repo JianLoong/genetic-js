@@ -14,10 +14,9 @@ export default class TimeEvolvingTermination extends TerminationBase {
 
     performHasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {
         const currentTime = new Date();
-        const duration = geneticAlgorithm.timeEvolving.getTime() - currentTime.getTime();
+        const duration = currentTime.getTime() - geneticAlgorithm.timeEvolving.getTime();
 
         const durationInSeconds = duration / 1000;
-
         if (durationInSeconds > this.maxTime)
             return true;
         return false;

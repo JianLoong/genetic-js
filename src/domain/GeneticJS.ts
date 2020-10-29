@@ -3,7 +3,7 @@ import IFitness from "./fitnesses/IFitness";
 /**
  * This file is the main entry point of the library.
  */
-const createGA = (population, fitness, selection, crossover, mutation, reinsertion) => {
+const createGA = (population, fitness, selection, crossover, mutation, reinsertion, termination) => {
 
     if (crossover === undefined)
         crossover = new UniformCrossover(0.5);
@@ -14,11 +14,9 @@ const createGA = (population, fitness, selection, crossover, mutation, reinserti
         selection,
         crossover,
         mutation,
-        reinsertion
+        reinsertion,
+        termination
     );
     return ga;
 }
 
-const start = (ga: GeneticAlgorithm, generationNumber: number) => {
-    ga.start(generationNumber);
-};

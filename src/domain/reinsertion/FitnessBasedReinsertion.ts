@@ -7,7 +7,6 @@ export class FitnessBasedReinsertion extends ReinsertionBase {
         super(false, true);
     }
 
-
     performSelectChromosome(population: IPopulation, offspring: IChromosome[], parents: IChromosome[]): IChromosome[] {
         if (offspring.length > population.maxSize) {
             const selected = offspring.sort((a, b) => b.fitness - b.fitness).slice(0, population.maxSize - 1);
@@ -16,5 +15,4 @@ export class FitnessBasedReinsertion extends ReinsertionBase {
 
         return offspring;
     }
-
 }

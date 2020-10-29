@@ -21,7 +21,7 @@ export abstract class ReinsertionBase implements IReinsertion {
             throw new Error("The population is undefined.");
 
         if (!this.canExpand && offspring.length < population.minSize) {
-            throw new Error("");
+            throw new Error("Chromosome cannot be selected as the number of offsprings exceed the min size of the population.");
         }
 
         return this.performSelectChromosome(population, offspring, parents);

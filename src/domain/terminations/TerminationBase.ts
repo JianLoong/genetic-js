@@ -5,6 +5,7 @@ export default abstract class TerminationBase implements ITermination {
   private mHasReached: boolean;
 
   hasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {
+    this.mHasReached = this.performHasReached(geneticAlgorithm);
     return this.mHasReached;
   }
 

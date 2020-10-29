@@ -1,7 +1,7 @@
 import IGeneticAlgorithm from "../IGeneticAlgorithm";
 import TerminationBase from "./TerminationBase";
 
-class FitnessThresholdTermination extends TerminationBase {
+export default class FitnessThresholdTermination extends TerminationBase {
 
     public expectedFitness: number;
 

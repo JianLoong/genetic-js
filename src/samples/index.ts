@@ -1,15 +1,13 @@
 import DecimalChromosome from "../domain/chromosome/DecimalChromosome";
 import IChromosome from "../domain/chromosome/IChromosome";
-import OnePointCrossOver from "../domain/crossovers/OnePointCrossover";
 import UniformCrossover from "../domain/crossovers/UniformCrossover";
 import FuncFitness from "../domain/fitnesses/FuncFitness";
 import GeneticAlgorithm from "../domain/GeneticAlgorithm";
 import PartialShuffleMutation from "../domain/mutations/PartialShuffleMutation";
 import Population from "../domain/populations/Population";
-import { ElitistReinsertion } from "../domain/reinsertion/ElitistReinsertion";
 import { FitnessBasedReinsertion } from "../domain/reinsertion/FitnessBasedReinsertion";
-import EliteSelection from "../domain/selections/EliteSelection";
 import RouletteWheelSelection from "../domain/selections/RouletteWheelSelection";
+import GenerationNumberTermination from "../domain/terminations/GenerationNumberTermination";
 
 // Create a HashMap lookup for fitness
 const fitnessMap = (chromosome: IChromosome): number => {
@@ -41,6 +39,7 @@ const selection = new RouletteWheelSelection();
 const crossover = new UniformCrossover(0.5);
 const mutation = new PartialShuffleMutation();
 const population = new Population(100, 1000, chromosome);
+const termination = new GenerationNumberTermination(100);
 
 const reinsertion = new FitnessBasedReinsertion();
 
@@ -50,11 +49,12 @@ const ga = new GeneticAlgorithm(
     selection,
     crossover,
     mutation,
-    reinsertion
+    reinsertion,
+    termination
 );
 
-export function start(generations) {
-    const bestChromosomes = ga.start(generations);
+export function start() {
+    const bestChromosomes = ga.start();
 
     const set = new Set([...bestChromosomes]);
 
@@ -66,4 +66,4 @@ export function start(generations) {
     console.log(fitnessMap(best));
 }
 
-start(10000);
+start();

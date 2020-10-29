@@ -1,16 +1,13 @@
-import { AlternatingPointCrossover } from "../domain";
 import DecimalChromosome from "../domain/chromosome/DecimalChromosome";
 import IChromosome from "../domain/chromosome/IChromosome";
-import OnePointCrossOver from "../domain/crossovers/OnePointCrossover";
 import UniformCrossover from "../domain/crossovers/UniformCrossover";
 import FuncFitness from "../domain/fitnesses/FuncFitness";
 import GeneticAlgorithm from "../domain/GeneticAlgorithm";
 import PartialShuffleMutation from "../domain/mutations/PartialShuffleMutation";
 import Population from "../domain/populations/Population";
-import { ElitistReinsertion } from "../domain/reinsertion/ElitistReinsertion";
 import { FitnessBasedReinsertion } from "../domain/reinsertion/FitnessBasedReinsertion";
-import EliteSelection from "../domain/selections/EliteSelection";
 import RouletteWheelSelection from "../domain/selections/RouletteWheelSelection";
+import TimeEvolvingTermination from "../domain/terminations/TimeEvolvingTermination";
 
 const displayBoard = (chromosome: IChromosome): string => {
   let str = "";
@@ -25,7 +22,7 @@ const displayBoard = (chromosome: IChromosome): string => {
   return str;
 };
 
-const noOfQueen = 8;
+const noOfQueen = 12;
 
 const good = (no) => {
   let sum = 0;
@@ -78,9 +75,10 @@ const chromosome = new DecimalChromosome(noOfQueen, 0, noOfQueen);
 
 // Running the GA
 const selection = new RouletteWheelSelection();
-const crossover = new AlternatingPointCrossover();
+const crossover = new UniformCrossover(0.5);
 const mutation = new PartialShuffleMutation();
 const population = new Population(100, 1000, chromosome);
+const termination = new TimeEvolvingTermination(10);
 
 const reinsertion = new FitnessBasedReinsertion();
 
@@ -90,11 +88,12 @@ const ga = new GeneticAlgorithm(
   selection,
   crossover,
   mutation,
-  reinsertion
+  reinsertion,
+  termination
 );
 
-export function start(generations) {
-  const bestChromosomes = ga.start(generations);
+export function start() {
+  const bestChromosomes = ga.start();
 
   const set = new Set([...bestChromosomes]);
 
@@ -102,9 +101,10 @@ export function start(generations) {
     console.log(item.getGenes().toString() + " Fitness: " + fitnessFunction(item));
   }
   const best = bestChromosomes[bestChromosomes.length - 1];
+  // const best = ga.bestChromosome;
   console.log(best.getGenes().toString());
   console.log(displayBoard(best));
   console.log(fitnessFunction(best));
 }
 
-start(100);
+start();
