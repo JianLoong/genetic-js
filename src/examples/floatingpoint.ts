@@ -1,23 +1,19 @@
 import Float32Encoding from "../commons/Float32Encoding";
-import DecimalChromosome from "../domain/chromosome/DecimalChromosome";
 import FloatingPointChromosome from "../domain/chromosome/FloatingPointChromosome";
 import IChromosome from "../domain/chromosome/IChromosome";
 import UniformCrossover from "../domain/crossovers/UniformCrossover";
 import FuncFitness from "../domain/fitnesses/FuncFitness";
 import GeneticAlgorithm from "../domain/GeneticAlgorithm";
 import FlipBitMutation from "../domain/mutations/FlipBitMutation";
-import PartialShuffleMutation from "../domain/mutations/PartialShuffleMutation";
 import Population from "../domain/populations/Population";
 import { FitnessBasedReinsertion } from "../domain/reinsertion/FitnessBasedReinsertion";
 import EliteSelection from "../domain/selections/EliteSelection";
-import RouletteWheelSelection from "../domain/selections/RouletteWheelSelection";
-import { FitnessStagnationTermination, GenerationNumberTermination, TimeEvolvingTermination } from "../domain/terminations/Index";
+import { FitnessStagnationTermination } from "../domain/terminations/Index";
 
 const chromosome = new FloatingPointChromosome([0, 0, 0, 0], [998, 680, 998, 680]);
 
-const displayValues = (chromosome: IChromosome) => {
+const displayValues = (chromosome: IChromosome): string => {
     const c = chromosome as FloatingPointChromosome;
-    const sum = 0;
     const genes = c.originalValue;
     const values = [];
     for (let i = 0; i < genes.length; i = i + 32) {
@@ -29,17 +25,11 @@ const displayValues = (chromosome: IChromosome) => {
     const y1 = values[1];
     const x2 = values[2];
     const y2 = values[3];
-    // return values[0] + values[1];
-    // const frac1 = 1 + Math.cos(12 * Math.sqrt(Math.pow(x1, 2) + Math.pow(x2, 2)));
-    // const frac2 = 0.5 * (Math.pow(x1, 2) + Math.pow(x2, 2)) + 2;
-    // return (frac1 * -1) / frac2;
-    // console.log(x1, y1, x2, y2);
-    console.log(x1, y1, x2, y2);
+    return x1 + "," + y1 + "," + x2 + "," + y2;
 }
 
 const fitnessFunction = (chromosome: IChromosome) => {
     const c = chromosome as FloatingPointChromosome;
-    const sum = 0;
     const genes = c.originalValue;
     const values = [];
     for (let i = 0; i < genes.length; i = i + 32) {
@@ -51,21 +41,10 @@ const fitnessFunction = (chromosome: IChromosome) => {
     const y1 = values[1];
     const x2 = values[2];
     const y2 = values[3];
-    // return values[0] + values[1];
-    // const frac1 = 1 + Math.cos(12 * Math.sqrt(Math.pow(x1, 2) + Math.pow(x2, 2)));
-    // const frac2 = 0.5 * (Math.pow(x1, 2) + Math.pow(x2, 2)) + 2;
-    // return (frac1 * -1) / frac2;
-    // console.log(x1, y1, x2, y2);
     return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
 }
 
 
-function chunk(arr, chunkSize): any[] {
-    const R = [];
-    for (let i = 0, len = arr.length; i < len; i += chunkSize)
-        R.push(arr.slice(i, i + chunkSize));
-    return R;
-}
 
 const fitness = new FuncFitness(fitnessFunction);
 
@@ -100,10 +79,7 @@ export function start() {
     // const best = ga.bestChromosome;
     console.log(best.getGenes().toString());
     console.log(fitnessFunction(best));
-
-    displayValues(best);
-
-
+    console.log(displayValues(best));
 }
 
 start();

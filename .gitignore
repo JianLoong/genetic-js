@@ -106,3 +106,5 @@ dist
 # Generated JS file
 out/*
 coverage/*
+
+site/bundle.js
