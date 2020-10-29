@@ -17,6 +17,8 @@ export default class FitnessStagnationTermination extends TerminationBase {
     private mStagnantGenerationCount: number;
 
     performHasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {
+        if (geneticAlgorithm.bestChromosome === undefined)
+            return false;
         const bestFitness = geneticAlgorithm.bestChromosome.fitness;
 
         if (this.mLastFitness === bestFitness) {
