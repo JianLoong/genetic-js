@@ -11,7 +11,8 @@ export default class GenerationNumberTermination extends TerminationBase {
       expectedGenerationNumber === null
     )
       this.expectedGenerationNumber = 100;
-    this.expectedGenerationNumber = expectedGenerationNumber;
+    else
+      this.expectedGenerationNumber = expectedGenerationNumber;
   }
 
   performHasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {

@@ -12,9 +12,9 @@ export default abstract class ChromosomeBase implements IChromosome {
   public genes: Gene[];
   public length: number;
 
-  clone(): IChromosome {
-    throw new Error("Method not implemented.");
-  }
+  // clone(): IChromosome {
+  //   throw new Error("Method not implemented.");
+  // }
 
   abstract createNew(): IChromosome;
   abstract generateGene(geneIndex: number): Gene;
@@ -39,6 +39,10 @@ export default abstract class ChromosomeBase implements IChromosome {
   }
 
   replaceGenes(startIndex: number, genes: Gene[]): void {
+
+    if (startIndex < 0)
+      throw new Error("Start Index cannot be less than 0");
+
     const genesToBeReplacedLength = genes.length;
 
     const availableSpaceLength = this.length - startIndex;

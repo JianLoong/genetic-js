@@ -8,7 +8,7 @@
     "./src/**/*"
   ],
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES6",
     "outDir": "./dist/",
     "module": "CommonJS",
     "strict": false,

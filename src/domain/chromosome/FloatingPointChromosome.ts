@@ -1,6 +1,10 @@
 import BinaryChromosomeBase from "./BinaryChromosomeBase";
 import Gene from "./Gene";
 import IChromosome from "./IChromosome";
+
+/**
+ * https://stackoverflow.com/questions/37088194/is-there-any-way-to-see-a-number-in-its-64-bit-float-ieee754-representation
+ */
 export default class FloatingPointChromosome extends BinaryChromosomeBase {
 
   constructor(mValue: number) {
@@ -20,7 +24,7 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
   }
 
   generateGene(geneIndex: number): Gene {
-    return new Gene(this.binArrayStr[geneIndex]);
+    return new Gene(Number(this.binArrayStr[geneIndex]));
   }
 
   private convertFloat32ToBin = (float32) => {

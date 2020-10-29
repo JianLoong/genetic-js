@@ -2,10 +2,10 @@ import IGeneticAlgorithm from "../IGeneticAlgorithm";
 import ITermination from "./ITermination";
 
 export default abstract class TerminationBase implements ITermination {
-  private m_hasReached: boolean;
+  private mHasReached: boolean;
 
   hasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {
-    return this.m_hasReached;
+    return this.mHasReached;
   }
 
   abstract performHasReached(geneticAlgorithm: IGeneticAlgorithm): boolean;

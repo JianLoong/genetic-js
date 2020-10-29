@@ -34,6 +34,7 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
   reinsertion: IReinsertion;
   selection: ISelection;
   termination: ITermination;
+  public timeEvolving: Date;
 
   constructor(
     population: IPopulation,
@@ -81,9 +82,12 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
 
   public start = (generations: number): IChromosome[] => {
     const bestChromosomeArray = [];
-    for (let j = 0; j < generations; j++) {
-      this.evolveOneGeneration();
-      bestChromosomeArray.push(this.bestChromosome);
+    this.timeEvolving = new Date();
+    if (this.termination.hasReached(this) === false) {
+      for (let j = 0; j < generations; j++) {
+        this.evolveOneGeneration();
+        bestChromosomeArray.push(this.bestChromosome);
+      }
     }
     return bestChromosomeArray;
   };
