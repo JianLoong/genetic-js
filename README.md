@@ -1,4 +1,5 @@
 ![Logo](./logo/cover.png)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/JianLoong/genetic-js/Node%20CI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=square)](https://opensource.org/licenses/MIT)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=square)](https://github.com/JianLoong/genetic-js/issues)
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
@@ -21,21 +22,12 @@ The current landscape of Genetic Algorithm libraries are vast, however this libr
 ## Roadmap
 
 - [ ] Documentation of usage with example code
-- [ ] Full port of
 - [ ] Full port of GeneticJS
 - [ ] Node.js support
 - [ ] Browser support
 - [ ] Require.js support
 - [ ] Universal Module Definition
 - [ ] Multi-threading
-
-# Multi-threading
-
-Multi-threading on the browser is achieved by using Web Workers.
-
-# Asynchronous
-
-In order to achieve better performance, certain ask are performed asynchronously. (Not to be confused with multi-threading). This is achieved via Promise API.
 
 # Design Decisions and Considerations
 
@@ -49,11 +41,7 @@ In order to achieve better performance, certain ask are performed asynchronously
 
 # Usage
 
-## Importing the library
-
-- The library will be bundled into a single JavaScript file and can be used.
-
-## You will first need to create your own chromosome to represent the problem.
+- You will first need to create your own chromosome to represent the problem.
 
 ```typescript
 class MyProblemChromosome extends ChromosomeBase {
@@ -70,9 +58,7 @@ class MyProblemChromosome extends ChromosomeBase {
 }
 ```
 
-## You will need to create your own fitness evaluation.
-
-This is an example of a simple evaluation function that just sums up all the mValue in the chromosomes. You can use arrow functions if you want to. Most importantly is that the fitness function **must be a function that returns a number**.
+- You will need also to create your own fitness evaluation.
 
 ```typescript
 const fitnessFunction = (chromosome: IChromosome): number => {
@@ -85,7 +71,7 @@ const fitnessFunction = (chromosome: IChromosome): number => {
 };
 ```
 
-### Running your GA
+# Running your GA
 
 ```typescript
 var selection = new EliteSelection();
