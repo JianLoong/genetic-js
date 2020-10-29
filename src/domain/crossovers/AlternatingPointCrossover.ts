@@ -1,4 +1,3 @@
-import { SSL_OP_PKCS1_CHECK_1 } from "constants";
 import ChromosomeExtension from "../chromosome/ChromosomeExtension";
 import DecimalChromosome from "../chromosome/DecimalChromosome";
 import Gene from "../chromosome/Gene";

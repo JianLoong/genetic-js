@@ -1,39 +1,51 @@
+
+import Float32Encoding from "../../commons/Float32Encoding";
+import RandomizationProvider from "../randomization/RandomizationProvider";
 import BinaryChromosomeBase from "./BinaryChromosomeBase";
 import Gene from "./Gene";
 import IChromosome from "./IChromosome";
 
-/**
- * https://stackoverflow.com/questions/37088194/is-there-any-way-to-see-a-number-in-its-64-bit-float-ieee754-representation
- */
 export default class FloatingPointChromosome extends BinaryChromosomeBase {
+    public originalValue: number[];
+    constructor(minValue: number[], maxValue: number[]) {
 
-  constructor(mValue: number) {
-    super(32);
-    this.mValue = mValue;
-    const result = this.convertFloat32ToBin(mValue);
-    this.binArrayStr = result.split("");
 
-    this.createGenes();
-  }
+        super(32 * minValue.length);
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.originalValue = this.flatten(minValue, maxValue);
 
-  private binArrayStr: string[];
-  private mValue: number;
+        this.createGenes();
 
-  createNew(): IChromosome {
-    return new FloatingPointChromosome(this.mValue);
-  }
+    }
 
-  generateGene(geneIndex: number): Gene {
-    return new Gene(Number(this.binArrayStr[geneIndex]));
-  }
+    private maxValue: number[];
+    private minValue: number[];
 
-  private convertFloat32ToBin = (float32) => {
-    const HexToBin = hex => (parseInt(hex, 16).toString(2)).padStart(32, '0');
-    const getHex = i => ('00' + i.toString(16)).slice(-2);
-    const view = new DataView(new ArrayBuffer(4))
-    view.setFloat32(0, float32);
-    return HexToBin(Array.apply(null, { length: 4 }).map((_, i) => getHex(view.getUint8(i))).join(''));
-  }
+    createNew(): IChromosome {
+        return new FloatingPointChromosome(this.minValue, this.maxValue);
+    }
+
+    flatten = (minValue: number[], maxValue: number[]): number[] => {
+
+        let str = "";
+        for (let i = 0; i < minValue.length; i++) {
+            const min = minValue[i];
+            const max = maxValue[i];
+            const r = RandomizationProvider.current.getInt(min, max);
+            str += Float32Encoding.convertFloat32ToBin(r);
+        }
+
+        let result = [];
+        result = str.split("");
+        return result;
+    }
+
+    generateGene(geneIndex: number): Gene {
+        const gene = this.originalValue[geneIndex];
+        return new Gene(gene);
+    }
+
+
+
 }
-
-export { FloatingPointChromosome };

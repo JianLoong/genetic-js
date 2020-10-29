@@ -1,6 +1,6 @@
-import BinaryChromosomeBase from "../../domain/chromosome/BinaryChromosomeBase";
-import Gene from "../../domain/chromosome/Gene";
-import IChromosome from "../../domain/chromosome/IChromosome";
+import BinaryChromosomeBase from "../../../domain/chromosome/BinaryChromosomeBase";
+import Gene from "../../../domain/chromosome/Gene";
+import IChromosome from "../../../domain/chromosome/IChromosome";
 
 export default class BinaryChromosomeStub extends BinaryChromosomeBase {
 

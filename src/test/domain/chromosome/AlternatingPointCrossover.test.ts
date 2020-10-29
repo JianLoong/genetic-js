@@ -1,11 +1,6 @@
-import { mockRandom } from "jest-mock-random";
-import { resetMockRandom } from "jest-mock-random";
-import Gene from "../../domain/chromosome/Gene";
-import NQueenChromosome from "../../domain/chromosome/NQueenChromosome";
-import OrderedCrossover from "../../domain/crossovers/OrderedCrossover";
-import AlternatingPointCrossover from "../../domain/crossovers/AlternatingPointCrossover";
-import ChromosomeBase from "../../domain/chromosome/ChromosomeBase";
-import DecimalChromosome from "../../domain/chromosome/DecimalChromosome"
+import DecimalChromosome from "../../../domain/chromosome/DecimalChromosome";
+import Gene from "../../../domain/chromosome/Gene";
+import AlternatingPointCrossover from "../../../domain/crossovers/AlternatingPointCrossover"
 
 describe("CrossOver Test", () => {
 

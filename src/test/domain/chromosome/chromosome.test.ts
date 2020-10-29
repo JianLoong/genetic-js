@@ -1,7 +1,7 @@
-import IntegerChromosome from "../../domain/chromosome/IntegerChromosome";
-import BinaryChromosomeStub from "./BinaryChromosomeStub.";
 import { mockRandom } from "jest-mock-random";
 import { resetMockRandom } from "jest-mock-random";
+import BinaryChromosomeStub from "./BinaryChromosomeStub.";
+import IntegerChromosome from "../../../domain/chromosome/IntegerChromosome"
 
 describe("IntegerChromosome Test", () => {
   test("Check the create binary string function", () => {
@@ -44,12 +44,12 @@ describe("IntegerChromosome Test", () => {
     );
   });
 
-  // https://stackoverflow.com/questions/49027595/jest-test-that-exception-will-be-thrown-isnt-working
-  test("Check the flipGene() function of BinaryChromosomeBase", () => {
-    const a = new BinaryChromosomeStub(2);
+  // // https://stackoverflow.com/questions/49027595/jest-test-that-exception-will-be-thrown-isnt-working
+  // test("Check the flipGene() function of BinaryChromosomeBase", () => {
+  //   const a = new BinaryChromosomeStub(2);
 
-    expect(() => {
-      a.flipGene(0);
-    }).toThrow(Error);
-  });
+  //   expect(() => {
+  //     a.flipGene(0);
+  //   }).toThrow(Error);
+  // });
 });

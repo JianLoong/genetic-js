@@ -1,5 +1,6 @@
-import { GeneticAlgorithm, UniformCrossover } from "."
-import IFitness from "./fitnesses/IFitness";
+import UniformCrossover from "./crossovers/UniformCrossover";
+import GeneticAlgorithm from "./GeneticAlgorithm";
+
 /**
  * This file is the main entry point of the library.
  */

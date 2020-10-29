@@ -1,8 +1,8 @@
 import IChromosome from "../chromosome/IChromosome";
-import { ChromosomeBase } from "../chromosome/Index";
 import Generation from "../populations/Generation";
 import RandomizationProvider from "../randomization/RandomizationProvider";
 import SelectionBase from "./SelectionBase";
+
 
 export default class RouletteWheelSelection extends SelectionBase {
 
