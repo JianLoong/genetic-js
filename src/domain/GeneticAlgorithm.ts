@@ -1,15 +1,20 @@
 import IChromosome from "./chromosome/IChromosome";
 import ICrossover from "./crossovers/ICrossover";
+import UniformCrossover from "./crossovers/UniformCrossover";
 import DefaultOperationStrategy from "./DefaultOperationStrategy";
 import IFitness from "./fitnesses/IFitness";
 import IGeneticAlgorithm from "./IGeneticAlgorithm";
 import IOperationStrategy from "./IOperationStrategy";
 import IMutation from "./mutations/IMutation";
+import UniformMutation from "./mutations/UniformMutation";
 import IPopulation from "./populations/IPopulation";
 import Population from "./populations/Population";
+import { ElitistReinsertion } from "./reinsertion/ElitistReinsertion";
 import { IReinsertion } from "./reinsertion/IReinsertion";
+import EliteSelection from "./selections/EliteSelection";
 import ISelection from "./selections/ISelection";
-import { ITermination } from "./terminations/Index";
+import GenerationNumberTermination from "./terminations/GenerationNumberTermination";
+import ITermination from "./terminations/ITermination";
 
 enum GeneticAlgorithmState {
   NotStarted,
@@ -27,6 +32,7 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
   defaultMutationProbability: number = 0.3;
   fitness: IFitness;
   generationsNumber: number;
+  isMaximized: boolean = true;
   mutation: IMutation;
   operatorStrategy: IOperationStrategy;
   population: IPopulation;
@@ -38,11 +44,11 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
   constructor(
     population: IPopulation,
     fitness: IFitness,
-    selection: ISelection,
-    crossOver: ICrossover,
-    mutation: IMutation,
-    reinsertion: IReinsertion,
-    termination: ITermination
+    selection: ISelection = new EliteSelection(),
+    crossOver: ICrossover = new UniformCrossover(0.5),
+    mutation: IMutation = new UniformMutation(),
+    reinsertion: IReinsertion = new ElitistReinsertion(),
+    termination: ITermination = new GenerationNumberTermination(100)
   ) {
     this.selection = selection;
     this.population = population;
@@ -52,7 +58,6 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
     this.termination = termination;
     this.operatorStrategy = new DefaultOperationStrategy();
     this.reinsertion = reinsertion;
-
     this.generationsNumber = 0;
   }
 

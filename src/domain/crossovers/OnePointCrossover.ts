@@ -2,7 +2,7 @@ import IChromosome from "../chromosome/IChromosome";
 import RandomizationProvider from "../randomization/RandomizationProvider";
 import CrossoverBase from "./CrossoverBase";
 
-export default class OnePointCrossOver extends CrossoverBase {
+export default class OnePointCrossover extends CrossoverBase {
 
     constructor(swapPointIndex?: number) {
         super(2, 2);

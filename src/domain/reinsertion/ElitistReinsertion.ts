@@ -3,10 +3,10 @@ import IPopulation from "../populations/IPopulation";
 import { ReinsertionBase } from "./ReinsertionBase";
 
 export class ElitistReinsertion extends ReinsertionBase {
-    constructor() {
+    isMaximized: boolean;
+    constructor(isMaximized?: boolean) {
         super(false, true);
     }
-
 
     performSelectChromosome(population: IPopulation, offspring: IChromosome[], parents: IChromosome[]): IChromosome[] {
         const diff = population.minSize - offspring.length;

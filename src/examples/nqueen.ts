@@ -1,4 +1,3 @@
-
 import DecimalChromosome from "../domain/chromosome/DecimalChromosome";
 import IChromosome from "../domain/chromosome/IChromosome";
 import UniformCrossover from "../domain/crossovers/UniformCrossover";
@@ -8,8 +7,7 @@ import PartialShuffleMutation from "../domain/mutations/PartialShuffleMutation";
 import Population from "../domain/populations/Population";
 import { FitnessBasedReinsertion } from "../domain/reinsertion/FitnessBasedReinsertion";
 import RouletteWheelSelection from "../domain/selections/RouletteWheelSelection";
-import { TimeEvolvingTermination } from "../domain/terminations/Index";
-
+import TimeEvolvingTermination from "../domain/terminations/TimeEvolvingTermination";
 
 const displayBoard = (chromosome: IChromosome): string => {
   let str = "";

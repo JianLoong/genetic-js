@@ -18,7 +18,8 @@
     "compile": "tsc",
     "test": "jest",
     "start": "webpack-dev-server --progress --colors",
-    "build": "webpack"
+    "build": "webpack",
+    "prod": "webpack --mode=production --config webpack.production.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",

@@ -2,13 +2,13 @@ module.exports = {
   mode: "development",
   devtool: "inline-source-map",
   entry: {
-    bundle: "./src/domain/index.ts",
+    bundle: "./src/index.ts",
     //worker: "./src/samples/worker.ts"
   },
   output: {
-    filename: "[name].js",
+    filename: "[name].mjs",
     library: "geneticjs",
-    libraryTarget: "window"
+    libraryTarget: "umd"
   },
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension.
@@ -23,6 +23,7 @@ module.exports = {
         options: {
           compilerOptions: {
             module: "esnext",
+            sourceMap: false
           },
         },
       },

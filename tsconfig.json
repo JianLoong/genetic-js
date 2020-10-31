@@ -11,6 +11,8 @@
     "target": "ES6",
     "outDir": "./dist/",
     "module": "CommonJS",
+    "declaration": false,
+    "emitDeclarationOnly": false,
     "strict": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
