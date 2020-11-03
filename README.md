@@ -13,35 +13,35 @@ Genetic JS **attempts** to be a _fast_, _extensible_, _multi-platform_ and _mult
 
 **Credits to the original implementation goes to the author of Genetic Sharp** which serves as the entire basis of this project.
 
-Currently the project is `ongoing` and there will be plans to release a npm module with instructions on how to run it.
+# Important
 
-# Motivation
+Currently the project is `ongoing` and there will be plans to release a npm module with instructions on how to run it.
 
 The current landscape of Genetic Algorithm libraries are vast, however this library aims to provide a simple way in which various selection and crossover criteria can be introduced. This library also aims to provide implementations of the vastly different _crossover_, _mutation_ and other criteria that exist.
 
-## Roadmap
+# Installing
 
-- [ ] Documentation of usage with example code
-- [ ] Full port of GeneticJS
-- [ ] Node.js support
-- [ ] Browser support
-- [ ] Require.js support
-- [ ] Universal Module Definition
-- [ ] Multi-threading
+The easiest way to start using the library is by importing the **module**.
 
-# Design Decisions and Considerations
+```html
+<script type="module" src="./geneticjs.umd.min.mjs"></script>
+```
 
-- Usage of `namespaces` are abandoned in favour of modules. Refer
-  [here](https://michelenasti.com/2019/01/23/is-typescript-namespace-feature-deprecated.html)
-- Usage of `extensions methods` are still be considered. Refer [here](https://www.c-sharpcorner.com/article/learn-about-extension-methods-in-typescript/) and [here](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods)
-- `Jest` is used as the testing framework.
-- `Promise` in combination with `web workers` API will be used to "multi-thread".
-- `Singleton` pattern is determined to be not needed. Refer [here](https://medium.com/@dmnsgn/singleton-pattern-in-es6-d2d021d150ae)
-- Testing randomness with `Jest` can be found [here](https://softwareengineering.stackexchange.com/questions/147134/how-should-i-test-randomness)
+After that you can use the module by
 
-# Usage
+The global namespace for geneticjs is `geneticjs`
 
-- You will first need to create your own chromosome to represent the problem.
+```javascript
+const gjs = geneticjs;
+
+const ga = new gjs.GeneticAlgorithm();
+```
+
+# Configuration
+
+Before you start, you will need to define your own Chromosome. There are several chromosomes predefined for common problems.
+
+1. Defining your chromosome.
 
 ```typescript
 class MyProblemChromosome extends ChromosomeBase {
@@ -58,7 +58,7 @@ class MyProblemChromosome extends ChromosomeBase {
 }
 ```
 
-- You will need also to create your own fitness evaluation.
+2. Provide a fitness function. By default the fitness will be maximized.
 
 ```typescript
 const fitnessFunction = (chromosome: IChromosome): number => {
@@ -71,7 +71,10 @@ const fitnessFunction = (chromosome: IChromosome): number => {
 };
 ```
 
-# Running your GA
+If you would prefer the fitness to be minimized, you can choose tho calculate the fitness
+via (1 / 1 - fitness).
+
+3. Running your GA
 
 ```typescript
 var selection = new EliteSelection();
@@ -88,10 +91,21 @@ var ga = new GeneticAlgorithm(
   crossover,
   mutation
 );
+
+ga.start();
 ```
 
-# Samples
+# Examples
 
-Provided samples are as follows
+1. Function maximization
+2. NQueen Problem
 
-- NQueenProblem.
+# Road Map
+
+- [ ] Documentation of usage with example code
+- [ ] Full port of GeneticJS
+- [ ] Node.js support
+- [ ] Browser support
+- [ ] Require.js support
+- [ ] Universal Module Definition
+- [ ] Multi-threading

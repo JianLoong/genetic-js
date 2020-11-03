@@ -15,6 +15,8 @@ import EliteSelection from "./selections/EliteSelection";
 import ISelection from "./selections/ISelection";
 import GenerationNumberTermination from "./terminations/GenerationNumberTermination";
 import ITermination from "./terminations/ITermination";
+import { Subject } from "rxjs"
+
 
 enum GeneticAlgorithmState {
   NotStarted,
@@ -27,12 +29,13 @@ enum GeneticAlgorithmState {
 export default class GeneticAlgorithm implements IGeneticAlgorithm {
   bestChromosome: IChromosome;
   crossOver: ICrossover;
-
   defaultCrossOverProbability: number = 0.75;
   defaultMutationProbability: number = 0.3;
   fitness: IFitness;
   generationsNumber: number;
-  isMaximized: boolean = true;
+
+  geneticAlgorithmState: GeneticAlgorithmState;
+  isFitnessMaximized: boolean = true;
   mutation: IMutation;
   operatorStrategy: IOperationStrategy;
   population: IPopulation;
@@ -59,6 +62,7 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
     this.operatorStrategy = new DefaultOperationStrategy();
     this.reinsertion = reinsertion;
     this.generationsNumber = 0;
+    this.geneticAlgorithmState = GeneticAlgorithmState.NotStarted;
   }
 
   clone() {
@@ -88,13 +92,22 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
     return this.endCurrentGeneration();
   }
 
-  public start = (): IChromosome[] => {
+  /**
+   *
+   * @param subject An RXJS subject which can be used to observed the best chromosome returned.
+   */
+  public start = (subject?: Subject<IChromosome>): IChromosome[] => {
+
     const bestChromosomeArray = [];
     this.timeEvolving = new Date();
+
     while (this.termination.hasReached(this) === false) {
       this.evolveOneGeneration();
       bestChromosomeArray.push(this.bestChromosome);
       this.generationsNumber++;
+      const best = this.bestChromosome;
+      if (subject !== undefined) subject.next(best);
+      this.geneticAlgorithmState = GeneticAlgorithmState.TerminationReached;
     }
     return bestChromosomeArray;
   };
@@ -120,7 +133,7 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
    * that already been calculated.
    */
   private evaluateFitness(): void {
-    // The evaluate fitness needs to be done using async
+    // The evaluate fitness needs to be done using async or parallel.
     const chromosomes = this.population.currentGeneration.chromosomes;
     for (const chromosome of chromosomes) {
       const element = chromosome;
@@ -174,4 +187,5 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
       this.population.currentGeneration
     );
   }
+
 }

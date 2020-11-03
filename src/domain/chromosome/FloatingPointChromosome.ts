@@ -12,6 +12,8 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
     minValue: number[];
     public originalValue: number[];
     constructor(minValue: number[], maxValue: number[], isIntValue: boolean = true) {
+        minValue.forEach(element => { if (element < 0) throw new Error("Min value cannot be below 0") });
+        maxValue.forEach(element => { if (element < 0) throw new Error("Max value cannot be below 0") });
         let totalBit = 0;
         maxValue.forEach(element => totalBit += element.toString(2).length);
         if (isIntValue === true)
@@ -33,6 +35,10 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
         return true;
     }
 
+    /**
+     * The operations are very expensive because they involve a lot of string operations and regex.
+     * Could be optimized further.
+     */
     expand(): number[] {
         const values: number[] = [];
         // Determine bitLength
@@ -47,6 +53,10 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
             for (let i = 0, j = 0; i < genes.length; i = i + bitLength[j], j++) {
                 const sliced = genes.slice(i, i + bitLength[j]).toString().replace(/,/g, "");
                 values.push(parseInt(sliced, 2));
+                // const sliced = genes.slice(i, i + bitLength[j]);// .toString().replace(/,/g, "");
+                // const arr = [];
+                // sliced.for
+
             }
         } else {
             for (let i = 0; i < genes.length; i = i + 32) {

@@ -4,7 +4,7 @@
 
 export default class Float32Encoding {
 
-    static convertBinToFloat32 = (str) => {
+    static convertBinToFloat32 = (str: string) => {
         const int = parseInt(str, 2);
         if (int > 0 || int < 0) {
             const sign = (int >>> 31) ? -1 : 1;
@@ -26,7 +26,7 @@ export default class Float32Encoding {
         return HexToBin(Array.apply(null, { length: 4 }).map((_, i) => getHex(view.getUint8(i))).join(''));
     }
 
-    static convertFloat32ToHex = (float32) => {
+    static convertFloat32ToHex = (float32: number) => {
         const getHex = i => ('00' + i.toString(16)).slice(-2);
         const view = new DataView(new ArrayBuffer(4))
         view.setFloat32(0, float32);

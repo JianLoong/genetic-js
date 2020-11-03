@@ -35,7 +35,7 @@ export default abstract class ChromosomeBase implements IChromosome {
     }
 
     this.genes[index] = gene;
-    this.fitness = null;
+    this.fitness = undefined;
   }
 
   replaceGenes(startIndex: number, genes: Gene[]): void {
@@ -56,6 +56,10 @@ export default abstract class ChromosomeBase implements IChromosome {
   }
   resize(newLength: number): void {
     this.validateLength(newLength);
+  }
+
+  toString(): string {
+    return this.genes.toString();
   }
 
   protected createGenes(): void {

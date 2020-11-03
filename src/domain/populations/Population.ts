@@ -9,10 +9,11 @@ export default class Population implements IPopulation {
   currentGeneration: Generation;
   generationNumber: number;
   generations: Generation[];
+  isMaximized: boolean;
   maxSize: number;
   minSize: number;
 
-  constructor(minSize: number, maxSize: number, adamChromosome: IChromosome) {
+  constructor(minSize: number, maxSize: number, adamChromosome: IChromosome, isMaximized: boolean = true) {
     if (minSize < 2) throw new Error();
     if (maxSize < minSize) throw new Error();
 
@@ -22,6 +23,7 @@ export default class Population implements IPopulation {
     this.generations = [];
     this.adamChromosome = adamChromosome;
     this.bestChromosome = adamChromosome;
+    this.isMaximized = isMaximized;
 
     this.createInitialGeneration();
   }
@@ -29,13 +31,13 @@ export default class Population implements IPopulation {
   createInitialGeneration(): void {
     this.generations = [];
     this.generationNumber = 0;
-    const chromosomes = [];
+    const chromosomes: IChromosome[] = [];
 
     for (let i = 0; i < this.minSize; i++) {
       const c = this.adamChromosome.createNew();
 
       if (c == null) {
-        throw new Error("");
+        throw new Error("Initial chromosome cannot be created.");
       }
 
       chromosomes.push(c);
@@ -47,14 +49,15 @@ export default class Population implements IPopulation {
   createNewGeneration(chromosomes?: IChromosome[]): void {
     this.currentGeneration = new Generation(
       ++this.generationNumber,
-      chromosomes
+      chromosomes,
+      this.isMaximized
     );
     this.generations.push(this.currentGeneration);
   }
   endCurrentGeneration(): void {
     this.currentGeneration.end(this.maxSize);
     if (
-      this.bestChromosome.fitness <
+      (this.bestChromosome.fitness || 0) <
       this.currentGeneration.chromosomes[0].fitness ||
       this.bestChromosome === undefined
     ) {

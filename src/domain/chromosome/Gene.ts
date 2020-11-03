@@ -10,6 +10,7 @@ export default class Gene {
     }
     return other.mValue === this.mValue;
   }
+
   equalsOperator(first: Gene, second: Gene): boolean {
     return first.equals(second);
   }

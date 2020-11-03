@@ -1,3 +1,4 @@
+import { FitnessStagnationTermination } from "..";
 import FloatingPointChromosome from "../domain/chromosome/FloatingPointChromosome";
 import IChromosome from "../domain/chromosome/IChromosome";
 import UniformCrossover from "../domain/crossovers/UniformCrossover";
@@ -7,7 +8,11 @@ import FlipBitMutation from "../domain/mutations/FlipBitMutation";
 import Population from "../domain/populations/Population";
 import { ElitistReinsertion } from "../domain/reinsertion/ElitistReinsertion";
 import EliteSelection from "../domain/selections/EliteSelection";
+import RouletteWheelSelection from "../domain/selections/RouletteWheelSelection";
 import GenerationNumberTermination from "../domain/terminations/GenerationNumberTermination";
+import { Observable } from "rxjs"
+import { Subject } from "rxjs"
+
 
 const chromosome = new FloatingPointChromosome([0, 0, 0, 0], [998, 680, 998, 680], true);
 
@@ -39,17 +44,17 @@ const fitnessFunction = (chromosome: IChromosome) => {
         return -1;
 
     const result = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-    return convertToMin(result);
+    return (result);
 }
 
 const fitness = new FuncFitness(fitnessFunction);
 
 // Running the GA
-const selection = new EliteSelection();
+const selection = new RouletteWheelSelection();
 const crossover = new UniformCrossover(0.5);
 const mutation = new FlipBitMutation();
 const population = new Population(500, 1000, chromosome);
-const termination = new GenerationNumberTermination(1000);
+const termination = new FitnessStagnationTermination(100);
 
 const reinsertion = new ElitistReinsertion();
 
@@ -64,18 +69,15 @@ const ga = new GeneticAlgorithm(
 );
 
 export function start() {
-    const bestChromosomes = ga.start();
 
-    const set = new Set([...bestChromosomes]);
+    const subject = new Subject<IChromosome>();
 
-    for (const item of set) {
-        console.log(displayValues(item) + " Fitness: " + item.fitness);
-    }
-    const best = bestChromosomes[bestChromosomes.length - 1];
-    // const best = ga.bestChromosome;
-    console.log(best.getGenes().toString());
-    console.log(fitnessFunction(best));
-    console.log(displayValues(best));
+    subject.subscribe((best) => {
+        console.log(best.getGenes().toString());
+        console.log(fitnessFunction(best));
+        console.log(displayValues(best));
+    });
+    const bestChromosomes = ga.start(subject);
 }
 
 start();

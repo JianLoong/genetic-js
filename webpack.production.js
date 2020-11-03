@@ -5,9 +5,10 @@ module.exports = {
       //worker: "./src/samples/worker.ts"
     },
     output: {
-      filename: "[name].mjs",
+      filename: "geneticjs.umd.min.mjs",
       library: "geneticjs",
-      libraryTarget: "umd"
+      libraryTarget: "umd",
+      globalObject: "this"
     },
     resolve: {
       // Add `.ts` and `.tsx` as a resolvable extension.

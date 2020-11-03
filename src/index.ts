@@ -8,6 +8,8 @@ import CrossoverBase from "./domain/crossovers/CrossoverBase";
 import OnePointCrossover from "./domain/crossovers/OnePointCrossover";
 import OrderedCrossover from "./domain/crossovers/OrderedCrossover";
 import UniformCrossover from "./domain/crossovers/UniformCrossover";
+import FuncFitness from "./domain/fitnesses/FuncFitness";
+import IFitness from "./domain/fitnesses/IFitness";
 import GeneticAlgorithm from "./domain/GeneticAlgorithm";
 import FlipBitMutation from "./domain/mutations/FlipBitMutation";
 import IMutation from "./domain/mutations/IMutation";
@@ -19,10 +21,18 @@ import Generation from "./domain/populations/Generation";
 import IGenerationStrategy from "./domain/populations/IGenerationStrategy";
 import IPopulation from "./domain/populations/IPopulation";
 import Population from "./domain/populations/Population";
+import { ElitistReinsertion } from "./domain/reinsertion/ElitistReinsertion";
+import { FitnessBasedReinsertion } from "./domain/reinsertion/FitnessBasedReinsertion";
+import EliteSelection from "./domain/selections/EliteSelection";
+import RankSelection from "./domain/selections/RankSelection";
+import RouletteWheelSelection from "./domain/selections/RouletteWheelSelection";
 import AndTermination from "./domain/terminations/AndTermination";
 import FitnessStagnationTermination from "./domain/terminations/FitnessStagnationTermination";
 import FitnessThresholdTermination from "./domain/terminations/FitnessThresholdTermination";
 import GenerationNumberTermination from "./domain/terminations/GenerationNumberTermination";
+import ITermination from "./domain/terminations/ITermination";
+import OrTermination from "./domain/terminations/OrTermination";
+import TimeEvolvingTermination from "./domain/terminations/TimeEvolvingTermination";
 
 // Export Chromosomes
 export {
@@ -33,11 +43,11 @@ export {
     FloatingPointChromosome
 }
 
-// Export Genetic Algorithm main class
-export { GeneticAlgorithm }
-
 // Export Crossovers
 export { AlternatingPointCrossover, CrossoverBase, OnePointCrossover, OrderedCrossover, UniformCrossover }
+
+// Export Fitnesses
+export { FuncFitness, IFitness }
 
 // Export Mutations
 export { FlipBitMutation, IMutation, MutationBase, PartialShuffleMutation, ReverseSequenceMutation, UniformMutation }
@@ -45,11 +55,22 @@ export { FlipBitMutation, IMutation, MutationBase, PartialShuffleMutation, Rever
 // Export Population
 export { Generation, IGenerationStrategy, IPopulation, Population }
 
+// Reinsertion
+export { ElitistReinsertion, FitnessBasedReinsertion }
+
+// Selections
+export { EliteSelection, RankSelection, RouletteWheelSelection }
+
 // Terminations
 export {
     AndTermination,
     FitnessStagnationTermination,
     FitnessThresholdTermination,
-    GenerationNumberTermination
+    GenerationNumberTermination,
+    ITermination,
+    OrTermination,
+    TimeEvolvingTermination
 }
 
+// Export Genetic Algorithm main class
+export { GeneticAlgorithm }

@@ -3,7 +3,7 @@ import SelectionBase from "./SelectionBase";
 
 export default class EliteSelection extends SelectionBase {
 
-  constructor() {
+  constructor(isMaximized: boolean = true) {
     super(2);
   }
   performSelectChromosome(num: number, generation: Generation) {

@@ -8,12 +8,14 @@ export default class FitnessThresholdTermination extends TerminationBase {
     constructor(expectedFitness?: number) {
         super();
         if (expectedFitness === undefined || expectedFitness == null) {
-            this.expectedFitness = 1;
+            this.expectedFitness = 0;
         } else {
             this.expectedFitness = expectedFitness;
         }
     }
     performHasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {
+        if (geneticAlgorithm.bestChromosome.fitness === undefined)
+            throw new Error("Best chromosome does not have a fitness");
         return geneticAlgorithm.bestChromosome.fitness >= this.expectedFitness;
     }
 

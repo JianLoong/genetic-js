@@ -1,9 +1,10 @@
 import IChromosome from "../chromosome/IChromosome";
 
 export default class Generation {
+  public bestChromosome: IChromosome;
   chromosomes: IChromosome[];
 
-  constructor(num: number, chromosomes: IChromosome[]) {
+  constructor(num: number, chromosomes: IChromosome[], isMaximized: boolean = true) {
     if (num < 1) {
       throw new Error("Generation number " + num + "is invalid.");
     }
@@ -14,19 +15,27 @@ export default class Generation {
     this.num = num;
     this.creationDate = new Date();
     this.chromosomes = chromosomes;
+    this.isMaximized = isMaximized;
+    this.bestChromosome = undefined;
   }
-  private bestChromosomes: IChromosome;
   private creationDate: Date;
+  private isMaximized: boolean;
   private num: number;
 
   end(chromosomesNumber: number): void {
-    this.chromosomes = this.chromosomes
-      .filter((chromosome) => this.validateChromosome(chromosome) === true)
-      .sort((a, b) => b.fitness - a.fitness);
+    if (this.isMaximized) {
+      this.chromosomes = this.chromosomes
+        .filter((chromosome) => this.validateChromosome(chromosome) === true)
+        .sort((a, b) => b.fitness - a.fitness);
+    } else {
+      this.chromosomes = this.chromosomes
+        .filter((chromosome) => this.validateChromosome(chromosome) === true)
+        .sort((a, b) => a.fitness - b.fitness);
+    }
 
     this.chromosomes = this.chromosomes.slice(0, chromosomesNumber);
 
-    this.bestChromosomes = this.chromosomes[0];
+    this.bestChromosome = Object.assign(this.chromosomes[0], this.bestChromosome);
   }
 
   getChromosome(): IChromosome[] {
@@ -35,7 +44,7 @@ export default class Generation {
 
   toString() {
     // return "";
-    return this.bestChromosomes.getGenes().toString();
+    return this.bestChromosome.getGenes().toString();
   }
 
   validateChromosome(chromosome: IChromosome): boolean {

@@ -6,14 +6,17 @@ import IChromosome from "./IChromosome";
 export default class DecimalChromosome extends ChromosomeBase {
   constructor(
     length: number,
-    minValue?: number,
-    maxValue?: number,
-    unique?: boolean,
+    minValue: number = 0,
+    maxValue: number = 0,
+    unique: boolean = true,
     randomValues?: number[]
   ) {
     super(length);
     this.minValue = minValue;
     this.maxValue = maxValue;
+    if (this.validate() === false) {
+      throw new Error("Min value and max values are not valid.");
+    }
     unique === undefined ? (this.unique = false) : (this.unique = true);
 
     if (randomValues === undefined) {
@@ -48,5 +51,13 @@ export default class DecimalChromosome extends ChromosomeBase {
   }
   generateGene(geneIndex: number): Gene {
     return new Gene(this.randomValues[geneIndex]);
+  }
+
+  validate(): boolean {
+    if (this.minValue < 0)
+      return false;
+    if (this.maxValue < 0)
+      return false;
+    return true;
   }
 }

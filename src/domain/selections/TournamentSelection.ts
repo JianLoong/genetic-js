@@ -7,7 +7,7 @@ export default class TournamentSelection extends SelectionBase {
   allowWinnerCompeteNextTournament: boolean;
   size: number;
 
-  constructor(size?: number, allowWinnerCompeteNextTournament?: boolean) {
+  constructor(size: number, allowWinnerCompeteNextTournament: boolean = true) {
     super(2);
     this.size = size;
     this.allowWinnerCompeteNextTournament = allowWinnerCompeteNextTournament;

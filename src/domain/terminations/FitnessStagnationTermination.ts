@@ -16,6 +16,11 @@ export default class FitnessStagnationTermination extends TerminationBase {
     private mLastFitness: number;
     private mStagnantGenerationCount: number;
 
+    /**
+     * When the generation fitness has become stagnant, it will return true
+     * @param geneticAlgorithm the genetic algorithm
+     * @returns true if the generation has become stagnant.
+     */
     performHasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {
         if (geneticAlgorithm.bestChromosome === undefined)
             return false;
@@ -30,7 +35,6 @@ export default class FitnessStagnationTermination extends TerminationBase {
         this.mLastFitness = bestFitness;
 
         return this.mStagnantGenerationCount >= this.expectedStagnationGenerationNumber;
-
     }
 
 }

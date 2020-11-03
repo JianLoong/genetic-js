@@ -7,17 +7,13 @@ export default class AndTermination extends LogicalOperatorTerminationBase {
         super(terminations.length, terminations);
     }
 
-
     performHasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {
-
         let status: boolean = false;
-
         for (const termination of this.terminations) {
             status = termination.hasReached(geneticAlgorithm);
             if (status === false)
                 return false;
         }
-
         return true;
     }
 

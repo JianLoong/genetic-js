@@ -28,12 +28,12 @@ export default class AlternatingPointCrossover extends CrossoverBase {
     firstParent: IChromosome,
     secondParent: IChromosome
   ): IChromosome {
-    const child = [];
+    const child: Gene[] = [];
     const c = new DecimalChromosome(firstParent.length);
-    const p1 = [...firstParent.getGenes()];
-    const p2 = [...secondParent.getGenes()];
-    const p1Genes = [];
-    const p2Genes = [];
+    const p1: Gene[] = [...firstParent.getGenes()];
+    const p2: Gene[] = [...secondParent.getGenes()];
+    const p1Genes: Gene[] = [];
+    const p2Genes: Gene[] = [];
     p1.forEach((element) => p1Genes.push(element.mValue));
     p2.forEach((element) => p2Genes.push(element.mValue));
 
