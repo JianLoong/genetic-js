@@ -1,4 +1,5 @@
 
+import BinaryStringRepresentation from "../../commons/BinaryStringRepresentation";
 import Float32Encoding from "../../commons/Float32Encoding";
 import RandomizationProvider from "../randomization/RandomizationProvider";
 import BinaryChromosomeBase from "./BinaryChromosomeBase";
@@ -6,26 +7,40 @@ import Gene from "./Gene";
 import IChromosome from "./IChromosome";
 
 export default class FloatingPointChromosome extends BinaryChromosomeBase {
-
-    isIntValue: boolean;
-    maxValue: number[];
-    minValue: number[];
+    public maxValue: number[];
+    public minValue: number[];
     public originalValue: number[];
+
     constructor(minValue: number[], maxValue: number[], isIntValue: boolean = true) {
-        minValue.forEach(element => { if (element < 0) throw new Error("Min value cannot be below 0") });
-        maxValue.forEach(element => { if (element < 0) throw new Error("Max value cannot be below 0") });
+
+        minValue.forEach(element => {
+            if (element < 0)
+                throw new Error("Min value cannot be below 0")
+        });
+
+        maxValue.forEach(element => {
+            if (element < 0)
+                throw new Error("Max value cannot be below 0")
+        });
+
+
         let totalBit = 0;
+
+
         maxValue.forEach(element => totalBit += element.toString(2).length);
         if (isIntValue === true)
             super(totalBit);
         else
-            super(32 * minValue.length);
+            super(FloatingPointChromosome.BIT_LENGTH * minValue.length);
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.isIntValue = isIntValue;
         this.originalValue = this.flatten(minValue, maxValue);
         this.createGenes();
     }
+
+    private static BIT_LENGTH = 64;
+    private isIntValue: boolean;
 
     createNew(): IChromosome {
         return new FloatingPointChromosome(this.minValue, this.maxValue, this.isIntValue);
@@ -59,9 +74,10 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
 
             }
         } else {
-            for (let i = 0; i < genes.length; i = i + 32) {
-                const sliced = genes.slice(i, i + 32).toString().replace(/,/g, "");
-                values.push(Float32Encoding.convertBinToFloat32(sliced));
+            for (let i = 0; i < genes.length; i = i + FloatingPointChromosome.BIT_LENGTH) {
+                const sliced = genes.slice(i, i + FloatingPointChromosome.BIT_LENGTH).toString().replace(/,/g, "");
+                // values.push(Float32Encoding.convertBinToFloat32(sliced));
+                values.push(BinaryStringRepresentation.convertBinaryToNumber(sliced));
             }
         }
         return values;
@@ -90,7 +106,8 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
                 const max = maxValue[i];
                 let random: number = 0;
                 random = RandomizationProvider.current.getFloat(min, max);
-                stringRepresentation += Float32Encoding.convertFloat32ToBin(random);
+                // stringRepresentation += Float32Encoding.convertFloat32ToBin(random);
+                stringRepresentation += BinaryStringRepresentation.convertNumberToBinary(random);
             }
 
         }
@@ -100,5 +117,19 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
     generateGene(geneIndex: number): Gene {
         const gene = this.originalValue[geneIndex];
         return new Gene(gene);
+    }
+
+    isSafeInteger(minValue: number[], maxValue: number[]): boolean {
+        minValue.forEach(element => {
+            if (!Number.isSafeInteger(element))
+                return false;
+        });
+
+        maxValue.forEach(element => {
+            if (!Number.isSafeInteger(element))
+                return false;
+        });
+
+        return true;
     }
 }

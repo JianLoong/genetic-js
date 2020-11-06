@@ -19,14 +19,14 @@ export default class Float32Encoding {
             return 0;
     };
     static convertFloat32ToBin = (float32) => {
-        const HexToBin = hex => (parseInt(hex, 16).toString(2)).padStart(32, '0');
-        const getHex = i => ('00' + i.toString(16)).slice(-2);
+        const HexToBin = (hex: string) => (parseInt(hex, 16).toString(2)).padStart(32, '0');
+        const getHex = (i: number) => ('00' + i.toString(16)).slice(-2);
         const view = new DataView(new ArrayBuffer(4))
         view.setFloat32(0, float32);
         return HexToBin(Array.apply(null, { length: 4 }).map((_, i) => getHex(view.getUint8(i))).join(''));
     }
 
-    static convertFloat32ToHex = (float32: number) => {
+    static convertFloat32ToHex = (float32) => {
         const getHex = i => ('00' + i.toString(16)).slice(-2);
         const view = new DataView(new ArrayBuffer(4))
         view.setFloat32(0, float32);

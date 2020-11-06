@@ -1,39 +1,27 @@
-class BinaryStringRepresentation {
+export default class BinaryStringRepresentation {
 
-    static toRepresentation(value: number[], totalBits: number[], throwsException?: boolean): string {
-        let result = "";
-        // value.forEach(v => result += v.toString(2).padStart(totalBits, "0"));
-
-        for (let i = 0; i < value.length; i++) {
-            result += value[i].toString(2).padStart(totalBits[i], "0");
-        }
-
-        return result;
-
-        // if (throwsException && totalBits > 0 && result.length > totalBits)
-        //     throw new Error("Cannot be represented");
-        // return result;
+    // Converts number into a 64-bit binary using its IEEE764 Representation
+    // Based on https://stackoverflow.com/questions/3096646/how-to-convert-a-floating-point-number-to-its-binary-representation-ieee-754-i
+    static convertNumberToBinary(num: number): string {
+        let str: string = "";
+        const c = new Uint8Array(new Float64Array([num]).buffer, 0, 8);
+        for (const element of c.reverse())
+            str += element.toString(2).padStart(8, '0');
+        return str;
     }
 
-    static toInt64One(representation: string): number {
-        return parseInt(representation, 10);
-    }
-
-    static toInt64(representation: string, totalBits: number[]): number[] {
-        let sum = 0;
-        totalBits.forEach(a => sum += a);
-
-        if (representation.length !== sum)
-            throw new Error("There is an issue with the sum");
-        const int64s: number[] = [];
-        let startIndex = 0;
-
-        for (let i = 0; i < totalBits.length; i++) {
-            const currentTotalBits = totalBits[i];
-            int64s[i] = this.toInt64One(representation.substring(startIndex, currentTotalBits));
-            startIndex += currentTotalBits;
+    // Converts a binary IEEE764 to its number representation
+    static convertBinaryToNumber(str: string): number {
+        // Convert back to Uint8Array.
+        if (str.length !== 64)
+            throw new Error("Binary cannot be converted because the length is not 64.")
+        const arr: number[] = [];
+        for (let i = 0; i < str.length; i += 8) {
+            const inner = str.slice(i, i + 8);
+            arr.push(parseInt(inner, 2));
         }
-
-        return int64s;
+        const c = new Uint8Array(arr);
+        const num = new DataView(c.buffer, 0, 8).getFloat64(0);
+        return num;
     }
 }
