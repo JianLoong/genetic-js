@@ -21,7 +21,7 @@ import Generation from "./domain/populations/Generation";
 import IGenerationStrategy from "./domain/populations/IGenerationStrategy";
 import IPopulation from "./domain/populations/IPopulation";
 import Population from "./domain/populations/Population";
-import { ElitistReinsertion } from "./domain/reinsertion/ElitistReinsertion";
+import ElitistReinsertion from "./domain/reinsertion/ElitistReinsertion";
 import { FitnessBasedReinsertion } from "./domain/reinsertion/FitnessBasedReinsertion";
 import EliteSelection from "./domain/selections/EliteSelection";
 import RankSelection from "./domain/selections/RankSelection";

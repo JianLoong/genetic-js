@@ -11,7 +11,7 @@ export default class OnePointCrossover extends CrossoverBase {
             this.swapPointIndex = swapPointIndex;
     }
 
-    private swapPointIndex: number;
+    private swapPointIndex: number = 0;
 
     performCross(parents: IChromosome[]): IChromosome[] {
         const firstParent = parents[0];

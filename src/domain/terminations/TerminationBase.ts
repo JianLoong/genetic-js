@@ -2,7 +2,7 @@ import IGeneticAlgorithm from "../IGeneticAlgorithm";
 import ITermination from "./ITermination";
 
 export default abstract class TerminationBase implements ITermination {
-  private mHasReached: boolean;
+  mHasReached: boolean = false;
 
   hasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {
     this.mHasReached = this.performHasReached(geneticAlgorithm);

@@ -1,3 +1,4 @@
+import { DecimalChromosome } from "../..";
 import IChromosome from "../chromosome/IChromosome";
 import Generation from "./Generation";
 import IPopulation from "./IPopulation";
@@ -24,6 +25,8 @@ export default class Population implements IPopulation {
     this.adamChromosome = adamChromosome;
     this.bestChromosome = adamChromosome;
     this.isMaximized = isMaximized;
+    this.generationNumber = 0;
+    this.currentGeneration = new Generation(0, [new DecimalChromosome(10, 0, 10)])
 
     this.createInitialGeneration();
   }
@@ -46,7 +49,7 @@ export default class Population implements IPopulation {
     this.createNewGeneration(chromosomes);
   }
 
-  createNewGeneration(chromosomes?: IChromosome[]): void {
+  createNewGeneration(chromosomes: IChromosome[]): void {
     this.currentGeneration = new Generation(
       ++this.generationNumber,
       chromosomes,
@@ -58,18 +61,10 @@ export default class Population implements IPopulation {
     this.currentGeneration.end(this.maxSize);
     if (
       (this.bestChromosome.fitness || 0) <
-      this.currentGeneration.chromosomes[0].fitness ||
+      (this.currentGeneration.chromosomes[0].fitness || new DecimalChromosome(10, 0, 10)) ||
       this.bestChromosome === undefined
     ) {
       this.bestChromosome = this.currentGeneration.chromosomes[0];
     }
   }
-
-  toString = () => {
-    let str = "";
-    for (const generation of this.generations) {
-      str += this.generations.toString();
-    }
-    return str;
-  };
 }

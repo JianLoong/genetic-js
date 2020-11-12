@@ -14,24 +14,4 @@ export default class ChromosomeExtension {
     }
     return false;
   }
-
-  static validateGenes(
-    chromosome?: IChromosome,
-    chromosomes?: IChromosome[]
-  ): boolean {
-
-    if (chromosome !== undefined) {
-      if (chromosome.getGenes() === undefined)
-        return false;
-    }
-
-    if (chromosomes !== undefined) {
-      for (const ch of chromosomes) {
-        if (ch.getGenes() === undefined)
-          return false;
-      }
-    }
-
-    return true;
-  }
 }

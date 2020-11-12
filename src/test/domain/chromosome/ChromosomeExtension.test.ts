@@ -52,4 +52,18 @@ describe("ChromosomeExtension Test", () => {
         expect(result).toBe(true);
 
     });
+
+    it("should be true", () => {
+
+        const p1 = [1, 2, 2, 2, 5, 6, 7, 8];
+        const d1 = new DecimalChromosome(8, 0, 8, false, p1);
+        const p2 = [1, 2, 3, 4, 5, 6, 7, 8];
+        const d2 = new DecimalChromosome(8, 0, 8, false, p2);
+
+
+        const result = ChromosomeExtension.anyHasRepeatedGene([d1, d2]);
+
+        expect(result).toBe(true);
+
+    });
 });

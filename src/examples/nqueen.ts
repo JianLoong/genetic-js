@@ -24,7 +24,7 @@ const displayBoard = (chromosome: IChromosome): string => {
 
 const noOfQueen = 8;
 
-const good = (no) => {
+const good = (no: number) => {
   let sum = 0;
   for (let i = no - 1; i > 0; i--) sum += i;
   return sum;

@@ -13,7 +13,8 @@
     "module": "CommonJS",
     "declaration": false,
     "emitDeclarationOnly": false,
-    "strict": false,
+    "strict": true,
+    "noUnusedLocals": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "downlevelIteration": true,
@@ -28,7 +29,7 @@
     "plugins": [
       {
         "name": "typescript-tslint-plugin",
-        "configFile": "../tslint.json"
+        "configFile": "./tslint.json"
       }
     ]
   },

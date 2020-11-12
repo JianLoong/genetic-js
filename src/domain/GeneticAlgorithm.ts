@@ -9,13 +9,14 @@ import IMutation from "./mutations/IMutation";
 import UniformMutation from "./mutations/UniformMutation";
 import IPopulation from "./populations/IPopulation";
 import Population from "./populations/Population";
-import { ElitistReinsertion } from "./reinsertion/ElitistReinsertion";
+import ElitistReinsertion from "./reinsertion/ElitistReinsertion";
 import { IReinsertion } from "./reinsertion/IReinsertion";
 import EliteSelection from "./selections/EliteSelection";
 import ISelection from "./selections/ISelection";
 import GenerationNumberTermination from "./terminations/GenerationNumberTermination";
 import ITermination from "./terminations/ITermination";
 import { Subject } from "rxjs"
+import { DecimalChromosome } from "..";
 
 
 enum GeneticAlgorithmState {
@@ -63,6 +64,8 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
     this.reinsertion = reinsertion;
     this.generationsNumber = 0;
     this.geneticAlgorithmState = GeneticAlgorithmState.NotStarted;
+    this.timeEvolving = new Date();
+    this.bestChromosome = new DecimalChromosome(10, 0, 10);
   }
 
   clone() {
@@ -100,14 +103,13 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
 
     const bestChromosomeArray = [];
     this.timeEvolving = new Date();
-
+    this.geneticAlgorithmState = GeneticAlgorithmState.Started;
     while (this.termination.hasReached(this) === false) {
       this.evolveOneGeneration();
       bestChromosomeArray.push(this.bestChromosome);
       this.generationsNumber++;
       const best = this.bestChromosome;
       if (subject !== undefined) subject.next(best);
-      this.geneticAlgorithmState = GeneticAlgorithmState.TerminationReached;
     }
     return bestChromosomeArray;
   };
@@ -145,12 +147,16 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
 
   private fitnessMap = (chromosome: IChromosome): number => {
     const hm: Map<IChromosome, number> = new Map();
-    if (hm.get(chromosome) === undefined) {
-      const fitness = this.fitness.evaluate(chromosome);
-      hm.set(chromosome, fitness);
+
+    const fitness = hm.get(chromosome);
+
+    if (fitness === undefined) {
+      const result = this.fitness.evaluate(chromosome);
+      hm.set(chromosome, result);
+      return result;
+    } else {
       return fitness;
     }
-    return hm.get(chromosome);
   };
 
   private mutate(chromosomes: IChromosome[]): void {
@@ -163,19 +169,19 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
 
   // https://stackoverflow.com/questions/40328932/javascript-es6-promise-for-loop
   // https://stackoverflow.com/questions/31426740/how-to-return-many-promises-and-wait-for-them-all-before-doing-other-stuff
-  private promiseArr = (totalIsland: number): void => {
-    const promArr = [];
-    for (let i = 0; i < totalIsland; i++) {
-      const evolveOneGenerationAsync = new Promise((resolve, reject) => {
-        return resolve(this.evolveOneGeneration());
-      });
-      promArr.push(evolveOneGenerationAsync);
-    }
+  // private promiseArr = (totalIsland: number): void => {
+  //   const promArr = [];
+  //   for (let i = 0; i < totalIsland; i++) {
+  //     const evolveOneGenerationAsync = new Promise((resolve, reject) => {
+  //       return resolve(this.evolveOneGeneration());
+  //     });
+  //     promArr.push(evolveOneGenerationAsync);
+  //   }
 
-    Promise.all(promArr).then((values) => {
-      // console.log(this.bestChromosome.toString());
-    });
-  };
+  //   Promise.all(promArr).then((values) => {
+  //     // console.log(this.bestChromosome.toString());
+  //   });
+  // };
 
   private reinsert(offspring: IChromosome[], parents: IChromosome[]) {
     return this.reinsertion.selectChromosome(this.population, offspring, parents);

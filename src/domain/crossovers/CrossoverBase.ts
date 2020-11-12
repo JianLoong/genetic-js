@@ -3,8 +3,8 @@ import ICrossover from "./ICrossover";
 
 export default abstract class CrossoverBase implements ICrossover {
   public childrenNumber: number;
-
   isOrdered: boolean;
+
   public minChromosomeLength: number;
   public parentNumber: number;
   constructor(
@@ -14,7 +14,9 @@ export default abstract class CrossoverBase implements ICrossover {
   ) {
     this.parentNumber = parentsNumber;
     this.childrenNumber = childrenNumber;
-    this.minChromosomeLength = minChromosomeLength;
+    this.minChromosomeLength = minChromosomeLength || 0;
+    this.isOrdered = false;
+
   }
 
   cross(parents: IChromosome[]): IChromosome[] {

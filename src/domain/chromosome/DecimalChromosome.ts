@@ -4,6 +4,7 @@ import Gene from "./Gene";
 import IChromosome from "./IChromosome";
 
 export default class DecimalChromosome extends ChromosomeBase {
+  public unique: boolean;
   constructor(
     length: number,
     minValue: number = 0,
@@ -14,11 +15,10 @@ export default class DecimalChromosome extends ChromosomeBase {
     super(length);
     this.minValue = minValue;
     this.maxValue = maxValue;
+    this.unique = unique;
     if (this.validate() === false) {
       throw new Error("Min value and max values are not valid.");
     }
-    unique === undefined ? (this.unique = false) : (this.unique = true);
-
     if (randomValues === undefined) {
       if (unique === true)
         this.randomValues = RandomizationProvider.current.getUniqueInts(length, minValue, maxValue);
@@ -33,7 +33,6 @@ export default class DecimalChromosome extends ChromosomeBase {
   private maxValue: number;
   private minValue: number;
   private randomValues: number[];
-  private unique: boolean;
 
   // clone = () => {
   //   const clone = new DecimalChromosome(

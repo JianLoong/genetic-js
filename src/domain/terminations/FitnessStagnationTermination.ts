@@ -3,8 +3,10 @@ import TerminationBase from "./TerminationBase";
 
 export default class FitnessStagnationTermination extends TerminationBase {
     public expectedStagnationGenerationNumber: number;
-    constructor(expectedStagnationGenerationNumber?: number) {
+    constructor(expectedStagnationGenerationNumber: number) {
         super();
+        this.mLastFitness = 0;
+        this.mStagnantGenerationCount = 0;
         if (
             expectedStagnationGenerationNumber === undefined ||
             expectedStagnationGenerationNumber === null
@@ -32,7 +34,7 @@ export default class FitnessStagnationTermination extends TerminationBase {
             this.mStagnantGenerationCount = 1;
         }
 
-        this.mLastFitness = bestFitness;
+        this.mLastFitness = bestFitness || 0;
 
         return this.mStagnantGenerationCount >= this.expectedStagnationGenerationNumber;
     }

@@ -1,3 +1,4 @@
+import { FuncFitness } from "../..";
 import IChromosome from "../chromosome/IChromosome";
 import Generation from "../populations/Generation";
 import RandomizationProvider from "../randomization/RandomizationProvider";
@@ -25,14 +26,15 @@ export default class RouletteWheelSelection extends SelectionBase {
     let sum = 0;
 
     for (const chromosome of generation.chromosomes) {
-      sum += chromosome.fitness;
+      sum += chromosome.fitness || 0;
     }
 
     const random = RandomizationProvider.current.getInt(0, sum);
-    const sorted = generation.chromosomes.sort((a, b) => b.fitness - a.fitness);
+    // const sorted = generation.chromosomes.sort((a, b) => b.fitness - a.fitness);
+    const sorted = FuncFitness.sort(generation.chromosomes);
     let partialSum = 0;
     for (const chromosome of sorted) {
-      partialSum += chromosome.fitness;
+      partialSum += chromosome.fitness || 0;
       if (partialSum > random) return chromosome;
     }
 

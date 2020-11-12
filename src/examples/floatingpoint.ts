@@ -1,4 +1,5 @@
-import { FitnessStagnationTermination, OrTermination } from "..";
+import { Subject } from "rxjs";
+import { FitnessStagnationTermination } from "..";
 import FloatingPointChromosome from "../domain/chromosome/FloatingPointChromosome";
 import IChromosome from "../domain/chromosome/IChromosome";
 import UniformCrossover from "../domain/crossovers/UniformCrossover";
@@ -6,12 +7,8 @@ import FuncFitness from "../domain/fitnesses/FuncFitness";
 import GeneticAlgorithm from "../domain/GeneticAlgorithm";
 import FlipBitMutation from "../domain/mutations/FlipBitMutation";
 import Population from "../domain/populations/Population";
-import { ElitistReinsertion } from "../domain/reinsertion/ElitistReinsertion";
-import EliteSelection from "../domain/selections/EliteSelection";
+import ElitistReinsertion from "../domain/reinsertion/ElitistReinsertion";
 import RouletteWheelSelection from "../domain/selections/RouletteWheelSelection";
-import GenerationNumberTermination from "../domain/terminations/GenerationNumberTermination";
-import { Observable } from "rxjs"
-import { Subject } from "rxjs"
 
 
 const chromosome = new FloatingPointChromosome([0, 0, 0, 0], [998, 680, 998, 680], false);
@@ -21,9 +18,6 @@ const displayValues = (chromosome: IChromosome): string => {
     return c.expand().toString();
 }
 
-const convertToMin = (value) => {
-    return 1 / (1 + value);
-}
 
 const fitnessFunction = (chromosome: IChromosome) => {
     const c = chromosome as FloatingPointChromosome;
@@ -77,7 +71,7 @@ export function start() {
         console.log(fitnessFunction(best));
         console.log(displayValues(best));
     });
-    const bestChromosomes = ga.start(subject);
+    ga.start(subject);
 }
 
 start();

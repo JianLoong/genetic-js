@@ -1,3 +1,4 @@
+import { FuncFitness } from "../..";
 import IChromosome from "../chromosome/IChromosome";
 import Generation from "../populations/Generation";
 import RandomizationProvider from "../randomization/RandomizationProvider";
@@ -30,7 +31,8 @@ export default class TournamentSelection extends SelectionBase {
         tournamentParticipants.push(candidates[index]);
       }
 
-      const winner = tournamentParticipants.sort((a, b) => b.fitness - a.fitness)[0];
+      //const winner = tournamentParticipants.sort((a, b) => b.fitness - a.fitness)[0];
+      const winner = FuncFitness.sort(tournamentParticipants)[0];
 
       selected.push(winner);
 

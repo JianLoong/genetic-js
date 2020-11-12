@@ -5,8 +5,8 @@ export default class CrossOverUtil {
   static orderedCrossover = (
     parentOne: any[],
     parentTwo: any[],
-    pos1?,
-    pos2?
+    pos1?: number,
+    pos2?: number
   ): any[] => {
     const parentOneClone = [...parentOne];
     let parentTwoClone = [...parentTwo];
@@ -18,8 +18,8 @@ export default class CrossOverUtil {
     if (pos1 === undefined) pos1 = random[0];
     if (pos2 === undefined) pos2 = random[1];
 
-    const child = [];
-    const markedOut = [];
+    const child: any[] = [];
+    const markedOut: any[] = [];
     for (let i = pos1; i < pos2; i++) {
       markedOut.push(parentOneClone[i]);
       child[i] = parentOneClone[i];

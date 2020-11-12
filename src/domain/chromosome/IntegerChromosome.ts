@@ -6,7 +6,7 @@ import IChromosome from "./IChromosome";
 export default class IntegerChromosome extends BinaryChromosomeBase {
   maxValue: number;
   minValue: number;
-  originalValue = [];
+  originalValue: number[] = [];
 
   constructor(minValue: number, maxValue: number) {
     super(32);
@@ -45,12 +45,6 @@ export default class IntegerChromosome extends BinaryChromosomeBase {
   }
 
   toString(): string {
-    let str = "";
-    for (let i = 0; i < this.getGenes().length; i++) {
-      str += this.getGene(i).mValue + " ";
-    }
-
-    const fitness = "Fitness:  " + this.fitness;
     // return str + fitness;
     return super.toString();
   }

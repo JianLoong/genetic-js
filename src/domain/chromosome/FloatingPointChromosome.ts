@@ -1,6 +1,4 @@
-
 import BinaryStringRepresentation from "../../commons/BinaryStringRepresentation";
-import Float32Encoding from "../../commons/Float32Encoding";
 import RandomizationProvider from "../randomization/RandomizationProvider";
 import BinaryChromosomeBase from "./BinaryChromosomeBase";
 import Gene from "./Gene";
@@ -44,10 +42,6 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
 
     createNew(): IChromosome {
         return new FloatingPointChromosome(this.minValue, this.maxValue, this.isIntValue);
-    }
-
-    ensureCapacity(): boolean {
-        return true;
     }
 
     /**
@@ -119,17 +113,17 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
         return new Gene(gene);
     }
 
-    isSafeInteger(minValue: number[], maxValue: number[]): boolean {
-        minValue.forEach(element => {
-            if (!Number.isSafeInteger(element))
-                return false;
-        });
+    // isSafeInteger(minValue: number[], maxValue: number[]): boolean {
+    //     minValue.forEach(element => {
+    //         if (!Number.isSafeInteger(element))
+    //             return false;
+    //     });
 
-        maxValue.forEach(element => {
-            if (!Number.isSafeInteger(element))
-                return false;
-        });
+    //     maxValue.forEach(element => {
+    //         if (!Number.isSafeInteger(element))
+    //             return false;
+    //     });
 
-        return true;
-    }
+    //     return true;
+    // }
 }

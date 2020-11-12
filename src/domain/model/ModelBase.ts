@@ -5,6 +5,6 @@ export default abstract class ModelBase implements IModel {
         throw new Error("Method not implemented.");
     }
 
-    abstract performModel();
+    abstract performModel(): void;
 
 }

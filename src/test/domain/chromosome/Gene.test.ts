@@ -1,4 +1,4 @@
-import Gene from "../../domain/chromosome/Gene";
+import Gene from "../../../domain/chromosome/Gene";
 
 describe("Gene Test", () => {
   test("Check the gene constructor", () => {
@@ -51,10 +51,8 @@ describe("Gene Test", () => {
     expect(a.equals(b)).toEqual(false);
   });
 
-  test("To test equals method null", () => {
-    const a = new Gene(null);
-    const b = null;
-
-    expect(a.equals(b)).toEqual(false);
+  test("To test equals method false", () => {
+    const a = new Gene(0);
+    expect(a.equals(undefined)).toEqual(false);
   });
 });

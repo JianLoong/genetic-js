@@ -7,15 +7,10 @@ import CrossOverUtil from "./CrossOverUtil";
 export default class OrderedCrossover extends CrossoverBase {
   constructor() {
     super(2, 2);
-    this.isOrdered = true;
   }
   performCross(parents: IChromosome[]): IChromosome[] {
     const parentOne = parents[0];
     const parentTwo = parents[1];
-
-    if (!ChromosomeExtension.validateGenes(parentOne)) {
-      throw new Error("Ordered Crossover - Cannot be used! Parent has duplicate genes.");
-    }
 
     if (ChromosomeExtension.anyHasRepeatedGene([parentOne, parentTwo])) {
       throw new Error("Ordered Crossover - Parents have repeated genes");

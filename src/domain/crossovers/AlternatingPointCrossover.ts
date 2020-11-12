@@ -40,10 +40,10 @@ export default class AlternatingPointCrossover extends CrossoverBase {
     const length = p1.length;
     while (child.length < length) {
       !child.includes(p1Genes[0])
-        ? child.push(p1Genes.shift())
+        ? child.push(p1Genes.shift() || new Gene(0))
         : p1Genes.shift();
       !child.includes(p2Genes[0])
-        ? child.push(p2Genes.shift())
+        ? child.push(p2Genes.shift() || new Gene(0))
         : p2Genes.shift();
     }
     for (let i = 0; i < firstParent.length; i++)

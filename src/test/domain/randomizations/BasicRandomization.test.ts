@@ -1,4 +1,3 @@
-import { isInteger } from "core-js/fn/number";
 import RandomizationProvider from "../../../domain/randomization/RandomizationProvider";
 
 describe("Basic Randomization Test", () => {

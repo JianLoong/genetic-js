@@ -1,3 +1,3 @@
 export interface IModel {
-    perform();
+    perform(): void;
 }

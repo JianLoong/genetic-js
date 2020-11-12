@@ -4,10 +4,9 @@ export default class Gene {
     this.mValue = value;
   }
 
-  equals(other: Gene): boolean {
-    if (other == null) {
+  equals(other?: Gene): boolean {
+    if (other === undefined)
       return false;
-    }
     return other.mValue === this.mValue;
   }
 

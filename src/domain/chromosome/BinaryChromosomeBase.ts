@@ -10,7 +10,7 @@ export default abstract class BinaryChromosomeBase extends ChromosomeBase
 
   flipGene(index: number): void {
     const value = this.getGene(index);
-    if (value === undefined) throw new Error("BinaryChromosomeBase - Cannot Flip a gene which is undefined");
+    if (value.mValue === undefined) throw new Error("BinaryChromosomeBase - Cannot Flip a gene which is undefined");
     this.replaceGene(index, new Gene(value.mValue === 0 ? 1 : 0));
   }
 

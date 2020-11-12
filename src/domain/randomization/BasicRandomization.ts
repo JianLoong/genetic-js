@@ -6,7 +6,7 @@ export default class BasicRandomization extends RandomizationBase {
     return Math.random() * (max - min) + min;
   }
 
-  getFloat(min?: number, max?: number): number {
+  getFloat(min: number = 0, max: number = 0): number {
     return Math.random() * (max - min) + min;
   }
 

@@ -18,7 +18,6 @@ export default abstract class SequenceMutationBase extends MutationBase {
         .sort((a, b) => a - b);
       const firstIndex = indexes[0];
       const secondIndex = indexes[1];
-      const sequenceLength = secondIndex - firstIndex + 1;
       const sequence = chromosome.getGenes().slice(firstIndex, secondIndex);
       const mutatedSequence = this.mutateOnSequence(sequence);
 

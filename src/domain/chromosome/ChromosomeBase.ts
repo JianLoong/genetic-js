@@ -12,10 +12,6 @@ export default abstract class ChromosomeBase implements IChromosome {
   public genes: Gene[];
   public length: number;
 
-  // clone(): IChromosome {
-  //   throw new Error("Method not implemented.");
-  // }
-
   abstract createNew(): IChromosome;
   abstract generateGene(geneIndex: number): Gene;
   getGene(index: number): Gene {
@@ -54,8 +50,10 @@ export default abstract class ChromosomeBase implements IChromosome {
       this.replaceGene(i, genes[i]);
     }
   }
+
   resize(newLength: number): void {
     this.validateLength(newLength);
+    this.length = newLength;
   }
 
   toString(): string {
