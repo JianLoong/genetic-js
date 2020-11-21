@@ -97,6 +97,20 @@ describe("ChromosomeBase Test", () => {
         expect(genes).toHaveLength(10);
     });
 
+    it("should replace genes", () => {
+        const cb = new ChromosomeBaseTest(10);
+
+        const replacement: Gene[] = [];
+        replacement.push(new Gene(1));
+        replacement.push(new Gene(2));
+        replacement.push(new Gene(3));
+
+        cb.replaceGenes(5, replacement);
+
+        const genes = cb.getGenes();
+        expect(genes).toHaveLength(10);
+    });
+
 
 
 

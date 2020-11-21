@@ -46,9 +46,10 @@ export default abstract class ChromosomeBase implements IChromosome {
     if (availableSpaceLength < genesToBeReplacedLength)
       throw new Error("ChromosomeBase - Not enough space to replace genes.");
 
-    for (let i = startIndex; i < genes.length; i++) {
-      this.replaceGene(i, genes[i]);
+    for (let i = startIndex, j = 0; i < this.length && j < genes.length; i++, j++) {
+      this.genes[i] = genes[j];
     }
+
   }
 
   resize(newLength: number): void {

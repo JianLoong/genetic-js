@@ -6,12 +6,9 @@ export default class OnePointCrossover extends CrossoverBase {
 
     constructor(swapPointIndex?: number) {
         super(2, 2);
-
-        if (swapPointIndex !== undefined)
-            this.swapPointIndex = swapPointIndex;
+        this.swapPointIndex = swapPointIndex;
     }
-
-    private swapPointIndex: number = 0;
+    private swapPointIndex?: number;
 
     performCross(parents: IChromosome[]): IChromosome[] {
         const firstParent = parents[0];
@@ -30,13 +27,24 @@ export default class OnePointCrossover extends CrossoverBase {
     }
 
     private createChild(leftParent: IChromosome, rightParent: IChromosome) {
-        const cutGeneCount = this.swapPointIndex + 1;
-        const child = leftParent.createNew();
-        const left = leftParent.getGenes().slice(0, cutGeneCount);
-        const right = rightParent.getGenes().slice(cutGeneCount, rightParent.getGenes().length - 1);
-        const combined = left.concat(right);
-        child.replaceGenes(0, combined);
+        // const cutGeneCount = (this.swapPointIndex || 0) + 1;
+        // const child = leftParent.createNew();
+        // const left = leftParent.getGenes().slice(0, cutGeneCount);
+        // const right = rightParent.getGenes().slice(cutGeneCount, rightParent.getGenes().length - 1);
+        // const combined = left.concat(right);
+        // child.replaceGenes(0, combined);
 
+        const left = [...leftParent.getGenes()];
+        const right = [...rightParent.getGenes()];
+        const child = leftParent.createNew();
+        const index = this.swapPointIndex;
+
+        const l = left.slice(0, index);
+        const r = right.slice(index, right.length + 1);
+
+        const genes = l.concat(r);
+
+        child.replaceGenes(0, genes);
         return child;
     }
 

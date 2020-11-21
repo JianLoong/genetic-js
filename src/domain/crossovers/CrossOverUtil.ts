@@ -1,38 +1,36 @@
-import RandomizationProvider from "../randomization/RandomizationProvider";
+import Gene from "../chromosome/Gene";
 
 // https://www.researchgate.net/figure/An-example-of-order-crossover_fig4_282998951
 export default class CrossOverUtil {
-  static orderedCrossover = (
-    parentOne: any[],
-    parentTwo: any[],
-    pos1?: number,
-    pos2?: number
-  ): any[] => {
-    const parentOneClone = [...parentOne];
-    let parentTwoClone = [...parentTwo];
-    const length = parentOne.length;
-    const random = RandomizationProvider.current
-      .getUniqueInts(2, 0, length)
-      .sort((a, b) => a - b);
+  static orderedCrossover = (p1: Gene[], p2: Gene[], pos1: number, pos2: number): Gene[] => {
 
-    if (pos1 === undefined) pos1 = random[0];
-    if (pos2 === undefined) pos2 = random[1];
+    const child: Gene[] = [];
+    const parentOne = [...p1];
+    let parentTwo = [...p2];
 
-    const child: any[] = [];
-    const markedOut: any[] = [];
+    const markedOut: Gene[] = [];
     for (let i = pos1; i < pos2; i++) {
-      markedOut.push(parentOneClone[i]);
-      child[i] = parentOneClone[i];
+      markedOut.push(parentOne[i]);
+      child[i] = parentOne[i];
     }
 
-    parentTwoClone = parentTwoClone.filter((val) => !markedOut.includes(val));
-    for (let i = 0; i < pos1; i++) child[i] = parentTwoClone.shift();
-    for (let i = pos2; i < length; i++) child[i] = parentTwoClone.shift();
+    parentTwo = parentTwo.filter(element => {
+      for (const marked of markedOut) {
+        if (marked.equals(element))
+          return false;
+      }
+      return true;
+    });
+
+    for (let i = 0; i < pos1; i++) {
+      child[i] = parentTwo[0];
+      parentTwo.shift();
+    }
+    for (let i = pos2; i < parentOne.length; i++) {
+      child[i] = parentTwo[0];
+      parentTwo.shift();
+    }
 
     return child;
   };
-
-  static pmxCrossOver = {
-
-  }
 }

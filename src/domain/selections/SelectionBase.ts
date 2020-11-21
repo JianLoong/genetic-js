@@ -9,10 +9,10 @@ export default abstract class SelectionBase implements ISelection {
     this.minNumberChromosome = minNumberChromosome;
   }
 
-  abstract performSelectChromosome(num: number, generation: Generation): IChromosome[];
+  abstract performSelectChromosome(num: number, generation?: Generation): IChromosome[];
   selectChromosomes(num: number, generation: Generation): IChromosome[] {
     if (num < this.minNumberChromosome) {
-      throw new Error("");
+      throw new Error("The min number of chromosomes exceed the number.");
     }
     return this.performSelectChromosome(num, generation);
   }

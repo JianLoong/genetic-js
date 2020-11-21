@@ -62,10 +62,6 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
             for (let i = 0, j = 0; i < genes.length; i = i + bitLength[j], j++) {
                 const sliced = genes.slice(i, i + bitLength[j]).toString().replace(/,/g, "");
                 values.push(parseInt(sliced, 2));
-                // const sliced = genes.slice(i, i + bitLength[j]);// .toString().replace(/,/g, "");
-                // const arr = [];
-                // sliced.for
-
             }
         } else {
             for (let i = 0; i < genes.length; i = i + FloatingPointChromosome.BIT_LENGTH) {

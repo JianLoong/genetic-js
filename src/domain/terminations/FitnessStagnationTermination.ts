@@ -2,19 +2,18 @@ import IGeneticAlgorithm from "../IGeneticAlgorithm";
 import TerminationBase from "./TerminationBase";
 
 export default class FitnessStagnationTermination extends TerminationBase {
-    public expectedStagnationGenerationNumber: number;
-    constructor(expectedStagnationGenerationNumber: number) {
+
+    constructor(expectedStagnationGenerationNumber?: number) {
         super();
         this.mLastFitness = 0;
         this.mStagnantGenerationCount = 0;
-        if (
-            expectedStagnationGenerationNumber === undefined ||
-            expectedStagnationGenerationNumber === null
-        )
+        if (expectedStagnationGenerationNumber === undefined)
             this.expectedStagnationGenerationNumber = 100;
         else
             this.expectedStagnationGenerationNumber = expectedStagnationGenerationNumber;
     }
+
+    private expectedStagnationGenerationNumber: number;
     private mLastFitness: number;
     private mStagnantGenerationCount: number;
 
@@ -24,9 +23,10 @@ export default class FitnessStagnationTermination extends TerminationBase {
      * @returns true if the generation has become stagnant.
      */
     performHasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {
-        if (geneticAlgorithm.bestChromosome === undefined)
-            return false;
         const bestFitness = geneticAlgorithm.bestChromosome.fitness;
+
+        if (bestFitness === undefined)
+            throw new Error("the best fitness has not been evaluated.");
 
         if (this.mLastFitness === bestFitness) {
             this.mStagnantGenerationCount++;
@@ -34,7 +34,8 @@ export default class FitnessStagnationTermination extends TerminationBase {
             this.mStagnantGenerationCount = 1;
         }
 
-        this.mLastFitness = bestFitness || 0;
+
+        this.mLastFitness = bestFitness;
 
         return this.mStagnantGenerationCount >= this.expectedStagnationGenerationNumber;
     }

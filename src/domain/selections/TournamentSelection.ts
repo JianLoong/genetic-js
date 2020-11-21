@@ -31,7 +31,6 @@ export default class TournamentSelection extends SelectionBase {
         tournamentParticipants.push(candidates[index]);
       }
 
-      //const winner = tournamentParticipants.sort((a, b) => b.fitness - a.fitness)[0];
       const winner = FuncFitness.sort(tournamentParticipants)[0];
 
       selected.push(winner);

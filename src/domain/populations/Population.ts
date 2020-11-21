@@ -1,4 +1,3 @@
-import { DecimalChromosome } from "../..";
 import IChromosome from "../chromosome/IChromosome";
 import Generation from "./Generation";
 import IPopulation from "./IPopulation";
@@ -26,7 +25,7 @@ export default class Population implements IPopulation {
     this.bestChromosome = adamChromosome;
     this.isMaximized = isMaximized;
     this.generationNumber = 0;
-    this.currentGeneration = new Generation(0, [new DecimalChromosome(10, 0, 10)])
+    this.currentGeneration = new Generation(0, []);
 
     this.createInitialGeneration();
   }
@@ -38,14 +37,8 @@ export default class Population implements IPopulation {
 
     for (let i = 0; i < this.minSize; i++) {
       const c = this.adamChromosome.createNew();
-
-      if (c == null) {
-        throw new Error("Initial chromosome cannot be created.");
-      }
-
       chromosomes.push(c);
     }
-
     this.createNewGeneration(chromosomes);
   }
 
@@ -57,14 +50,30 @@ export default class Population implements IPopulation {
     );
     this.generations.push(this.currentGeneration);
   }
+
   endCurrentGeneration(): void {
+    if (this.bestChromosome.fitness === undefined)
+      throw new Error("The fitness of the best chromosome needs to be evaluated.");
+
+    if (this.currentGeneration.chromosomes[0].fitness === undefined)
+      throw new Error("Generation cannot be ended as their fitness has not been evaluated.");
+
+
     this.currentGeneration.end(this.maxSize);
-    if (
-      (this.bestChromosome.fitness || 0) <
-      (this.currentGeneration.chromosomes[0].fitness || new DecimalChromosome(10, 0, 10)) ||
-      this.bestChromosome === undefined
-    ) {
-      this.bestChromosome = this.currentGeneration.chromosomes[0];
+
+    if (this.isMaximized) {
+      if (
+        this.bestChromosome.fitness <
+        this.currentGeneration.chromosomes[0].fitness
+      ) {
+        this.bestChromosome = this.currentGeneration.chromosomes[0];
+      }
+    } else {
+      if (
+        this.currentGeneration.chromosomes[0].fitness < this.bestChromosome.fitness
+      ) {
+        this.bestChromosome = this.currentGeneration.chromosomes[0];
+      }
     }
   }
 }

@@ -1,22 +1,15 @@
 import IChromosome from "./chromosome/IChromosome";
 import ICrossover from "./crossovers/ICrossover";
-import UniformCrossover from "./crossovers/UniformCrossover";
 import DefaultOperationStrategy from "./DefaultOperationStrategy";
 import IFitness from "./fitnesses/IFitness";
 import IGeneticAlgorithm from "./IGeneticAlgorithm";
 import IOperationStrategy from "./IOperationStrategy";
 import IMutation from "./mutations/IMutation";
-import UniformMutation from "./mutations/UniformMutation";
 import IPopulation from "./populations/IPopulation";
-import Population from "./populations/Population";
-import ElitistReinsertion from "./reinsertion/ElitistReinsertion";
-import { IReinsertion } from "./reinsertion/IReinsertion";
-import EliteSelection from "./selections/EliteSelection";
+import IReinsertion from "./reinsertion/IReinsertion";
 import ISelection from "./selections/ISelection";
-import GenerationNumberTermination from "./terminations/GenerationNumberTermination";
 import ITermination from "./terminations/ITermination";
 import { Subject } from "rxjs"
-import { DecimalChromosome } from "..";
 
 
 enum GeneticAlgorithmState {
@@ -48,11 +41,11 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
   constructor(
     population: IPopulation,
     fitness: IFitness,
-    selection: ISelection = new EliteSelection(),
-    crossOver: ICrossover = new UniformCrossover(0.5),
-    mutation: IMutation = new UniformMutation(),
-    reinsertion: IReinsertion = new ElitistReinsertion(),
-    termination: ITermination = new GenerationNumberTermination(100)
+    selection: ISelection,
+    crossOver: ICrossover,
+    mutation: IMutation,
+    reinsertion: IReinsertion,
+    termination: ITermination
   ) {
     this.selection = selection;
     this.population = population;
@@ -65,23 +58,7 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
     this.generationsNumber = 0;
     this.geneticAlgorithmState = GeneticAlgorithmState.NotStarted;
     this.timeEvolving = new Date();
-    this.bestChromosome = new DecimalChromosome(10, 0, 10);
-  }
-
-  clone() {
-    return new GeneticAlgorithm(
-      new Population(
-        this.population.minSize,
-        this.population.maxSize,
-        this.population.bestChromosome
-      ),
-      this.fitness,
-      this.selection,
-      this.crossOver,
-      this.mutation,
-      this.reinsertion,
-      this.termination
-    );
+    this.bestChromosome = this.population.bestChromosome;
   }
 
   public evolveOneGeneration(): boolean {
@@ -91,7 +68,6 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
     this.mutate(offspring);
     const newGenerationChromosome = this.reinsert(offspring, parents);
     this.population.createNewGeneration(newGenerationChromosome);
-
     return this.endCurrentGeneration();
   }
 
@@ -104,8 +80,10 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
     const bestChromosomeArray = [];
     this.timeEvolving = new Date();
     this.geneticAlgorithmState = GeneticAlgorithmState.Started;
+    this.bestChromosome.fitness = this.fitness.evaluate(this.bestChromosome);
     while (this.termination.hasReached(this) === false) {
       this.evolveOneGeneration();
+
       bestChromosomeArray.push(this.bestChromosome);
       this.generationsNumber++;
       const best = this.bestChromosome;
@@ -137,19 +115,19 @@ export default class GeneticAlgorithm implements IGeneticAlgorithm {
   private evaluateFitness(): void {
     // The evaluate fitness needs to be done using async or parallel.
     const chromosomes = this.population.currentGeneration.chromosomes;
+    const hm: Map<IChromosome, number> = new Map();
+
     for (const chromosome of chromosomes) {
       const element = chromosome;
       // const fitness = this.fitness.evaluate(element);
-      const fitness = this.fitnessMap(element);
+
+      const fitness = this.fitnessMap(element, hm);
       element.fitness = fitness;
     }
   }
 
-  private fitnessMap = (chromosome: IChromosome): number => {
-    const hm: Map<IChromosome, number> = new Map();
-
+  private fitnessMap = (chromosome: IChromosome, hm: Map<IChromosome, number>): number => {
     const fitness = hm.get(chromosome);
-
     if (fitness === undefined) {
       const result = this.fitness.evaluate(chromosome);
       hm.set(chromosome, result);

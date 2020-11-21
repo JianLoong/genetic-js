@@ -6,27 +6,21 @@ import { ReinsertionBase } from "./ReinsertionBase";
 export default class ElitistReinsertion extends ReinsertionBase {
     constructor(isMaximized?: boolean) {
         super(false, true);
-        this.isMaximized = isMaximized || true;
+        if (isMaximized === undefined)
+            this.isMaximized = true;
+        else
+            this.isMaximized = isMaximized;
     }
+
     private isMaximized: boolean;
 
     performSelectChromosome(population: IPopulation, offspring: IChromosome[], parents: IChromosome[]): IChromosome[] {
         const diff = population.minSize - offspring.length;
         let best: IChromosome[] = [];
 
+        // If there are less offsprings than the min size
         if (diff > 0) {
-            // // const bestParents = [...parents];
-            // if (this.isMaximized)
-            //     best = parents.sort((a, b) => b.fitness - a.fitness).slice(0, diff);
-            // else
-            //     best = parents.sort((a, b) => a.fitness - b.fitness).slice(0, diff);
-            if (this.isMaximized) {
-                best = FuncFitness.sort(parents, true).slice(0, diff);
-            }
-            else {
-                best = FuncFitness.sort(parents, false).slice(0, diff);
-            }
-
+            best = FuncFitness.sort(parents, this.isMaximized).slice(0, diff);
         }
 
         const result = offspring.concat(best);

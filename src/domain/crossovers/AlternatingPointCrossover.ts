@@ -4,6 +4,7 @@ import Gene from "../chromosome/Gene";
 import IChromosome from "../chromosome/IChromosome";
 import CrossoverBase from "./CrossoverBase";
 
+// https://www.researchgate.net/figure/Alternating-position-crossover-AP_fig5_226665831
 export default class AlternatingPointCrossover extends CrossoverBase {
   constructor() {
     super(2, 2);
@@ -14,7 +15,7 @@ export default class AlternatingPointCrossover extends CrossoverBase {
     const p2 = parents[1];
 
     if (ChromosomeExtension.anyHasRepeatedGene(parents)) {
-      throw new Error("Alternating cross over has repeated");
+      throw new Error("Alternating cross over has repeated genes");
     }
 
 
@@ -39,16 +40,24 @@ export default class AlternatingPointCrossover extends CrossoverBase {
 
     const length = p1.length;
     while (child.length < length) {
-      !child.includes(p1Genes[0])
-        ? child.push(p1Genes.shift() || new Gene(0))
-        : p1Genes.shift();
-      !child.includes(p2Genes[0])
-        ? child.push(p2Genes.shift() || new Gene(0))
-        : p2Genes.shift();
+      if (!child.includes(p1Genes[0])) {
+        const gene = p1Genes[0];
+        child.push(gene);
+        p1Genes.shift();
+      } else {
+        p1Genes.shift();
+      }
+
+      if (!child.includes(p2Genes[0])) {
+        const gene = p2Genes[0];
+        child.push(gene);
+        p2Genes.shift();
+      } else {
+        p2Genes.shift();
+      }
     }
     for (let i = 0; i < firstParent.length; i++)
       c.replaceGene(i, new Gene(child[i]));
-
     return c;
   }
 }

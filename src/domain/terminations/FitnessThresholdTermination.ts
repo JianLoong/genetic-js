@@ -7,7 +7,7 @@ export default class FitnessThresholdTermination extends TerminationBase {
 
     constructor(expectedFitness?: number) {
         super();
-        if (expectedFitness === undefined || expectedFitness == null) {
+        if (expectedFitness === undefined) {
             this.expectedFitness = 0;
         } else {
             this.expectedFitness = expectedFitness;

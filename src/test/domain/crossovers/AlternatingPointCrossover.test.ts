@@ -2,9 +2,9 @@ import DecimalChromosome from "../../../domain/chromosome/DecimalChromosome";
 import Gene from "../../../domain/chromosome/Gene";
 import AlternatingPointCrossover from "../../../domain/crossovers/AlternatingPointCrossover"
 
-describe("CrossOver Test", () => {
+describe("AlternatingPointCrossover Test", () => {
 
-    it("should throw an error", () => {
+    it("should throw an error because there are repeated genes", () => {
         const a = new AlternatingPointCrossover();
         const p1 = [2, 2, 3, 4, 5, 6, 7, 2];
         const p2 = [3, 7, 5, 1, 6, 8, 2, 4];
@@ -23,6 +23,12 @@ describe("CrossOver Test", () => {
         const parents = [d1, d2];
 
         const t = () => a.cross(parents);
+        expect(t).toThrowError();
+    });
+
+    it("should throw an error because there are no parents", () => {
+        const a = new AlternatingPointCrossover();
+        const t = () => a.cross([]);
         expect(t).toThrowError();
     });
 

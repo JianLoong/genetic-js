@@ -4,6 +4,7 @@ import SequenceMutationBase from "./SequenceMutationBase";
 export default class ReverseSequenceMutation extends SequenceMutationBase {
 
   mutateOnSequence(sequence: Gene[]): Gene[] {
-    return sequence.reverse();
+    const seq = [...sequence];
+    return seq.reverse();
   }
 }

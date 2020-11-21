@@ -6,10 +6,7 @@ export default class GenerationNumberTermination extends TerminationBase {
 
   constructor(expectedGenerationNumber?: number) {
     super();
-    if (
-      expectedGenerationNumber === undefined ||
-      expectedGenerationNumber === null
-    )
+    if (expectedGenerationNumber === undefined)
       this.expectedGenerationNumber = 100;
     else
       this.expectedGenerationNumber = expectedGenerationNumber;

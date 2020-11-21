@@ -1,13 +1,14 @@
+
+import { PartialShuffleMutation } from "..";
 import DecimalChromosome from "../domain/chromosome/DecimalChromosome";
 import IChromosome from "../domain/chromosome/IChromosome";
-import UniformCrossover from "../domain/crossovers/UniformCrossover";
+import OrderedCrossover from "../domain/crossovers/OrderedCrossover";
 import FuncFitness from "../domain/fitnesses/FuncFitness";
 import GeneticAlgorithm from "../domain/GeneticAlgorithm";
-import PartialShuffleMutation from "../domain/mutations/PartialShuffleMutation";
 import Population from "../domain/populations/Population";
-import { FitnessBasedReinsertion } from "../domain/reinsertion/FitnessBasedReinsertion";
+import ElitistReinsertion from "../domain/reinsertion/ElitistReinsertion";
 import RouletteWheelSelection from "../domain/selections/RouletteWheelSelection";
-import TimeEvolvingTermination from "../domain/terminations/TimeEvolvingTermination";
+import FitnessStagnationTermination from "../domain/terminations/FitnessStagnationTermination";
 
 const displayBoard = (chromosome: IChromosome): string => {
   let str = "";
@@ -22,7 +23,7 @@ const displayBoard = (chromosome: IChromosome): string => {
   return str;
 };
 
-const noOfQueen = 8;
+const noOfQueen = 15;
 
 const good = (no: number) => {
   let sum = 0;
@@ -75,12 +76,12 @@ const chromosome = new DecimalChromosome(noOfQueen, 0, noOfQueen);
 
 // Running the GA
 const selection = new RouletteWheelSelection();
-const crossover = new UniformCrossover(0.5);
+const crossover = new OrderedCrossover();
 const mutation = new PartialShuffleMutation();
 const population = new Population(100, 1000, chromosome);
-const termination = new TimeEvolvingTermination(10);
+const termination = new FitnessStagnationTermination(2000);
 
-const reinsertion = new FitnessBasedReinsertion();
+const reinsertion = new ElitistReinsertion();
 
 const ga = new GeneticAlgorithm(
   population,

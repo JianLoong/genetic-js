@@ -3,19 +3,13 @@ import ITermination from "./ITermination";
 
 export default abstract class LogicalOperatorTerminationBase implements ITermination {
 
-    protected constructor(minOperands?: number, terminations?: ITermination[]) {
-        // if (minOperands === undefined)
-        //     this.minOperands = 2;
-        // this.terminations = [];
-        // if (terminations !== undefined) {
-        //     this.terminations.concat(terminations);
-        // }
-        this.minOperands = minOperands || 2;
-        this.terminations = terminations || [];
+    protected constructor(minOperands: number, terminations: ITermination[]) {
+        this.minOperands = minOperands;
+        this.terminations = terminations;
     }
 
-    terminations: ITermination[];
     private minOperands: number;
+    protected terminations: ITermination[];
 
     hasReached(geneticAlgorithm: IGeneticAlgorithm): boolean {
         if (this.terminations.length < this.minOperands) {

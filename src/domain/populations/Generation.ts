@@ -46,6 +46,10 @@ export default class Generation {
     return this.chromosomes;
   }
 
+  public maximized(condition: boolean) {
+    this.isMaximized = condition;
+  }
+
   validateChromosome(chromosome: IChromosome): boolean {
     if (chromosome.fitness == null) throw new Error("No fitness");
     return true;

@@ -3,7 +3,7 @@ import RandomizationProvider from "../../../domain/randomization/RandomizationPr
 describe("Basic Randomization Test", () => {
 
     const min = 0;
-    const max = 10;
+    const max = 20;
 
     it("should be an number", () => {
         const random = RandomizationProvider.current.getInt(min, max);
@@ -29,5 +29,18 @@ describe("Basic Randomization Test", () => {
         const random = RandomizationProvider.current.getDouble();
         expect(true).toEqual(!isNaN(random));
     });
+
+    it("should be true", () => {
+        const random = RandomizationProvider.current.getFloat();
+        expect(true).toEqual(!isNaN(random));
+    });
+
+    // it("should be an number", () => {
+    //     for (let i = 0; i < 10; i++) {
+    //         const random = RandomizationProvider.current.getUniqueInts(2, min, max);
+    //         console.log(random);
+    //     }
+    // });
+
 
 });

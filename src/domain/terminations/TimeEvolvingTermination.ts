@@ -6,7 +6,7 @@ export default class TimeEvolvingTermination extends TerminationBase {
     constructor(maxTime?: number) {
         super();
         if (maxTime === undefined)
-            this.maxTime = 10;
+            this.maxTime = 1;
         else
             this.maxTime = maxTime;
     }

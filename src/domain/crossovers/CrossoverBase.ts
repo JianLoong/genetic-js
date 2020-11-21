@@ -20,12 +20,8 @@ export default abstract class CrossoverBase implements ICrossover {
   }
 
   cross(parents: IChromosome[]): IChromosome[] {
-    if (parents == null)
-      throw new Error("Error - CrossOverbase: Number of parents cannot be null.");
-    const firstParent = parents[0];
-
-    if (firstParent.length < this.minChromosomeLength) {
-      throw new Error("Error: A chromosome should have at least 0 genes");
+    if (parents.length < 2) {
+      throw new Error("Crossover needs at least 2 parents");
     }
     return this.performCross(parents);
   }

@@ -1,3 +1,4 @@
+
 import ChromosomeExtension from "../chromosome/ChromosomeExtension";
 import IChromosome from "../chromosome/IChromosome";
 import RandomizationProvider from "../randomization/RandomizationProvider";
@@ -5,23 +6,29 @@ import CrossoverBase from "./CrossoverBase";
 import CrossOverUtil from "./CrossOverUtil";
 
 export default class OrderedCrossover extends CrossoverBase {
-  constructor() {
+  constructor(indexes?: number[]) {
     super(2, 2);
+    if (indexes !== undefined)
+      this.indexes = indexes;
   }
+
+  private indexes?: number[];
+
   performCross(parents: IChromosome[]): IChromosome[] {
     const parentOne = parents[0];
     const parentTwo = parents[1];
 
     if (ChromosomeExtension.anyHasRepeatedGene([parentOne, parentTwo])) {
-      throw new Error("Ordered Crossover - Parents have repeated genes");
+      throw new Error("Ordered crossover can only be used if parents do not have repeated genes.");
     }
 
-    let middleSectionIndexes = RandomizationProvider.current.getUniqueInts(
-      2,
-      0,
-      parentOne.length
-    );
-    middleSectionIndexes = middleSectionIndexes.sort((a, b) => a - b);
+    if (this.indexes === undefined)
+      this.indexes = RandomizationProvider.current.getUniqueInts(2, 0, parentOne.length);
+
+    if (this.indexes.length !== 2)
+      throw new Error("Only 2 indexes are needed for the ordered crossover.");
+
+    const middleSectionIndexes = this.indexes.sort((a, b) => a - b);
     const middleSectionBeginIndex = middleSectionIndexes[0];
     const middleSectionEndIndex = middleSectionIndexes[1];
 
@@ -59,12 +66,8 @@ export default class OrderedCrossover extends CrossoverBase {
 
     const child = firstParent.createNew();
 
-    // child.replaceGenes(0, childGenes);
-    let index = 0;
-    for (const gene of childGenes) {
-      child.replaceGene(index, gene);
-      index++;
-    }
+    child.replaceGenes(0, childGenes);
+
     return child;
   }
 }

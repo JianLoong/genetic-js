@@ -7,13 +7,21 @@ import SelectionBase from "./SelectionBase";
 
 export default class RouletteWheelSelection extends SelectionBase {
 
-  constructor() {
+  constructor(isMaximized?: boolean) {
     super(2);
+    if (isMaximized === undefined)
+      this.isMaximized = true;
+    else
+      this.isMaximized = isMaximized;
   }
 
-  performSelectChromosome(num: number, generation: Generation) {
+  private isMaximized: boolean;
+
+  performSelectChromosome(num: number, generation?: Generation): IChromosome[] {
     if (generation === undefined)
-      throw new Error("EliteSelection - No generation for Elite Selection");
+      throw new Error("no generation");
+    if (generation.chromosomes.length === 0)
+      throw new Error("No chromosomes");
 
     const parents = [];
     for (let i = 0; i < num; i++) {
@@ -24,20 +32,27 @@ export default class RouletteWheelSelection extends SelectionBase {
   }
   pick = (generation: Generation): IChromosome => {
     let sum = 0;
+    let picked: IChromosome;
 
     for (const chromosome of generation.chromosomes) {
-      sum += chromosome.fitness || 0;
+      if (chromosome.fitness === undefined)
+        throw new Error("Chromosome fitness needs to be evaluated first.");
+      sum += chromosome.fitness;
     }
 
+    picked = generation.chromosomes[0];
+
     const random = RandomizationProvider.current.getInt(0, sum);
-    // const sorted = generation.chromosomes.sort((a, b) => b.fitness - a.fitness);
-    const sorted = FuncFitness.sort(generation.chromosomes);
+    const sorted = FuncFitness.sort(generation.chromosomes, this.isMaximized);
     let partialSum = 0;
     for (const chromosome of sorted) {
       partialSum += chromosome.fitness || 0;
-      if (partialSum > random) return chromosome;
+      if (partialSum > random) {
+        picked = chromosome;
+        break;
+      }
     }
 
-    return sorted[0];
+    return picked;
   };
 }

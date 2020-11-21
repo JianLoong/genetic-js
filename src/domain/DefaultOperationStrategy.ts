@@ -30,10 +30,11 @@ export default class DefaultOperationStrategy implements IOperationStrategy {
   mutate(
     mutation: IMutation,
     mutationProbability: number,
-    chromosomes: IChromosome[]
-  ): void {
+    chromosomes: IChromosome[]): void {
+
     for (const chromosome of chromosomes) {
       mutation.mutate(chromosome, mutationProbability);
+
     }
   }
 }
