@@ -1,5 +1,17 @@
-import { ElitistReinsertion, FitnessStagnationTermination, FitnessThresholdTermination, FlipBitMutation, FloatingPointChromosome, FuncFitness, GenerationNumberTermination, GeneticAlgorithm, ITermination, Population, RouletteWheelSelection, TimeEvolvingTermination, UniformCrossover } from "../..";
+import FloatingPointChromosome from "../../domain/chromosome/FloatingPointChromosome";
 import IChromosome from "../../domain/chromosome/IChromosome";
+import UniformCrossover from "../../domain/crossovers/UniformCrossover";
+import FuncFitness from "../../domain/fitnesses/FuncFitness";
+import GeneticAlgorithm from "../../domain/GeneticAlgorithm";
+import FlipBitMutation from "../../domain/mutations/FlipBitMutation";
+import Population from "../../domain/populations/Population";
+import ElitistReinsertion from "../../domain/reinsertion/ElitistReinsertion";
+import RouletteWheelSelection from "../../domain/selections/RouletteWheelSelection";
+import FitnessStagnationTermination from "../../domain/terminations/FitnessStagnationTermination";
+import FitnessThresholdTermination from "../../domain/terminations/FitnessThresholdTermination";
+import GenerationNumberTermination from "../../domain/terminations/GenerationNumberTermination";
+import ITermination from "../../domain/terminations/ITermination";
+import TimeEvolvingTermination from "../../domain/terminations/TimeEvolvingTermination";
 
 describe("GeneticAlgorithm Test", () => {
 

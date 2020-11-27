@@ -1,6 +1,8 @@
-import { EliteSelection, Generation, Population } from "../../..";
 import IChromosome from "../../../domain/chromosome/IChromosome";
 import IntegerChromosome from "../../../domain/chromosome/IntegerChromosome";
+import Generation from "../../../domain/populations/Generation";
+import Population from "../../../domain/populations/Population";
+import EliteSelection from "../../../domain/selections/EliteSelection";
 import ISelection from "../../../domain/selections/ISelection";
 
 describe("Selection Test", () => {

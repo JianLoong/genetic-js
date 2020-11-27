@@ -1,6 +1,6 @@
-import { FuncFitness } from "../../..";
 import IChromosome from "../../../domain/chromosome/IChromosome";
 import IntegerChromosome from "../../../domain/chromosome/IntegerChromosome";
+import FuncFitness from "../../../domain/fitnesses/FuncFitness";
 import Population from "../../../domain/populations/Population";
 
 const fitnessFunction = (chromosome: IChromosome): number => {

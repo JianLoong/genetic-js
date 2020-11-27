@@ -18,7 +18,6 @@ export default class ElitistReinsertion extends ReinsertionBase {
         const diff = population.minSize - offspring.length;
         let best: IChromosome[] = [];
 
-        // If there are less offsprings than the min size
         if (diff > 0) {
             best = FuncFitness.sort(parents, this.isMaximized).slice(0, diff);
         }

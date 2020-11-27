@@ -1,10 +1,9 @@
-import { IMutation } from "../../..";
 import BinaryChromosomeBase from "../../../domain/chromosome/BinaryChromosomeBase";
 import DecimalChromosome from "../../../domain/chromosome/DecimalChromosome";
 import Gene from "../../../domain/chromosome/Gene";
 import IChromosome from "../../../domain/chromosome/IChromosome";
-// import IntegerChromosome from "../../../domain/chromosome/IntegerChromosome";
 import FlipBitMutation from "../../../domain/mutations/FlipBitMutation"
+import IMutation from "../../../domain/mutations/IMutation";
 
 class BinaryChromosomeBaseTest extends BinaryChromosomeBase {
     constructor(length: number) {

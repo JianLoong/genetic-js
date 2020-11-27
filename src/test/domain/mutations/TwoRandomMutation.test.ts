@@ -1,6 +1,6 @@
-import { IMutation } from "../../..";
 import DecimalChromosome from "../../../domain/chromosome/DecimalChromosome";
 import Gene from "../../../domain/chromosome/Gene";
+import IMutation from "../../../domain/mutations/IMutation";
 import TwoRandomMutation from "../../../domain/mutations/TwoRandomMutation"
 
 

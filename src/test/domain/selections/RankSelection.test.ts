@@ -1,7 +1,9 @@
-import { Generation, Population, RankSelection } from "../../..";
 import IChromosome from "../../../domain/chromosome/IChromosome";
 import IntegerChromosome from "../../../domain/chromosome/IntegerChromosome";
+import Generation from "../../../domain/populations/Generation";
+import Population from "../../../domain/populations/Population";
 import ISelection from "../../../domain/selections/ISelection";
+import RankSelection from "../../../domain/selections/RankSelection";
 
 describe("RankSelection Test", () => {
     it("should throw an error", () => {

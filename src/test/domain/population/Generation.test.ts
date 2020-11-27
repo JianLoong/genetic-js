@@ -1,6 +1,7 @@
-import { FuncFitness, Generation } from "../../..";
 import IChromosome from "../../../domain/chromosome/IChromosome";
 import IntegerChromosome from "../../../domain/chromosome/IntegerChromosome";
+import FuncFitness from "../../../domain/fitnesses/FuncFitness";
+import Generation from "../../../domain/populations/Generation";
 import Population from "../../../domain/populations/Population";
 
 

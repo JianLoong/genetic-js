@@ -1,6 +1,14 @@
-import { FuncFitness, FloatingPointChromosome, RouletteWheelSelection, UniformCrossover, FlipBitMutation, Population, ElitistReinsertion, ITermination, GeneticAlgorithm } from "../../..";
+import FloatingPointChromosome from "../../../domain/chromosome/FloatingPointChromosome";
 import IChromosome from "../../../domain/chromosome/IChromosome";
+import UniformCrossover from "../../../domain/crossovers/UniformCrossover";
+import FuncFitness from "../../../domain/fitnesses/FuncFitness";
+import GeneticAlgorithm from "../../../domain/GeneticAlgorithm";
 import IGeneticAlgorithm from "../../../domain/IGeneticAlgorithm";
+import FlipBitMutation from "../../../domain/mutations/FlipBitMutation";
+import Population from "../../../domain/populations/Population";
+import ElitistReinsertion from "../../../domain/reinsertion/ElitistReinsertion";
+import RouletteWheelSelection from "../../../domain/selections/RouletteWheelSelection";
+import ITermination from "../../../domain/terminations/ITermination";
 import TerminationBase from "../../../domain/terminations/TerminationBase";
 
 class TerminationBaseStub extends TerminationBase {
@@ -13,26 +21,11 @@ class TerminationBaseStub extends TerminationBase {
 describe("TerminationBase Test", () => {
 
     const fitnessFunction = (chromosome: IChromosome): number => {
-        // const c = chromosome as FloatingPointChromosome;
-        // const values = c.expand();
+        const c = chromosome as FloatingPointChromosome;
+        const values = c.expand();
 
-        // const x1 = values[0];
-        // const y1 = values[1];
-        // const x2 = values[2];
-        // const y2 = values[3];
-
-        // if (x1 < c.minValue[0] || x1 > c.maxValue[0])
-        //     return -1;
-        // if (y1 < c.minValue[1] || y1 > c.maxValue[1])
-        //     return -1;
-        // if (x2 < c.minValue[2] || x2 > c.maxValue[2])
-        //     return -1;
-        // if (y2 < c.minValue[3] || y2 > c.maxValue[3])
-        //     return -1;
-
-        // const result = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        //  return (result);
-        return 10;
+        const x1 = values[0];
+        return x1;
     }
 
     const fitness = new FuncFitness(fitnessFunction);

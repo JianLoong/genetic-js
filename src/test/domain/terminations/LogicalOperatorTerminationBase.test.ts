@@ -1,4 +1,3 @@
-import { AndTermination, GenerationNumberTermination, OrTermination, TimeEvolvingTermination } from "../../..";
 import FloatingPointChromosome from "../../../domain/chromosome/FloatingPointChromosome";
 import IChromosome from "../../../domain/chromosome/IChromosome";
 import UniformCrossover from "../../../domain/crossovers/UniformCrossover";
@@ -9,8 +8,12 @@ import FlipBitMutation from "../../../domain/mutations/FlipBitMutation";
 import Population from "../../../domain/populations/Population";
 import ElitistReinsertion from "../../../domain/reinsertion/ElitistReinsertion";
 import RouletteWheelSelection from "../../../domain/selections/RouletteWheelSelection";
+import AndTermination from "../../../domain/terminations/AndTermination";
+import GenerationNumberTermination from "../../../domain/terminations/GenerationNumberTermination";
 import ITermination from "../../../domain/terminations/ITermination";
 import LogicalOperatorTerminationBase from "../../../domain/terminations/LogicalOperatorTerminationBase";
+import OrTermination from "../../../domain/terminations/OrTermination";
+import TimeEvolvingTermination from "../../../domain/terminations/TimeEvolvingTermination";
 
 class LogicalOperatorTerminationBaseStub extends LogicalOperatorTerminationBase {
     constructor(minOperands: number, terminations: ITermination[]) {

@@ -1,7 +1,8 @@
-import { Generation, RouletteWheelSelection } from "../../..";
 import IChromosome from "../../../domain/chromosome/IChromosome";
 import IntegerChromosome from "../../../domain/chromosome/IntegerChromosome";
+import Generation from "../../../domain/populations/Generation";
 import ISelection from "../../../domain/selections/ISelection";
+import RouletteWheelSelection from "../../../domain/selections/RouletteWheelSelection";
 
 describe("RouletteWheelSelection Test", () => {
     it("should throw an error", () => {

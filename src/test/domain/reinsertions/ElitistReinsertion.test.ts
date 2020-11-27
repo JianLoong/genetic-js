@@ -1,7 +1,8 @@
-import { ElitistReinsertion, IPopulation } from "../../..";
 import IChromosome from "../../../domain/chromosome/IChromosome";
 import IntegerChromosome from "../../../domain/chromosome/IntegerChromosome";
+import IPopulation from "../../../domain/populations/IPopulation";
 import Population from "../../../domain/populations/Population";
+import ElitistReinsertion from "../../../domain/reinsertion/ElitistReinsertion";
 import IReinsertion from "../../../domain/reinsertion/IReinsertion";
 
 describe("ElitistReinsertion Test", () => {

@@ -9,6 +9,8 @@ export class UniformReinsertion extends ReinsertionBase {
     }
 
     performSelectChromosome(population: IPopulation, offspring: IChromosome[], parents: IChromosome[]): IChromosome[] {
+        if (offspring.length === 0)
+            return parents;
         while (offspring.length < population.minSize) {
             const random = RandomizationProvider.current.getInt(0, offspring.length);
             offspring.push(offspring[random]);

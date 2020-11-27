@@ -9,7 +9,7 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
     public minValue: number[];
     public originalValue: number[];
 
-    constructor(minValue: number[], maxValue: number[], isIntValue: boolean = true) {
+    constructor(minValue: number[], maxValue: number[], isIntValue?: boolean) {
 
         minValue.forEach(element => {
             if (element < 0)
@@ -24,8 +24,11 @@ export default class FloatingPointChromosome extends BinaryChromosomeBase {
 
         let totalBit = 0;
 
+        if (isIntValue === undefined)
+            isIntValue = true;
 
         maxValue.forEach(element => totalBit += element.toString(2).length);
+
         if (isIntValue === true)
             super(totalBit);
         else

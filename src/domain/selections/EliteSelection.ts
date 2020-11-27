@@ -1,5 +1,5 @@
-import { FuncFitness } from "../..";
 import IChromosome from "../chromosome/IChromosome";
+import FuncFitness from "../fitnesses/FuncFitness";
 import Generation from "../populations/Generation";
 import SelectionBase from "./SelectionBase";
 
