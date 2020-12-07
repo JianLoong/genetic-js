@@ -19,6 +19,9 @@ export default class FitnessBasedReinsertion extends ReinsertionBase {
             const selected = FuncFitness.sort(offspring, this.isMaximized).slice(0, population.maxSize - 1);
             return selected;
         }
+
+        if (offspring.length === 0)
+            return parents;
         return offspring;
     }
 }

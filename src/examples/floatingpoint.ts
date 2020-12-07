@@ -1,5 +1,5 @@
 import { Subject } from "rxjs";
-import { GenerationNumberTermination } from "..";
+import { TimeEvolvingTermination } from "..";
 import FloatingPointChromosome from "../domain/chromosome/FloatingPointChromosome";
 import IChromosome from "../domain/chromosome/IChromosome";
 import UniformCrossover from "../domain/crossovers/UniformCrossover";
@@ -11,7 +11,7 @@ import ElitistReinsertion from "../domain/reinsertion/ElitistReinsertion";
 import RouletteWheelSelection from "../domain/selections/RouletteWheelSelection";
 
 
-const chromosome = new FloatingPointChromosome([0, 0, 0, 0], [998, 680, 998, 680], true);
+const chromosome = new FloatingPointChromosome([0, 0, 0, 0], [998, 680, 998, 680], false);
 
 const displayValues = (chromosome: IChromosome): string => {
     const c = chromosome as FloatingPointChromosome;
@@ -48,7 +48,7 @@ const selection = new RouletteWheelSelection();
 const crossover = new UniformCrossover(0.5);
 const mutation = new FlipBitMutation();
 const population = new Population(500, 1000, chromosome);
-const termination = new GenerationNumberTermination(20);
+const termination = new TimeEvolvingTermination(10);
 
 const reinsertion = new ElitistReinsertion();
 

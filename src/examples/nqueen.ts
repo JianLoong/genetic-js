@@ -1,5 +1,5 @@
 
-import { PartialShuffleMutation } from "..";
+import { AndTermination, PartialShuffleMutation, TimeEvolvingTermination } from "..";
 import DecimalChromosome from "../domain/chromosome/DecimalChromosome";
 import IChromosome from "../domain/chromosome/IChromosome";
 import OrderedCrossover from "../domain/crossovers/OrderedCrossover";
@@ -79,7 +79,7 @@ const selection = new RouletteWheelSelection();
 const crossover = new OrderedCrossover();
 const mutation = new PartialShuffleMutation();
 const population = new Population(100, 1000, chromosome);
-const termination = new FitnessStagnationTermination(2000);
+const termination = new AndTermination([new FitnessStagnationTermination(2000), new TimeEvolvingTermination(10)]);
 
 const reinsertion = new ElitistReinsertion();
 
